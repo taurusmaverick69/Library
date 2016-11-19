@@ -1,0 +1,16 @@
+ноя 12, 2016 12:48:13 AM com.AuthorServiceImpl getById
+INFO: Getting author by id: 75
+ноя 12, 2016 12:48:13 AM com.AuthorServiceImpl getAll
+INFO: Getting all authors
+ноя 12, 2016 12:48:56 AM com.AuthorServiceImpl getById
+INFO: Getting author by id: 75
+ноя 12, 2016 12:48:56 AM com.AuthorServiceImpl getAll
+INFO: Getting all authors
+ноя 12, 2016 12:49:01 AM com.AuthorServiceImpl getById
+INFO: Getting author by id: 75
+ноя 12, 2016 12:49:01 AM com.AuthorServiceImpl getAll
+INFO: Getting all authors
+ноя 12, 2016 12:00:59 PM com.maverick.service.AuthorServiceImpl getById
+INFO: Getting author by id: 75
+ноя 12, 2016 12:00:59 PM com.maverick.service.AuthorServiceImpl getAll
+INFO: Getting all authors
