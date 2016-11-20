@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "`group`")
 public class Group extends EntityClass {
 
-    @Column(name = "name")
+    @Column
     private String name;
 
     public Group() {

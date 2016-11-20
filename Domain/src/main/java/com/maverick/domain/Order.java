@@ -21,13 +21,13 @@ public class Order extends EntityClass {
     @JoinColumn(name = "Librarian_id")
     private Librarian librarian = new Librarian();
 
-    @Column(name = "startDate")
+    @Column
     private Date startDate;
 
-    @Column(name = "finishDate")
+    @Column
     private Date finishDate;
 
-    @Column(name = "status")
+    @Column
     private String status;
 
     public Order(int id, Student student, Book book, Date startDate, Date finishDate, String status) {

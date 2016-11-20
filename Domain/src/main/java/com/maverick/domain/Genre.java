@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 public class Genre extends EntityClass {
 
-    @Column(name = "name")
+    @Column
     private String name;
 
     public Genre() {

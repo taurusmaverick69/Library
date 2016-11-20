@@ -5,11 +5,11 @@ import org.bson.types.ObjectId;
 import javax.persistence.*;
 
 @MappedSuperclass
-public class EntityClass {
+public abstract class EntityClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     int id;
 
     @Transient

@@ -11,10 +11,10 @@ public class Book extends EntityClass {
     @JoinColumn(name = "Author_id")
     private Author author = new Author();
 
-    @Column(name = "title")
+    @Column
     private String title;
 
-    @Column(name = "publishingYear")
+    @Column
     private Integer publishingYear;
 
     @ManyToOne
@@ -25,7 +25,7 @@ public class Book extends EntityClass {
     @JoinColumn(name = "Publisher_id")
     private Publisher publisher = new Publisher();
 
-    @Column(name = "amount")
+    @Column
     private int amount;
 
     public Book() {

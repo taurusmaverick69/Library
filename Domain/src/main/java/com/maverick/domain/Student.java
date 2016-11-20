@@ -10,10 +10,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Student extends EntityClass {
 
-    @Column(name = "fullName")
+    @Column
     private String fullName;
 
-    @Column(name = "libraryCard")
+    @Column
     private String libraryCard;
 
     @ManyToOne

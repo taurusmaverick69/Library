@@ -8,10 +8,10 @@ import javax.persistence.Entity;
 @Entity
 public class Author extends EntityClass {
 
-    @Column(name = "fullName")
+    @Column
     private String fullName;
 
-    @Column(name = "yearsOfLife")
+    @Column
     private String yearsOfLife;
 
     public Author() {

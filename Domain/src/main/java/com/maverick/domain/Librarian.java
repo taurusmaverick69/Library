@@ -9,10 +9,10 @@ import java.util.List;
 @Entity
 public class Librarian extends EntityClass {
 
-    @Column(name = "fullName")
+    @Column
     private String fullName;
 
-    @Column(name = "password")
+    @Column
     private String password;
 
     @Transient
