@@ -45,5 +45,11 @@ public class Author extends EntityClass {
         this.yearsOfLife = yearsOfLife;
     }
 
-
+    @Override
+    public String toString() {
+        return "Author{" +
+                "fullName='" + fullName + '\'' +
+                ", yearsOfLife='" + yearsOfLife + '\'' +
+                '}';
+    }
 }

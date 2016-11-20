@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 public class SpringRunner {
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("model.cfg.xml");
         AuthorService service = context.getBean("author-service", AuthorService.class);
@@ -25,6 +26,7 @@ public class SpringRunner {
             System.out.println("No Such ID");
         }
         System.out.println(service.getAll());
+
     }
 
 }
