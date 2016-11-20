@@ -75,9 +75,7 @@ public class MainFrame extends JFrame {
         bookScrollPane = new JScrollPane(bookTable);
 
         books = bookDAO.selectBooks();
-
         bookTableModel.addBookData(books);
-
 
         TableRowSorter<BookTableModel> bookRowSorter = new TableRowSorter<>(bookTableModel);
         bookTable.setRowSorter(bookRowSorter);
@@ -135,7 +133,6 @@ public class MainFrame extends JFrame {
             });
         }
 
-
         menuBar.add(bookMenu);
         bookMenu.add(addBookMenuItem);
         bookMenu.add(deleteBookMenuItem);
@@ -143,7 +140,6 @@ public class MainFrame extends JFrame {
         bookMenu.add(searchBookMenuItem);
         bookMenu.add(refreshBookMenuItem);
         bookMenu.add(undoBookMenuItem);
-
 
         menuBar.add(orderMenu);
         orderMenu.add(addOrderMenuItem);
@@ -195,7 +191,6 @@ public class MainFrame extends JFrame {
         orderTable.getTableHeader().setReorderingAllowed(false);
         orderTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-
         add(tabbedPane, new GridBagConstraints(0, 0, 2, 5, 1.0, 1.0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(2, 2, 2, 2), 0, 0));
@@ -206,22 +201,14 @@ public class MainFrame extends JFrame {
         pack();
         setLocationRelativeTo(null);
 
-        final MainFrame mainFrame = this;
 
-        addBookMenuItem.addActionListener(e -> new AddBookFrame(mainFrame));
-
-
+        addBookMenuItem.addActionListener(e -> new AddBookFrame(this));
         deleteBookMenuItem.addActionListener(e -> {
-
             switch (JOptionPane.showConfirmDialog(null, "Вы действительно хотите удалить данные записи?", "Подтвердите", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.OK_OPTION:
-
                     for (int i : bookTable.getSelectedRows()) {
-
-
                         Book book = new Book();
                         book.setId(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
-
                         if (!bookDAO.deleteBook(book)) {
                             JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
                                     bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
@@ -230,19 +217,13 @@ public class MainFrame extends JFrame {
                                     ",пока есть заказы на неё", "Ошибка", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
-
                     }
-
                     selectedRow = bookTable.getSelectedRow();
-
                     Book book = books.get(selectedRow);
                     books.remove(selectedRow);
-
                     originator.setState(book);
                     careTaker.add(originator.saveStateToMemento());
-
                     indexState++;
-
                     bookTableModel.addBookData(books);
                     bookTable.updateUI();
                     bookTable.setRowSelectionInterval(0, 0);
@@ -254,20 +235,18 @@ public class MainFrame extends JFrame {
         });
 
         editBookMenuItem.addActionListener(e -> {
-
             Book book = new Book();
             book.setId(Integer.parseInt(bookTable.getValueAt(bookTable.getSelectedRow(), 0).toString()));
-
             if (bookTable.getSelectedRows().length > 1) {
                 JOptionPane.showMessageDialog(null, "Нельзя редактировать более одной строки!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
             } else if (bookDAO.isOrdered(book)) {
                 JOptionPane.showMessageDialog(null, "Нельзя редактировать книгу, на которую есть заказы", "Ошибка", JOptionPane.ERROR_MESSAGE);
             } else {
-                new EditBookFrame(mainFrame);
+                new EditBookFrame(this);
             }
         });
 
-        searchBookMenuItem.addActionListener(e -> new SearchBookFrame(mainFrame));
+        searchBookMenuItem.addActionListener(e -> new SearchBookFrame(this));
 
         refreshBookMenuItem.addActionListener(e -> {
             switch (JOptionPane.showConfirmDialog(null, "Обновить таблицу?", "Обновить", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
@@ -279,12 +258,10 @@ public class MainFrame extends JFrame {
             }
         });
 
-        addOrderMenuItem.addActionListener(e -> new AddOrderFrame(mainFrame));
+        addOrderMenuItem.addActionListener(e -> new AddOrderFrame(this));
 
         editOrderMenuItem.addActionListener(e -> {
-
             boolean isSelected = false;
-
             for (int i = 0; i < orderTable.getRowCount(); i++) {
                 if (orderTable.isRowSelected(i)) {
                     isSelected = true;
@@ -299,12 +276,12 @@ public class MainFrame extends JFrame {
             } else if (orderTable.getValueAt(orderTable.getSelectedRow(), 5).toString().equals("Возвращена")) {
                 JOptionPane.showMessageDialog(null, "Нельзя редактировать заказ,  который возвращён", "Ошибка", JOptionPane.ERROR_MESSAGE);
             } else {
-                new EditOrderFrame(mainFrame);
+                new EditOrderFrame(this);
             }
         });
 
 
-        searchOrderMenuItem.addActionListener(e -> new SearchOrderFrame(mainFrame));
+        searchOrderMenuItem.addActionListener(e -> new SearchOrderFrame(this));
 
         refreshOrderMenuItem.addActionListener(e -> {
             Object[] options = {"Да", "Нет"};
