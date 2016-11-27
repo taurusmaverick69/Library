@@ -1,4 +1,4 @@
-package com.maverick.service;
+package com.maverick.oldservice;
 
 import com.maverick.domain.Author;
 import com.maverick.newDAO.AuthorDao;

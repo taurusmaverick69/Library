@@ -13,10 +13,10 @@ import java.util.List;
 
 public class MySQLBookDAO implements BookDAO {
 
-    private final static String INSERT_BOOK = "INSERT INTO booksdb.book (Author_id, title, publishingYear, Genre_id, Publisher_id, amount) VALUES (?,?,?,?,?,?)";
+    private final static String INSERT_BOOK = "INSERT INTO booksdb.book (Author_id, title, publishing_year, Genre_id, Publisher_id, amount) VALUES (?,?,?,?,?,?)";
     private final static String DELETE_BOOK = "DELETE FROM booksdb.book WHERE id = ?";
     private final static String SELECT_BOOKS = "CALL booksdb.selectBooks()";
-    private final static String UPDATE_BOOK = "UPDATE booksdb.book SET Author_id = ?, title = ?, publishingYear = ?, Genre_id = ?, Publisher_id = ?, amount = ? WHERE id = ?";
+    private final static String UPDATE_BOOK = "UPDATE booksdb.book SET Author_id = ?, title = ?, publishing_year = ?, Genre_id = ?, Publisher_id = ?, amount = ? WHERE id = ?";
     private final static String SEARCH_BOOK = "CALL booksdb.searchBook(?,?,?,?,?,?)";
     private final static String GET_AMOUNT = "SELECT amount FROM booksdb.book WHERE title = ?";
     private final static String IS_ORDERED = "SELECT Book_id FROM booksdb.`order`";

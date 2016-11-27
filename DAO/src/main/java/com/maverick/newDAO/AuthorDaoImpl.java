@@ -30,7 +30,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
         KeyHolder key = new GeneratedKeyHolder();
 
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO booksdb.author (fullName, yearsOfLife) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO booksdb.author (full_name, years_of_life) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, author.getFullName());
             ps.setString(2, author.getYearsOfLife());
             return ps;
@@ -40,7 +40,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
 
     public long update(Author author) {
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement("UPDATE booksdb.author SET fullName=?, yearsOfLife=? WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE booksdb.author SET full_name=?, years_of_life=? WHERE id=?");
             ps.setString(1, author.getFullName());
             ps.setString(2, author.getYearsOfLife());
             ps.setLong(3, author.getId());

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MySQLAuthorDAO implements AuthorDAO {
 
-    private final static String INSERT_AUTHOR = "INSERT INTO booksdb.author (fullName, yearsOfLife) VALUES (?,?)";
+    private final static String INSERT_AUTHOR = "INSERT INTO booksdb.author (full_name, years_of_life) VALUES (?,?)";
     private final static String DELETE_AUTHOR = "DELETE FROM booksdb.author WHERE id = ?";
     private final static String GET_AUTHORS = "SELECT * FROM booksdb.author";
 

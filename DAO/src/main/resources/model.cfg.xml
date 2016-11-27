@@ -9,7 +9,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="author-service" class="com.maverick.service.AuthorServiceImpl">
+    <bean id="author-service" class="com.maverick.oldservice.AuthorServiceImpl">
         <property name="dao" ref="author-dao"/>
     </bean>
 
