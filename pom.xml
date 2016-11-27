@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>Runner</module>
         <module>Patterns</module>
         <module>GUI</module>
         <module>Domain</module>
@@ -18,6 +17,8 @@
         <module>Migrate</module>
         <module>Repository</module>
         <module>Service</module>
+        <module>Controller</module>
+        <module>Runner</module>
     </modules>
 
     <parent>
@@ -89,6 +90,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>

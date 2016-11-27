@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("publisher")
-public class PublisherController {
+@RestController
+@RequestMapping("order")
+public class OrderController {
 
     @Autowired
     private AuthorService authorService;
 
-  //  @RequestMapping
+    //  @RequestMapping
     public List<Author> findAll() {
         return authorService.findAll();
     }
-
 
 }

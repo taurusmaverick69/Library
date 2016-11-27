@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("order")
-public class OrderController {
+@RestController
+@RequestMapping("group")
+public class GroupController {
 
     @Autowired
     private AuthorService authorService;
 
-  //  @RequestMapping
+    @RequestMapping
     public List<Author> findAll() {
         return authorService.findAll();
     }

@@ -1,6 +1,5 @@
 package com.maverick;
 
-
 import com.maverick.domain.Author;
 import com.maverick.oldservice.AuthorService;
 import org.springframework.context.ApplicationContext;
