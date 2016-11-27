@@ -1,7 +1,7 @@
 package com.maverick.service.impl;
 
+import com.maverick.AuthorRepository;
 import com.maverick.domain.Author;
-import com.maverick.repository.AuthorRepository;
 import com.maverick.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

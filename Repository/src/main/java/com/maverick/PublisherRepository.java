@@ -1,4 +1,4 @@
-package com.maverick.repository;
+package com.maverick;
 
 import com.maverick.domain.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
