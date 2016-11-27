@@ -17,9 +17,10 @@ public class AuthorController {
 
     @RequestMapping("/all")
     public String findAll() {
-        List<Author> list = authorService.findAll();
-        System.out.println("list = " + list);
-        return "AuthorController.findAll";
+
+        System.out.println("AuthorController.findAll");
+
+        return "AuthorController.findA33";
     }
 
 }

@@ -1,4 +1,4 @@
-package com.maverick;
+package com.maverick.repository;
 
 import com.maverick.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
