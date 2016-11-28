@@ -1,10 +1,9 @@
 package com.maverick.controller;
 
-import com.maverick.domain.Author;
-import com.maverick.service.AuthorService;
+import com.maverick.domain.Order;
+import com.maverick.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,11 +12,26 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private AuthorService authorService;
+    private OrderService orderService;
 
-    //  @RequestMapping
-    public List<Author> findAll() {
-        return authorService.findAll();
+    @RequestMapping
+    public List<Order> findAll() {
+        return orderService.findAll();
+    }
+
+    @RequestMapping("/{id}")
+    public Order findById(@PathVariable("id") int id) {
+        return orderService.findById(id);
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public void save(@ModelAttribute("book") Order order) {
+        orderService.save(order);
+    }
+
+    @RequestMapping("/delete/{id}")
+    public void delete(@PathVariable("id") int id) {
+        orderService.delete(id);
     }
 
 }
