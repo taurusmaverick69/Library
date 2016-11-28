@@ -8,4 +8,9 @@ public interface AuthorService {
 
     List<Author> findAll();
 
+    Author findById(int id);
+
+    void save(Author author);
+
+    void delete(int id);
 }

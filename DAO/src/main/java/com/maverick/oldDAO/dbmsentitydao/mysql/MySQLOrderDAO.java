@@ -13,9 +13,9 @@ import java.util.List;
 
 public class MySQLOrderDAO implements OrderDAO {
 
-    private final static String INSERT_ORDER = "INSERT INTO booksdb.`order` (Student_id, Book_id, Librarian_id, startDate, finishDate, status) VALUES(?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'), ?)";
+    private final static String INSERT_ORDER = "INSERT INTO booksdb.`order` (Student_id, Book_id, Librarian_id, start_date, finishDate, status) VALUES(?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'), ?)";
     private final static String DELETE_ORDER = "DELETE FROM booksdb.`order` WHERE id = ?";
-    private final static String UPDATE_ORDER = "UPDATE booksdb.`order` SET Student_id = ?, Book_id = ?, startDate = STR_TO_DATE(?, '%Y-%m-%d'), finishDate = STR_TO_DATE(?, '%Y-%m-%d'), status = ? WHERE id = ?";
+    private final static String UPDATE_ORDER = "UPDATE booksdb.`order` SET Student_id = ?, Book_id = ?, start_date = STR_TO_DATE(?, '%Y-%m-%d'), finishDate = STR_TO_DATE(?, '%Y-%m-%d'), status = ? WHERE id = ?";
 
     @Override
     public boolean insertOrder(Order order) {

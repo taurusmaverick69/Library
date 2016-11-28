@@ -14,10 +14,10 @@ import java.util.List;
 
 public class MySQLLibrarianDAO implements LibrarianDAO {
 
-    private final static String INSERT_LIBRARIAN = "INSERT INTO booksdb.librarian (fullName, password) VALUES (?, md5(?))";
+    private final static String INSERT_LIBRARIAN = "INSERT INTO booksdb.librarian (full_name, password) VALUES (?, md5(?))";
     private final static String GET_LIBRARIANS = "SELECT * FROM booksdb.librarian";
-    private final static String GET_ORDERS = "SELECT o.id, s.fullName, b.title, startDate, finishDate, status FROM booksdb.`order` o , booksdb.book b, booksdb.student s WHERE Student_id = s.id AND  Book_id = b.id AND Librarian_id = ?";
-    private final static String CHECK_PASSWORD = "SELECT password FROM booksdb.librarian WHERE  fullName = ?";
+    private final static String GET_ORDERS = "SELECT o.id, s.fullName, b.title, start_date, finishDate, status FROM booksdb.`order` o , booksdb.book b, booksdb.student s WHERE Student_id = s.id AND  Book_id = b.id AND Librarian_id = ?";
+    private final static String CHECK_PASSWORD = "SELECT password FROM booksdb.librarian WHERE  full_name = ?";
 
     @Override
     public boolean insertLibrarian(Librarian librarian) {
