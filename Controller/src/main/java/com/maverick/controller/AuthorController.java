@@ -1,7 +1,7 @@
 package com.maverick.controller;
 
-import com.maverick.domain.Author;
 import com.maverick.service.AuthorService;
+import com.maverick.domain.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

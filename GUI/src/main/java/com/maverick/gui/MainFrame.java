@@ -1,8 +1,8 @@
 package com.maverick.gui;
 
+import com.maverick.gui.model.BookTableModel;
 import com.maverick.domain.Book;
 import com.maverick.domain.Librarian;
-import com.maverick.gui.model.BookTableModel;
 import com.maverick.gui.model.OrderTableModel;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import com.maverick.patterns.memnto.CareTaker;

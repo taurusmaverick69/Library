@@ -1,6 +1,7 @@
 package com.maverick.oldDAO.dbmsentitydao.mongodb;
 
 import com.maverick.domain.Book;
+import com.maverick.oldDAO.dbmsdaofactory.MongoDBDAOFactory;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -8,16 +9,14 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.maverick.oldDAO.dbmsdaofactory.MongoDBDAOFactory.*;
-
 public class MongoDBBookDAO implements BookDAO {
 
-    private MongoCollection<Document> bookCollection = createConnection().getCollection("book");
+    private MongoCollection<Document> bookCollection = MongoDBDAOFactory.createConnection().getCollection("book");
 
     @Override
     public boolean insertBook(Book book) {
         try {
-            bookCollection.insertOne(toDocument(book));
+            bookCollection.insertOne(MongoDBDAOFactory.toDocument(book));
         } catch (Exception e) {
 
             System.out.println("Lost Connection...Retrying");
@@ -30,7 +29,7 @@ public class MongoDBBookDAO implements BookDAO {
                 }
                 System.out.println("Reconnect" + i);
                 try {
-                    bookCollection.insertOne(toDocument(book));
+                    bookCollection.insertOne(MongoDBDAOFactory.toDocument(book));
                     break;
                 } catch (Exception e1) {
                     System.out.println("Reconnect" + i + "failed");
@@ -56,13 +55,13 @@ public class MongoDBBookDAO implements BookDAO {
         List<Book> bookList = new ArrayList<>();
 
         for (Document document : bookCollection.find())
-            bookList.add((Book) fromDocument(document, "Book"));
+            bookList.add((Book) MongoDBDAOFactory.fromDocument(document, "Book"));
         return bookList;
     }
 
     @Override
     public boolean updateBook(Book book) {
-        bookCollection.updateOne(new Document("_id", book.get_id()), new Document("$set", toDocument(book)));
+        bookCollection.updateOne(new Document("_id", book.get_id()), new Document("$set", MongoDBDAOFactory.toDocument(book)));
         return true;
     }
 

@@ -14,8 +14,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static com.maverick.oldDAO.TypeDAO.*;
-
 public class LoginFrame extends JFrame {
 
     public static JComboBox<Librarian> librarianComboBox = new JComboBox<>();
@@ -26,7 +24,7 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
 
-        daoFactory = DAOFactory.getDAOFactory(MySQL);
+        daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
         librarianDAO = daoFactory.getLibrarianDAO();
 
         JLabel[] labels = new JLabel[3];
@@ -99,13 +97,13 @@ public class LoginFrame extends JFrame {
             switch ((TypeDAO) daoComboBox.getSelectedItem()) {
 
                 case MySQL:
-                    daoFactory = DAOFactory.getDAOFactory(MySQL);
+                    daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
                     break;
                 case MongoDB:
-                    daoFactory = DAOFactory.getDAOFactory(MongoDB);
+                    daoFactory = DAOFactory.getDAOFactory(TypeDAO.MongoDB);
                     break;
                 case Hibernate:
-                    daoFactory = DAOFactory.getDAOFactory(Hibernate);
+                    daoFactory = DAOFactory.getDAOFactory(TypeDAO.Hibernate);
                     break;
             }
 
@@ -119,8 +117,8 @@ public class LoginFrame extends JFrame {
             } catch (Exception ex) {
 
                 JOptionPane.showMessageDialog(null, "Не запущен сервер данной СУБД, будет возвращёна СУБД MySQL", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                daoComboBox.setSelectedItem(MySQL);
-                daoFactory = DAOFactory.getDAOFactory(MySQL);
+                daoComboBox.setSelectedItem(TypeDAO.MySQL);
+                daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
                 librarianComboBox.removeAllItems();
                 for (Librarian librarian : librarianDAO.selectLibrarians())
                     librarianComboBox.addItem(librarian);
