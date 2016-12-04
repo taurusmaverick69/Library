@@ -1,8 +1,8 @@
 package com.maverick.oldDAO.dbmsentitydao.mongodb;
 
+import com.maverick.domain.Author;
 import com.maverick.oldDAO.dbmsdaofactory.MongoDBDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
-import com.maverick.domain.Author;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 

@@ -1,8 +1,8 @@
 package com.maverick.service.impl;
 
 import com.maverick.domain.Order;
-import com.maverick.service.OrderService;
 import com.maverick.repository.OrderRepository;
+import com.maverick.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

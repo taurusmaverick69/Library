@@ -1,8 +1,8 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
+import com.maverick.domain.Author;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
-import com.maverick.domain.Author;
 
 import java.sql.*;
 import java.util.ArrayList;

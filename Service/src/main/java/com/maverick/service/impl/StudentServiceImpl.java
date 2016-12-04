@@ -1,8 +1,8 @@
 package com.maverick.service.impl;
 
-import com.maverick.service.StudentService;
 import com.maverick.domain.Student;
 import com.maverick.repository.StudentRepository;
+import com.maverick.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
 package com.maverick.gui;
 
+import com.maverick.domain.Author;
 import com.maverick.domain.Book;
 import com.maverick.domain.Genre;
 import com.maverick.domain.Publisher;
@@ -8,7 +9,6 @@ import com.maverick.oldDAO.entitydao.AuthorDAO;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import com.maverick.oldDAO.entitydao.GenreDAO;
 import com.maverick.oldDAO.entitydao.PublisherDAO;
-import com.maverick.domain.Author;
 
 import javax.swing.*;
 import javax.swing.text.*;

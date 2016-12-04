@@ -1,36 +1,49 @@
 package com.maverick.controller;
 
+
+import com.maverick.domain.Author;
 import com.maverick.service.AuthorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthorController.class)
 public class AuthorControllerTest {
 
-//    @Autowired
-//    private MockMvc mvc;
+    @Autowired
+    private MockMvc mvc;
 
     @MockBean
     private AuthorService authorService;
 
-//    @Mock
-//    private AuthorService authorService;
-//
-//    @InjectMocks
-//    AuthorController authorController;
-
     @Test
-    public void findAll() throws Exception {
+    public void getVehicleShouldReturnMakeAndModel() throws Exception {
 
-        System.out.println("AuthorControllerTest.findAll");
-//
-//        List<Author> all = authorController.findAll();
-//
-//        System.out.println("all = " + all);
 
+        given(this.authorService.findById(1)).willReturn(new Author(1, "1", "1"));
+
+
+        System.out.println("mvc = " + mvc);
+
+        MockHttpServletRequestBuilder mockHttpServletRequestBuilder = get("localhost:8080/author/1");
+
+        System.out.println("mockHttpServletRequestBuilder = " + mockHttpServletRequestBuilder);
+
+        mvc.perform(mockHttpServletRequestBuilder.accept(MediaType.TEXT_PLAIN)).andExpect(status().isOk()).andExpect((ResultMatcher) content().string("Honda Civic"));
     }
+
+
 }
