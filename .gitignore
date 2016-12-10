@@ -3,3 +3,12 @@
 *.iws
 *.iml
 *.ipr
+Controller/target/
+DAO/target/
+Domain/target/
+GUI/target/
+Migrate/target/
+Patterns/target/
+Repository/target/
+Runner/target/
+Service/target/
