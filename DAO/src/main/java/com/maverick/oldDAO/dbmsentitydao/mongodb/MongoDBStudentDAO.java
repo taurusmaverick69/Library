@@ -14,15 +14,14 @@ public class MongoDBStudentDAO implements StudentDAO {
 
     private MongoCollection<Document> studentCollection = MongoDBDAOFactory.createConnection().getCollection("student");
 
-
     @Override
-    public boolean insertStudent(Student student) {
+    public boolean save(Student student) {
         studentCollection.insertOne(MongoDBDAOFactory.toDocument(student));
         return true;
     }
 
     @Override
-    public boolean deleteStudent(Student student) {
+    public boolean delete(Student student) {
         try {
             studentCollection.deleteOne(new Document("_id", student.get_id()));
         } catch (Exception e) {
@@ -33,7 +32,7 @@ public class MongoDBStudentDAO implements StudentDAO {
     }
 
     @Override
-    public List<Student> selectStudents() {
+    public List<Student> findAll() {
         List<Student> students = new ArrayList<>();
         MongoCursor<Document> iterator = studentCollection.find().iterator();
         while (iterator.hasNext()) {
@@ -43,9 +42,14 @@ public class MongoDBStudentDAO implements StudentDAO {
         return students;
     }
 
+    @Override
+    public Student findById(int id) {
+        return null;
+    }
+
 
     @Override
-    public boolean updateStudent(Student student) {
+    public boolean update(Student student) {
         return false;
     }
 }

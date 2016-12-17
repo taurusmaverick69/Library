@@ -72,13 +72,13 @@ public class AddGroupFrame extends JDialog implements WindowClosing {
                 Group existedGroup = new Group();
                 existedGroup.setName(nameTextField.getText());
 
-                if (!groupDAO.insertGroup(existedGroup)) {
+                if (!groupDAO.save(existedGroup)) {
                     JOptionPane.showMessageDialog(null, "Введённая Вами группа уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 AddStudentFrame.getGroupComboBox().removeAllItems();
-                groupDAO.selectGroups().forEach(group -> AddStudentFrame.getGroupComboBox().addItem(group));
+                groupDAO.findAll().forEach(group -> AddStudentFrame.getGroupComboBox().addItem(group));
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

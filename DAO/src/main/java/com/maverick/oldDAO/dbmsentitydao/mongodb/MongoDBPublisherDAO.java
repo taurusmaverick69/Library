@@ -7,22 +7,27 @@ import java.util.List;
 
 public class MongoDBPublisherDAO implements PublisherDAO {
     @Override
-    public boolean insertPublisher(Publisher publisher) {
+    public boolean save(Publisher publisher) {
         return false;
     }
 
     @Override
-    public boolean deletePublisher(Publisher publisher) {
+    public boolean delete(Publisher publisher) {
         return false;
     }
 
     @Override
-    public List<Publisher> selectPublishers() {
+    public List<Publisher> findAll() {
         return null;
     }
 
     @Override
-    public boolean updatePublisher(Publisher publisher) {
+    public Publisher findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Publisher publisher) {
         return false;
     }
 }

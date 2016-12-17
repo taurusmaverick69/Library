@@ -92,13 +92,13 @@ public class AddAuthorFrame extends JDialog implements WindowClosing {
                 Author existedAuthor = new Author();
                 existedAuthor.setFullName(fullNameTextField.getText());
 
-                if (!authorDAO.insertAuthor(existedAuthor)) {
+                if (!authorDAO.save(existedAuthor)) {
                     JOptionPane.showMessageDialog(null, "Введённый Вами автор уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 AddBookFrame.getAuthorComboBox().removeAllItems();
-                for (Author author : authorDAO.selectAuthors())
+                for (Author author : authorDAO.findAll())
                     AddBookFrame.getAuthorComboBox().addItem(author);
 
 

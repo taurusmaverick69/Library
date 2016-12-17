@@ -7,27 +7,27 @@ import java.util.List;
 
 public class MongoDBLibrarianDAO implements LibrarianDAO {
     @Override
-    public boolean insertLibrarian(Librarian librarian) {
+    public boolean save(Librarian librarian) {
         return false;
     }
 
     @Override
-    public boolean deleteLibrarian(Librarian librarian) {
+    public boolean delete(Librarian librarian) {
         return false;
     }
 
     @Override
-    public List<Librarian> selectLibrarians() {
+    public List<Librarian> findAll() {
         return null;
     }
 
     @Override
-    public boolean updateLibrarian(Librarian librarian) {
-        return false;
+    public Librarian findById(int id) {
+        return null;
     }
 
     @Override
-    public boolean checkPassword(Librarian librarian) {
+    public boolean update(Librarian librarian) {
         return false;
     }
 }

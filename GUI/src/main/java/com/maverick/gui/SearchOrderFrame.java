@@ -130,17 +130,16 @@ public class SearchOrderFrame extends JDialog implements WindowClosing {
 
                 Order order = new Order();
 
-                List<Order> orders = orderDAO.searchOrder(order);
 
-                if (orders.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, " По вашему запросу не найдено совпадений", "Завершено", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    // MainFrame.orderTableModel.addOrderData(orders);
-                    MainFrame.orderTable.updateUI();
-                    JOptionPane.showMessageDialog(null, "Найдено совпадений: " + MainFrame.orderTable.getRowCount(), "Завершено", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                    setVisible(false);
-                }
+//                if (orders.isEmpty()) {
+//                    JOptionPane.showMessageDialog(null, " По вашему запросу не найдено совпадений", "Завершено", JOptionPane.INFORMATION_MESSAGE);
+//                } else {
+//                    // MainFrame.orderTableModel.addOrderData(orders);
+//                    MainFrame.orderTable.updateUI();
+//                    JOptionPane.showMessageDialog(null, "Найдено совпадений: " + MainFrame.orderTable.getRowCount(), "Завершено", JOptionPane.INFORMATION_MESSAGE);
+//                    dispose();
+//                    setVisible(false);
+//                }
 
             case JOptionPane.NO_OPTION:
                 break;

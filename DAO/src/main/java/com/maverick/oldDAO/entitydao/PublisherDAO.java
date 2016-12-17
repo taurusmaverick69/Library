@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface PublisherDAO {
 
-    boolean insertPublisher(Publisher publisher);
+    List<Publisher> findAll();
 
-    boolean deletePublisher(Publisher publisher);
+    Publisher findById(int id);
 
-    List<Publisher> selectPublishers();
+    boolean save(Publisher publisher);
 
-    boolean updatePublisher(Publisher publisher);
+    boolean update(Publisher publisher);
+
+    boolean delete(Publisher publisher);
 }

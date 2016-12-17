@@ -37,7 +37,7 @@ public class AddStudentFrame extends JDialog implements WindowClosing {
         }
 
         groupComboBox.removeAllItems();
-        for (Group group : groupDAO.selectGroups())
+        for (Group group : groupDAO.findAll())
             groupComboBox.addItem(group);
 
         setTitle("Добавить студента");
@@ -125,12 +125,12 @@ public class AddStudentFrame extends JDialog implements WindowClosing {
                 student.setLibraryCard(libraryCardTextField.getText());
                 student.setGroup((Group) groupComboBox.getSelectedItem());
 
-                if (!studentDAO.insertStudent(student)) {
+                if (!studentDAO.save(student)) {
                     JOptionPane.showMessageDialog(null, "Введённый Вами студент с таким номер билета уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                ArrayList<Student> students = new ArrayList<>(studentDAO.selectStudents());
+                ArrayList<Student> students = new ArrayList<>(studentDAO.findAll());
                 Collections.sort(students, (o1, o2) -> o1.getFullName().compareTo(o2.getFullName()));
 
                 AddOrderFrame.getStudentComboBox().removeAllItems();

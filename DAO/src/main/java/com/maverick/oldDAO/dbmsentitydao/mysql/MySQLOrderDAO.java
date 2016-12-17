@@ -1,24 +1,80 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
+import com.maverick.domain.Book;
 import com.maverick.domain.Order;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
+import com.maverick.oldDAO.entitydao.BookDAO;
+import com.maverick.oldDAO.entitydao.LibrarianDAO;
 import com.maverick.oldDAO.entitydao.OrderDAO;
+import com.maverick.oldDAO.entitydao.StudentDAO;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLOrderDAO implements OrderDAO {
 
-    private final static String INSERT_ORDER = "INSERT INTO booksdb.`order` (Student_id, Book_id, Librarian_id, start_date, finishDate, status) VALUES(?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'), ?)";
-    private final static String DELETE_ORDER = "DELETE FROM booksdb.`order` WHERE id = ?";
-    private final static String UPDATE_ORDER = "UPDATE booksdb.`order` SET Student_id = ?, Book_id = ?, start_date = STR_TO_DATE(?, '%Y-%m-%d'), finishDate = STR_TO_DATE(?, '%Y-%m-%d'), status = ? WHERE id = ?";
+    private final static String ORDER_ID = "order.id";
+    private final static String ORDER_STUDENT_ID = "order.Student_id";
+    private final static String ORDER_BOOK_ID = "order.Book_id";
+    private final static String ORDER_LIBRARIAN_ID = "order.Librarian_id";
+    private final static String ORDER_START_DATE = "order.start_date";
+    private final static String ORDER_FINISH_DATE = "order.finish_date";
+    private final static String ORDER_STATUS = "order.status";
+
+    private final static String FIND_ORDERS_BY_LIBRARIAN_ID = "SELECT * FROM `order` WHERE Librarian_id = ?";
+    private final static String INSERT_ORDER = "INSERT INTO `order` VALUES(DEFAULT, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'), ?)";
+    private final static String DELETE_ORDER = "DELETE FROM `order` WHERE id = ?";
+    private final static String UPDATE_ORDER = "UPDATE `order` SET Student_id = ?, Book_id = ?, start_date = STR_TO_DATE(?, '%Y-%m-%d'), finish_date = STR_TO_DATE(?, '%Y-%m-%d'), status = ? WHERE id = ?";
+    private final static String IS_ORDERED = "SELECT Book_id FROM `order`";
+
+    private StudentDAO studentDAO;
+    private BookDAO bookDAO;
+    private LibrarianDAO librarianDAO;
 
     @Override
-    public boolean insertOrder(Order order) {
+    public List<Order> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<Order> findByLibrarianId(int librarianId) {
+
+        studentDAO = new MySQLStudentDAO();
+        bookDAO = new MySQLBookDAO();
+        librarianDAO = new MySQLLibrarianDAO();
+
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ORDERS_BY_LIBRARIAN_ID)) {
+
+            preparedStatement.setInt(1, librarianId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                Order order = new Order();
+                order.setId(resultSet.getInt(ORDER_ID));
+                order.setStudent(studentDAO.findById(resultSet.getInt(ORDER_STUDENT_ID)));
+                order.setBook(bookDAO.findById(resultSet.getInt(ORDER_BOOK_ID)));
+                order.setLibrarian(librarianDAO.findById(resultSet.getInt(ORDER_LIBRARIAN_ID)));
+                order.setStartDate(resultSet.getDate(ORDER_START_DATE));
+                order.setFinishDate(resultSet.getDate(ORDER_FINISH_DATE));
+                order.setStatus(resultSet.getString(ORDER_STATUS));
+
+                orders.add(order);
+            }
+
+            return orders;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Order order) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ORDER)) {
 
@@ -28,9 +84,6 @@ public class MySQLOrderDAO implements OrderDAO {
             preparedStatement.setDate(4, new Date(order.getStartDate().getTime()));
             preparedStatement.setDate(5, new Date(order.getFinishDate().getTime()));
             preparedStatement.setString(6, order.getStatus());
-
-            System.out.println(preparedStatement);
-
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -38,29 +91,10 @@ public class MySQLOrderDAO implements OrderDAO {
             return false;
         }
         return true;
-
     }
 
     @Override
-    public boolean deleteOrder(Order order) {
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER)) {
-            preparedStatement.setInt(1, order.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public List<Order> selectOrders() {
-        return null;
-    }
-
-    @Override
-    public boolean updateOrder(Order order) {
+    public boolean update(Order order) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDER)) {
             preparedStatement.setInt(1, order.getStudent().getId());
@@ -78,71 +112,15 @@ public class MySQLOrderDAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> searchOrder(Order order) {
-
-//        try (Connection connection = MySQLDAOFactory.createConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(
-//                     "SELECT id, Student_id, Book_id, DATE_FORMAT(startDate, '%d.%m.%Y') AS startDate, DATE_FORMAT(finishDate, '%d.%m.%Y') AS finishDate, status " +
-//                             "FROM booksdb.`order` " +
-//                             "JOIN booksdb.librarian ON Librarian_id = booksdb.librarian.id " +
-//                             "JOIN booksdb.student ON Student_id=booksdb.student.id " +
-//                             "JOIN booksdb.book ON Book_id=booksdb.book.id " +
-//                             "WHERE student.fullName LIKE ? " +
-//                             "AND book.title LIKE ? " +
-//
-//                             "  AND startDate BETWEEN STR_TO_DATE(?, '%d.%m.%Y' ) \n" +
-//                             "  AND STR_TO_DATE(?, '%d.%m.%Y')" +
-//
-//                             "  AND finishDate BETWEEN STR_TO_DATE(?, '%d.%m.%Y' ) \n" +
-//                             "  AND STR_TO_DATE(?, '%d.%m.%Y') " +
-//
-//                             "AND `order`.status LIKE ? AND librarian.fullName = ?")) {
-//
-//
-//            Calendar date = Calendar.getOurInstance();
-//            date.setTime(new Date());
-//            Format f = new SimpleDateFormat("dd.MM.yyyy");
-//            date.add(Calendar.YEAR, 1);
-//
-//            String currentDatePlusOneYear = f.format(date.getTime());
-//
-//
-//            preparedStatement.setString(1, "%" + order.getStudent().getFullName() + "%");
-//            preparedStatement.setString(2, "%" + order.getBook().getTitle() + "%");
-//
-//            if (order.getStartDate().isEmpty()) {
-//                preparedStatement.setString(3, "01.01.1970");
-//                preparedStatement.setString(4, currentDatePlusOneYear);
-//            } else {
-//                preparedStatement.setString(3, order.getStartDate());
-//                preparedStatement.setString(4, order.getStartDate());
-//            }
-//
-//            if (order.getFinishDate().isEmpty()) {
-//                preparedStatement.setString(5, "01.01.1970");
-//                preparedStatement.setString(6, currentDatePlusOneYear);
-//            } else {
-//                preparedStatement.setDate(5, order.getFinishDate());
-//                preparedStatement.setString(6, order.getFinishDate());
-//            }
-//
-//            if (order.getStatus().isEmpty())
-//                preparedStatement.setString(7, "%%");
-//            else
-//                preparedStatement.setString(7, order.getStatus());
-//
-//
-//            preparedStatement.setString(8, order.getLibrarian().getFullName());
-//
-//
-//            try (ResultSet orderResultSet = preparedStatement.executeQuery()) {
-//                return getOrdersFromResultSet(orderResultSet);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        return new ArrayList<>();
+    public boolean delete(Order order) {
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER)) {
+            preparedStatement.setInt(1, order.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
-
 }

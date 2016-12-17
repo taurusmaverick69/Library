@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HibernateStudentDAO implements StudentDAO {
     @Override
-    public boolean insertStudent(Student student) {
+    public boolean save(Student student) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -32,7 +32,7 @@ public class HibernateStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean deleteStudent(Student student) {
+    public boolean delete(Student student) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -48,7 +48,7 @@ public class HibernateStudentDAO implements StudentDAO {
     }
 
     @Override
-    public List<Student> selectStudents() {
+    public List<Student> findAll() {
         Session session = HibernateDAOFactory.openSession();
         List<Student> students = new ArrayList<>();
         try {
@@ -63,9 +63,14 @@ public class HibernateStudentDAO implements StudentDAO {
         return students;
     }
 
+    @Override
+    public Student findById(int id) {
+        return null;
+    }
+
 
     @Override
-    public boolean updateStudent(Student student) {
+    public boolean update(Student student) {
         return false;
     }
 }

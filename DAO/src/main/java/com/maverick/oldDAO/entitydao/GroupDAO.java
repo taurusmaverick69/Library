@@ -6,12 +6,13 @@ import java.util.List;
 
 public interface GroupDAO {
 
-    boolean insertGroup(Group group);
+    List<Group> findAll();
 
-    boolean deleteGroup(Group group);
+    Group findById(int id);
 
-    List<Group> selectGroups();
+    boolean save(Group group);
 
-    boolean updateGroup(Group group);
+    boolean update(Group group);
 
+    boolean delete(Group group);
 }

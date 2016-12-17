@@ -15,8 +15,9 @@ public abstract class DAOFactory {
                 return new MongoDBDAOFactory();
             case Hibernate:
                 return new HibernateDAOFactory();
+            default:
+                return new MySQLDAOFactory();
         }
-        return new MySQLDAOFactory();
     }
 
     public abstract AuthorDAO getAuthorDAO();
@@ -34,5 +35,4 @@ public abstract class DAOFactory {
     public abstract PublisherDAO getPublisherDAO();
 
     public abstract StudentDAO getStudentDAO();
-
 }

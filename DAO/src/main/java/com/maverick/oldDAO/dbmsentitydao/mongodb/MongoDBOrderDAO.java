@@ -1,5 +1,6 @@
 package com.maverick.oldDAO.dbmsentitydao.mongodb;
 
+import com.maverick.domain.Book;
 import com.maverick.domain.Order;
 import com.maverick.oldDAO.dbmsdaofactory.MongoDBDAOFactory;
 import com.maverick.oldDAO.entitydao.OrderDAO;
@@ -14,13 +15,13 @@ public class MongoDBOrderDAO implements OrderDAO {
 
 
     @Override
-    public boolean insertOrder(Order order) {
+    public boolean save(Order order) {
         orderCollection.insertOne(MongoDBDAOFactory.toDocument(order));
         return true;
     }
 
     @Override
-    public boolean deleteOrder(Order order) {
+    public boolean delete(Order order) {
         try {
             orderCollection.deleteOne(new Document("_id", order.get_id()));
         } catch (Exception e) {
@@ -31,17 +32,17 @@ public class MongoDBOrderDAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> selectOrders() {
+    public List<Order> findAll() {
         return null;
     }
 
     @Override
-    public boolean updateOrder(Order order) {
+    public List<Order> findByLibrarianId(int librarianId) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Order order) {
         return false;
-    }
-
-    @Override
-    public List<Order> searchOrder(Order order) {
-        return null;
     }
 }

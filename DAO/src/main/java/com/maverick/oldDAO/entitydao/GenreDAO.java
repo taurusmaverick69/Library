@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface GenreDAO {
 
-    boolean insertGenre(Genre genre);
+    List<Genre> findAll();
 
-    boolean deleteGenre(Genre genre);
+    Genre findById(int id);
 
-    List<Genre> selectGenres();
+    boolean save(Genre genre);
 
-    boolean updateGenre(Genre genre);
+    boolean update(Genre genre);
+
+    boolean delete(Genre genre);
 }

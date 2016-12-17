@@ -1,11 +1,11 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
-import com.maverick.domain.Author;
 import com.maverick.domain.Book;
-import com.maverick.domain.Genre;
-import com.maverick.domain.Publisher;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
+import com.maverick.oldDAO.entitydao.AuthorDAO;
 import com.maverick.oldDAO.entitydao.BookDAO;
+import com.maverick.oldDAO.entitydao.GenreDAO;
+import com.maverick.oldDAO.entitydao.PublisherDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,16 +13,87 @@ import java.util.List;
 
 public class MySQLBookDAO implements BookDAO {
 
-    private final static String INSERT_BOOK = "INSERT INTO booksdb.book (Author_id, title, publishing_year, Genre_id, Publisher_id, amount) VALUES (?,?,?,?,?,?)";
-    private final static String DELETE_BOOK = "DELETE FROM booksdb.book WHERE id = ?";
-    private final static String SELECT_BOOKS = "CALL booksdb.selectBooks()";
-    private final static String UPDATE_BOOK = "UPDATE booksdb.book SET Author_id = ?, title = ?, publishing_year = ?, Genre_id = ?, Publisher_id = ?, amount = ? WHERE id = ?";
-    private final static String SEARCH_BOOK = "CALL booksdb.searchBook(?,?,?,?,?,?)";
-    private final static String GET_AMOUNT = "SELECT amount FROM booksdb.book WHERE title = ?";
-    private final static String IS_ORDERED = "SELECT Book_id FROM booksdb.`order`";
+    private final static String BOOK_ID = "book.id";
+    private final static String BOOK_AUTHOR_ID = "book.Author_id";
+    private final static String BOOK_TITLE = "book.title";
+    private final static String BOOK_PUBLISHING_YEAR = "book.publishing_year";
+    private final static String BOOK_GENRE_ID = "book.Genre_id";
+    private final static String BOOK_PUBLISHER_ID = "book.Publisher_id";
+    private final static String BOOK_AMOUNT = "book.amount";
+
+    private final static String FIND_ALL = "SELECT * FROM book";
+    private final static String FIND_BY_ID = "SELECT * FROM book WHERE id = ?";
+    private final static String INSERT_BOOK = "INSERT INTO book VALUES (DEFAULT,?,?,?,?,?,?)";
+    private final static String UPDATE_BOOK = "UPDATE book SET Author_id = ?, title = ?, publishing_year = ?, Genre_id = ?, Publisher_id = ?, amount = ? WHERE id = ?";
+    private final static String DELETE_BOOK = "DELETE FROM book WHERE id = ?";
+    private final static String GET_AMOUNT = "SELECT amount FROM book WHERE title = ?";
+
+    private AuthorDAO authorDAO;
+    private GenreDAO genreDAO;
+    private PublisherDAO publisherDAO;
 
     @Override
-    public boolean insertBook(Book book) {
+    public List<Book> findAll() {
+
+        authorDAO = new MySQLAuthorDAO();
+        genreDAO = new MySQLGenreDAO();
+        publisherDAO = new MySQLPublisherDAO();
+
+        List<Book> books = new ArrayList<>();
+
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             CallableStatement callableStatement = connection.prepareCall(FIND_ALL);
+             ResultSet resultSet = callableStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                Book book = new Book();
+                book.setId(resultSet.getInt(BOOK_ID));
+                book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
+                book.setTitle(resultSet.getString(BOOK_TITLE));
+                book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
+                book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
+                book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
+                book.setAmount(resultSet.getInt(BOOK_AMOUNT));
+
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    @Override
+    public Book findById(int id) {
+
+        authorDAO = new MySQLAuthorDAO();
+        genreDAO = new MySQLGenreDAO();
+        publisherDAO = new MySQLPublisherDAO();
+
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Book book = new Book();
+            book.setId(resultSet.getInt(BOOK_ID));
+            book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
+            book.setTitle(resultSet.getString(BOOK_TITLE));
+            book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
+            book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
+            book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
+            book.setAmount(resultSet.getInt(BOOK_AMOUNT));
+            return book;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Book book) {
 
 
         try (Connection connection = MySQLDAOFactory.createConnection();
@@ -44,60 +115,7 @@ public class MySQLBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean deleteBook(Book book) {
-
-
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK)
-        ) {
-            preparedStatement.setInt(1, book.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public List<Book> selectBooks() {
-
-        List<Book> books = new ArrayList<>();
-
-
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             CallableStatement callableStatement = connection.prepareCall(SELECT_BOOKS);
-             ResultSet bookResultSet = callableStatement.executeQuery()) {
-
-            while (bookResultSet.next()) {
-
-                Author author = new Author();
-                author.setFullName(bookResultSet.getString("fullName"));
-
-                Genre genre = new Genre();
-                genre.setName(bookResultSet.getString("genre.name"));
-
-                Publisher publisher = new Publisher();
-                publisher.setName(bookResultSet.getString("publisher.name"));
-
-                books.add(new Book(
-                        bookResultSet.getInt("id"),
-                        author,
-                        bookResultSet.getString("title"),
-                        bookResultSet.getInt("publishingYear"),
-                        genre,
-                        publisher,
-                        bookResultSet.getInt("amount")));
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return books;
-    }
-
-    @Override
-    public boolean updateBook(Book book) {
+    public boolean update(Book book) {
 
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BOOK)) {
@@ -119,56 +137,20 @@ public class MySQLBookDAO implements BookDAO {
     }
 
     @Override
-    public List<Book> searchBook(Book book) {
-
-        List<Book> books = new ArrayList<>();
-
-
+    public boolean delete(Book book) {
         try (Connection connection = MySQLDAOFactory.createConnection();
-             CallableStatement callableStatement = connection.prepareCall(SEARCH_BOOK)) {
-
-            callableStatement.setString(1, "%" + book.getAuthor().getFullName() + "%");
-            callableStatement.setString(2, "%" + book.getTitle() + "%");
-
-            if (book.getPublishingYear() == -1)
-                callableStatement.setString(3, "%%");
-            else
-                callableStatement.setString(3, "%" + book.getPublishingYear() + "%");
-
-            callableStatement.setString(4, "%" + book.getGenre().getName() + "%");
-            callableStatement.setString(5, "%" + book.getPublisher().getName() + "%");
-
-            if (book.getAmount() == -1)
-                callableStatement.setString(6, "%%");
-            else
-                callableStatement.setString(6, "%" + book.getAmount() + "%");
-
-            try (ResultSet bookResultSet = callableStatement.executeQuery()) {
-                while (bookResultSet.next()) {
-
-                    Author author = new Author();
-                    author.setFullName(bookResultSet.getString("fullName"));
-
-                    Genre genre = new Genre();
-                    genre.setName(bookResultSet.getString("genre.name"));
-
-                    Publisher publisher = new Publisher();
-                    publisher.setName(bookResultSet.getString("publisher.name"));
-
-                    books.add(new Book(bookResultSet.getInt("id"), author, bookResultSet.getString("title"), bookResultSet.getInt("publishingYear"), genre, publisher, bookResultSet.getInt("amount")));
-                }
-
-            }
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK)) {
+            preparedStatement.setInt(1, book.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         }
-        return books;
+        return true;
     }
 
     @Override
     public int selectAmount(Book book) {
         int amount;
-
 
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_AMOUNT)) {
@@ -177,30 +159,12 @@ public class MySQLBookDAO implements BookDAO {
 
             try (ResultSet amountResultSet = preparedStatement.executeQuery()) {
                 amountResultSet.next();
-                amount = amountResultSet.getInt("amount");
+                amount = amountResultSet.getInt(BOOK_AMOUNT);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
         return amount;
-    }
-
-    @Override
-    public boolean isOrdered(Book book) {
-
-
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(IS_ORDERED)) {
-
-            while (resultSet.next()) {
-                if (book.getId() == resultSet.getInt("Book_id"))
-                    return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

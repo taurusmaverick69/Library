@@ -14,7 +14,7 @@ public class MongoDBBookDAO implements BookDAO {
     private MongoCollection<Document> bookCollection = MongoDBDAOFactory.createConnection().getCollection("book");
 
     @Override
-    public boolean insertBook(Book book) {
+    public boolean save(Book book) {
         try {
             bookCollection.insertOne(MongoDBDAOFactory.toDocument(book));
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class MongoDBBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean deleteBook(Book book) {
+    public boolean delete(Book book) {
         try {
             bookCollection.deleteOne(new Document("_id", book.get_id()));
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class MongoDBBookDAO implements BookDAO {
     }
 
     @Override
-    public List<Book> selectBooks() {
+    public List<Book> findAll() {
         List<Book> bookList = new ArrayList<>();
 
         for (Document document : bookCollection.find())
@@ -60,33 +60,18 @@ public class MongoDBBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean updateBook(Book book) {
+    public Book findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Book book) {
         bookCollection.updateOne(new Document("_id", book.get_id()), new Document("$set", MongoDBDAOFactory.toDocument(book)));
         return true;
     }
 
     @Override
-    public List<Book> searchBook(Book book) {
-//
-        List books = new ArrayList<>();
-//        MongoCursor<Document> iterator = bookCollection.find(new Document(type, Pattern.compile(request, Pattern.CASE_INSENSITIVE))).iterator();
-//        iterator = bookCollection.find(new Document(type, java.util.regex.Pattern.compile(request, Pattern.CASE_INSENSITIVE))).iterator();
-//
-//        while (iterator.hasNext()) {
-//            Document document = iterator.next();
-//            books.add(fromDocument(document, "Book"));
-//        }
-//
-        return books;
-    }
-
-    @Override
     public int selectAmount(Book book) {
         return 0;
-    }
-
-    @Override
-    public boolean isOrdered(Book book) {
-        return false;
     }
 }

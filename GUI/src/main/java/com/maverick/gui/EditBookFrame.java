@@ -69,15 +69,15 @@ public class EditBookFrame extends JDialog implements WindowClosing {
         });
 
         authorComboBox.removeAllItems();
-        for (Author author : authorDAO.selectAuthors())
+        for (Author author : authorDAO.findAll())
             authorComboBox.addItem(author);
 
         genreComboBox.removeAllItems();
-        for (Genre genre : genreDAO.selectGenres())
+        for (Genre genre : genreDAO.findAll())
             genreComboBox.addItem(genre);
 
         publisherComboBox.removeAllItems();
-        for (Publisher publisher : publisherDAO.selectPublishers())
+        for (Publisher publisher : publisherDAO.findAll())
             publisherComboBox.addItem(publisher);
 
         authorComboBox.setSelectedItem(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 1));
@@ -182,8 +182,8 @@ public class EditBookFrame extends JDialog implements WindowClosing {
                         (Publisher) publisherComboBox.getSelectedItem(),
                         Integer.parseInt(amountTextField.getText())
                 );
-                bookDAO.updateBook(book);
-                MainFrame.bookTableModel.addBookData(bookDAO.selectBooks());
+                bookDAO.update(book);
+                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
                 MainFrame.bookTable.updateUI();
                 JOptionPane.showMessageDialog(null, "Редактирование успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

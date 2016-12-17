@@ -33,7 +33,7 @@ public class LoginFrame extends JFrame {
         labels[2] = new JLabel("Выбирите СУБД (DAO):");
 
         librarianComboBox.removeAllItems();
-        for (Librarian librarian : librarianDAO.selectLibrarians()) {
+        for (Librarian librarian : librarianDAO.findAll()) {
             librarianComboBox.addItem(librarian);
         }
 
@@ -111,7 +111,7 @@ public class LoginFrame extends JFrame {
 
             try {
                 librarianComboBox.removeAllItems();
-                for (Librarian librarian : librarianDAO.selectLibrarians())
+                for (Librarian librarian : librarianDAO.findAll())
                     librarianComboBox.addItem(librarian);
 
             } catch (Exception ex) {
@@ -120,7 +120,7 @@ public class LoginFrame extends JFrame {
                 daoComboBox.setSelectedItem(TypeDAO.MySQL);
                 daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
                 librarianComboBox.removeAllItems();
-                for (Librarian librarian : librarianDAO.selectLibrarians())
+                for (Librarian librarian : librarianDAO.findAll())
                     librarianComboBox.addItem(librarian);
 
             }

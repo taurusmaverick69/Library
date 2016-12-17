@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HibernateBookDAO implements BookDAO {
     @Override
-    public boolean insertBook(Book book) {
+    public boolean save(Book book) {
 
         Session session = HibernateDAOFactory.openSession();
         try {
@@ -30,7 +30,7 @@ public class HibernateBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean deleteBook(Book book) {
+    public boolean delete(Book book) {
         Session session = HibernateDAOFactory.openSession();
         try {
 
@@ -58,7 +58,7 @@ public class HibernateBookDAO implements BookDAO {
     }
 
     @Override
-    public List<Book> selectBooks() {
+    public List<Book> findAll() {
         Session session = HibernateDAOFactory.openSession();
         List<Book> books = new ArrayList<>();
         try {
@@ -74,7 +74,12 @@ public class HibernateBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean updateBook(Book book) {
+    public Book findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Book book) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -87,11 +92,6 @@ public class HibernateBookDAO implements BookDAO {
         }
 
         return true;
-    }
-
-    @Override
-    public List<Book> searchBook(Book book) {
-        return null;
     }
 
     @Override
@@ -108,11 +108,6 @@ public class HibernateBookDAO implements BookDAO {
             HibernateDAOFactory.closeSession();
         }
         return (int) amount.get(0);
-    }
-
-    @Override
-    public boolean isOrdered(Book book) {
-        return false;
     }
 
 

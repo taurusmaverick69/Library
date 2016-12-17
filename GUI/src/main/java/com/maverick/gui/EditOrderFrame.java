@@ -46,11 +46,11 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
 
 
         studentComboBox.removeAllItems();
-        for (Student student : studentDAO.selectStudents())
+        for (Student student : studentDAO.findAll())
             studentComboBox.addItem(student);
 
         bookComboBox.removeAllItems();
-        for (Book book : bookDAO.selectBooks())
+        for (Book book : bookDAO.findAll())
             bookComboBox.addItem(book);
 
         statusComboBox.addItem("Возвращена");
@@ -173,7 +173,7 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
 //                        .setStatus("Не возвращена")
 //                        .build();
 //
-//                orderDAO.insertOrder(order);
+//                orderDAO.save(order);
 //                librarian.getOrders().add(order);
 
                 Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
@@ -188,14 +188,14 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
                         statusComboBox.getSelectedItem().toString());
 
 
-                orderDAO.updateOrder(order);
+                orderDAO.update(order);
 
                 List<Order> orders = librarian.getOrders();
                 orders.set(MainFrame.orderTable.getSelectedRow(), order);
 
                 MainFrame.orderTableModel.addOrderData(orders);
                 MainFrame.orderTable.updateUI();
-                MainFrame.bookTableModel.addBookData(bookDAO.selectBooks());
+                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
                 MainFrame.bookTable.updateUI();
                 JOptionPane.showMessageDialog(null, "Редактирование успешно", "Редактировано", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

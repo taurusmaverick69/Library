@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface OrderDAO {
 
-    boolean insertOrder(Order order);
+    List<Order> findAll();
 
-    boolean deleteOrder(Order order);
+    List<Order> findByLibrarianId(int librarianId);
 
-    List<Order> selectOrders();
+    boolean save(Order order);
 
-    boolean updateOrder(Order order);
+    boolean update(Order order);
 
-    List<Order> searchOrder(Order order);
+    boolean delete(Order order);
 }

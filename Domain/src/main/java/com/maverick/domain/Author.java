@@ -4,8 +4,10 @@ import org.bson.types.ObjectId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "Author.findAll", query = "select a from Author a")
 public class Author extends EntityClass {
 
     @Column

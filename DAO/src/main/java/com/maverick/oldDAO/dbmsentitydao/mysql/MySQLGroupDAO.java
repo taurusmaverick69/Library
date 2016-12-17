@@ -10,13 +10,51 @@ import java.util.List;
 
 public class MySQLGroupDAO implements GroupDAO {
 
-    private final static String INSET_GROUP = "INSERT INTO booksdb.`group` (name) VALUES (?)";
-    private final static String GET_GROUPS = "SELECT * FROM booksdb.`group`";
+    private final static String GROUP_ID = "group.id";
+    private final static String GROUP_NAME = "group.name";
+
+    private final static String FIND_ALL = "SELECT * FROM `group`";
+    private final static String FIND_BY_ID = "SELECT * FROM `group` WHERE id = ?";
+    private final static String INSERT_GROUP = "INSERT INTO `group` VALUES (DEFAULT,?)";
 
     @Override
-    public boolean insertGroup(Group group) {
+    public List<Group> findAll() {
+        List<Group> groups = new ArrayList<>();
         try (Connection connection = MySQLDAOFactory.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSET_GROUP)) {
+             Statement statement = connection.createStatement();
+             ResultSet groupResultSet = statement.executeQuery(FIND_ALL)) {
+            while (groupResultSet.next())
+                groups.add(new Group(groupResultSet.getInt(GROUP_ID), groupResultSet.getString(GROUP_NAME)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groups;
+    }
+
+    @Override
+    public Group findById(int id) {
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Group group = new Group();
+                group.setId(resultSet.getInt(GROUP_ID));
+                group.setName(resultSet.getString(GROUP_NAME));
+                return group;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Group group) {
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_GROUP)) {
             preparedStatement.setString(1, group.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -27,28 +65,12 @@ public class MySQLGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean deleteGroup(Group group) {
+    public boolean update(Group group) {
         return false;
     }
 
     @Override
-    public List<Group> selectGroups() {
-        List<Group> groups = new ArrayList<>();
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet groupResultSet = statement.executeQuery(GET_GROUPS)) {
-
-            while (groupResultSet.next())
-                groups.add(new Group(groupResultSet.getInt("id"), groupResultSet.getString("name")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return groups;
-    }
-
-    @Override
-    public boolean updateGroup(Group group) {
+    public boolean delete(Group group) {
         return false;
     }
-
 }

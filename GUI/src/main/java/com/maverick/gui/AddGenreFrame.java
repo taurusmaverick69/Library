@@ -71,13 +71,13 @@ public class AddGenreFrame extends JDialog implements WindowClosing {
                 Genre existedGenre = new Genre();
                 existedGenre.setName(nameTextField.getText());
 
-                if (!genreDAO.insertGenre(existedGenre)) {
+                if (!genreDAO.save(existedGenre)) {
                     JOptionPane.showMessageDialog(null, "Введённый Вами жанр уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 AddBookFrame.getGenreComboBox().removeAllItems();
-                for (Genre genre : genreDAO.selectGenres())
+                for (Genre genre : genreDAO.findAll())
                     AddBookFrame.getGenreComboBox().addItem(genre);
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);

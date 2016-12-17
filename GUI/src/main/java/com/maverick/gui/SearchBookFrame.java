@@ -9,6 +9,7 @@ import org.apache.commons.lang.math.NumberUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchBookFrame extends JDialog implements WindowClosing {
@@ -123,8 +124,9 @@ public class SearchBookFrame extends JDialog implements WindowClosing {
                 publisher.setName(publisherTextField.getText());
 
                 Book book = new Book(-1, author, titleTextField.getText(), NumberUtils.toInt(publishingYearTextField.getText(), -1), genre, publisher, (NumberUtils.toInt(amountTextField.getText(), -1)));
-                List<Book> books = bookDAO.searchBook(book);
+               // List<Book> books = bookDAO.searchBook(book);
 
+                List<Book> books = new ArrayList<>();
                 if (books.isEmpty()) {
                     JOptionPane.showMessageDialog(null, " По вашему запросу не найдено совпадений", "Завершено", JOptionPane.INFORMATION_MESSAGE);
                 } else {

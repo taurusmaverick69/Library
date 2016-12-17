@@ -7,22 +7,27 @@ import java.util.List;
 
 public class MongoDBGenreDAO implements GenreDAO {
     @Override
-    public boolean insertGenre(Genre genre) {
+    public boolean save(Genre genre) {
         return false;
     }
 
     @Override
-    public boolean deleteGenre(Genre genre) {
+    public boolean delete(Genre genre) {
         return false;
     }
 
     @Override
-    public List<Genre> selectGenres() {
+    public List<Genre> findAll() {
         return null;
     }
 
     @Override
-    public boolean updateGenre(Genre genre) {
+    public Genre findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Genre genre) {
         return false;
     }
 }

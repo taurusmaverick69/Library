@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HibernateLibrarianDAO implements LibrarianDAO {
     @Override
-    public boolean insertLibrarian(Librarian librarian) {
+    public boolean save(Librarian librarian) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -26,12 +26,12 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean deleteLibrarian(Librarian librarian) {
+    public boolean delete(Librarian librarian) {
         return false;
     }
 
     @Override
-    public List<Librarian> selectLibrarians() {
+    public List<Librarian> findAll() {
         Session session = HibernateDAOFactory.openSession();
         List<Librarian> librarians = new ArrayList<>();
         try {
@@ -53,12 +53,12 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean updateLibrarian(Librarian librarian) {
-        return false;
+    public Librarian findById(int id) {
+        return null;
     }
 
     @Override
-    public boolean checkPassword(Librarian librarian) {
+    public boolean update(Librarian librarian) {
         return false;
     }
 }

@@ -93,13 +93,13 @@ public class AddPublisherFrame extends JDialog implements WindowClosing {
                 Publisher existedPublisher = new Publisher();
                 existedPublisher.setName(nameTextField.getText());
 
-                if (!publisherDAO.insertPublisher(existedPublisher)) {
+                if (!publisherDAO.save(existedPublisher)) {
                     JOptionPane.showMessageDialog(null, "Введённоё Вами издательство уже существует", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 AddBookFrame.getPublisherComboBox().removeAllItems();
-                for (Publisher publisher : publisherDAO.selectPublishers())
+                for (Publisher publisher : publisherDAO.findAll())
                     AddBookFrame.getPublisherComboBox().addItem(publisher);
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);

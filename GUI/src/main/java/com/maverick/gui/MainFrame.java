@@ -74,7 +74,7 @@ public class MainFrame extends JFrame {
         bookTable = new JTable(bookTableModel);
         bookScrollPane = new JScrollPane(bookTable);
 
-        books = bookDAO.selectBooks();
+        books = bookDAO.findAll();
         bookTableModel.addBookData(books);
 
         TableRowSorter<BookTableModel> bookRowSorter = new TableRowSorter<>(bookTableModel);
@@ -209,7 +209,7 @@ public class MainFrame extends JFrame {
                     for (int i : bookTable.getSelectedRows()) {
                         Book book = new Book();
                         book.setId(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
-                        if (!bookDAO.deleteBook(book)) {
+                        if (!bookDAO.delete(book)) {
                             JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
                                     bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
                                     ' ' +
@@ -239,9 +239,12 @@ public class MainFrame extends JFrame {
             book.setId(Integer.parseInt(bookTable.getValueAt(bookTable.getSelectedRow(), 0).toString()));
             if (bookTable.getSelectedRows().length > 1) {
                 JOptionPane.showMessageDialog(null, "Нельзя редактировать более одной строки!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
-            } else if (bookDAO.isOrdered(book)) {
-                JOptionPane.showMessageDialog(null, "Нельзя редактировать книгу, на которую есть заказы", "Ошибка", JOptionPane.ERROR_MESSAGE);
-            } else {
+            }
+//            else if (bookDAO.isOrdered(book)) {
+//                JOptionPane.showMessageDialog(null, "Нельзя редактировать книгу, на которую есть заказы", "Ошибка", JOptionPane.ERROR_MESSAGE);
+//            }
+            // TODO: 17.12.2016 isordered
+            else {
                 new EditBookFrame(this);
             }
         });
@@ -251,7 +254,7 @@ public class MainFrame extends JFrame {
         refreshBookMenuItem.addActionListener(e -> {
             switch (JOptionPane.showConfirmDialog(null, "Обновить таблицу?", "Обновить", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.OK_OPTION:
-                    bookTableModel.addBookData(bookDAO.selectBooks());
+                    bookTableModel.addBookData(bookDAO.findAll());
                     break;
                 case JOptionPane.CANCEL_OPTION:
                     break;
@@ -325,7 +328,7 @@ public class MainFrame extends JFrame {
 //                    int rowCount = bookTable.getRowCount();
 //                 //   mysqlDao.initMigrateDB();
 //                  //  int migrate = LoginFrame.getDaoInstance().migrateBooks();
-//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().selectBooks());
+//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAll());
 //
 //                 //   JOptionPane.showMessageDialog(null, "Миграция завершена\nПеренесено " + (rowCount - migrate) + " записей\n" +
 //                 //           "Не перенесено " + migrate + " записей", "Завершено",JOptionPane.INFORMATION_MESSAGE);
@@ -385,7 +388,7 @@ public class MainFrame extends JFrame {
 //            switch (JOptionPane.showOptionDialog(null, "Действительно перенести книги из MongoDB в MYSQL?", "Перенести?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
 //                case JOptionPane.OK_OPTION:
 //                    int migrate = mongoDao.migrateBooks();
-//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().selectBooks());
+//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAll());
 //                    JOptionPane.showMessageDialog(null, "Миграция завершена\nПеренесено " + migrate + " записей\n", "Завершено",JOptionPane.INFORMATION_MESSAGE);
 //                    break;
 //                case JOptionPane.CANCEL_OPTION:

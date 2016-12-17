@@ -6,19 +6,15 @@ import java.util.List;
 
 public interface BookDAO {
 
-    boolean insertBook(Book book);
+    List<Book> findAll();
 
-    boolean deleteBook(Book book);
+    Book findById(int id);
 
-    List<Book> selectBooks();
+    boolean save(Book book);
 
-    boolean updateBook(Book book);
+    boolean update(Book book);
 
-    List<Book> searchBook(Book book);
+    boolean delete(Book book);
 
     int selectAmount(Book book);
-
-    boolean isOrdered(Book book);
-
-
 }

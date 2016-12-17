@@ -11,11 +11,49 @@ import java.util.List;
 
 public class MySQLGenreDAO implements GenreDAO {
 
-    private final static String INSERT_GENRE = "INSERT INTO booksdb.genre (name) VALUES (?)";
-    private final static String GET_GENRES = "SELECT * FROM booksdb.genre";
+    private final static String GENRE_ID = "genre.id";
+    private final static String GENRE_NAME = "genre.name";
+
+    private final static String FIND_ALL = "SELECT * FROM genre";
+    private final static String FIND_BY_ID = "SELECT * FROM genre WHERE id = ?";
+    private final static String INSERT_GENRE = "INSERT INTO genre VALUES (DEFAULT,?)";
 
     @Override
-    public boolean insertGenre(Genre genre) {
+    public List<Genre> findAll() {
+        List<Genre> genres = new ArrayList<>();
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             Statement statement = connection.createStatement();
+             ResultSet genreResultSet = statement.executeQuery(FIND_ALL)) {
+            while (genreResultSet.next())
+                genres.add(new Genre(genreResultSet.getInt(GENRE_ID), genreResultSet.getString(GENRE_NAME)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return genres;
+    }
+
+    @Override
+    public Genre findById(int id) {
+
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Genre genre = new Genre();
+            genre.setId(resultSet.getInt(GENRE_ID));
+            genre.setName(resultSet.getString(GENRE_NAME));
+            return genre;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Genre genre) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_GENRE)) {
             preparedStatement.setString(1, genre.getName());
@@ -28,26 +66,12 @@ public class MySQLGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean deleteGenre(Genre genre) {
+    public boolean update(Genre genre) {
         return false;
     }
 
     @Override
-    public List<Genre> selectGenres() {
-        List<Genre> genres = new ArrayList<>();
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet genreResultSet = statement.executeQuery(GET_GENRES)) {
-            while (genreResultSet.next())
-                genres.add(new Genre(genreResultSet.getInt("id"), genreResultSet.getString("name")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return genres;
-    }
-
-    @Override
-    public boolean updateGenre(Genre genre) {
+    public boolean delete(Genre genre) {
         return false;
     }
 }

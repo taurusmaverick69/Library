@@ -69,15 +69,15 @@ public class AddBookFrame extends JDialog implements WindowClosing {
         });
 
         authorComboBox.removeAllItems();
-        for (Author author : authorDAO.selectAuthors())
+        for (Author author : authorDAO.findAll())
             authorComboBox.addItem(author);
 
         genreComboBox.removeAllItems();
-        for (Genre genre : genreDAO.selectGenres())
+        for (Genre genre : genreDAO.findAll())
             genreComboBox.addItem(genre);
 
         publisherComboBox.removeAllItems();
-        for (Publisher publisher : publisherDAO.selectPublishers())
+        for (Publisher publisher : publisherDAO.findAll())
             publisherComboBox.addItem(publisher);
 
 
@@ -215,14 +215,14 @@ public class AddBookFrame extends JDialog implements WindowClosing {
                 );
 
 
-                if (!bookDAO.insertBook(book)) {
+                if (!bookDAO.save(book)) {
                     JOptionPane.showMessageDialog(null, "Данная запись уже существует в БД", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
 
-                List<Book> books = bookDAO.selectBooks();
+                List<Book> books = bookDAO.findAll();
                 ArrayList<Book> booksList = new ArrayList<>(books);
 
                 MainFrame.bookTableModel.addBookData(books);

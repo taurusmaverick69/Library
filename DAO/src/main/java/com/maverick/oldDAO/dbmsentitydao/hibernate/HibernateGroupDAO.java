@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HibernateGroupDAO implements GroupDAO {
     @Override
-    public boolean insertGroup(Group group) {
+    public boolean save(Group group) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -25,7 +25,7 @@ public class HibernateGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean deleteGroup(Group group) {
+    public boolean delete(Group group) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -45,7 +45,7 @@ public class HibernateGroupDAO implements GroupDAO {
     }
 
     @Override
-    public List<Group> selectGroups() {
+    public List<Group> findAll() {
         Session session = HibernateDAOFactory.openSession();
         List<Group> groups = new ArrayList<>();
 
@@ -62,7 +62,12 @@ public class HibernateGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean updateGroup(Group group) {
+    public Group findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Group group) {
         return false;
     }
 }

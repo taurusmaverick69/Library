@@ -5,13 +5,30 @@ import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import org.hibernate.Session;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateAuthorDAO implements AuthorDAO {
 
+    private EntityManager entityManager = Persistence.createEntityManagerFactory("MY_EM").createEntityManager();
+
     @Override
-    public boolean insertAuthor(Author author) {
+    public List<Author> findAll() {
+        TypedQuery<Author> namedQuery = entityManager.createNamedQuery("Author.findAll", Author.class);
+        return namedQuery.getResultList();
+    }
+
+    @Override
+    public Author findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean save(Author author) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -26,7 +43,12 @@ public class HibernateAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean deleteAuthor(Author author) {
+    public boolean update(Author author) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Author author) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -38,27 +60,5 @@ public class HibernateAuthorDAO implements AuthorDAO {
             HibernateDAOFactory.closeSession();
         }
         return true;
-    }
-
-    @Override
-    public List<Author> selectAuthors() {
-
-        Session session = HibernateDAOFactory.openSession();
-        List<Author> authors = new ArrayList<>();
-        try {
-            session.beginTransaction();
-            authors.addAll(session.createCriteria(Author.class).list());
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
-        return authors;
-    }
-
-    @Override
-    public boolean updateAuthor(Author author) {
-        return false;
     }
 }

@@ -1,26 +1,76 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
-import com.maverick.domain.Book;
 import com.maverick.domain.Librarian;
-import com.maverick.domain.Order;
-import com.maverick.domain.Student;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
 import com.maverick.oldDAO.entitydao.LibrarianDAO;
+import com.maverick.oldDAO.entitydao.OrderDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MySQLLibrarianDAO implements LibrarianDAO {
 
-    private final static String INSERT_LIBRARIAN = "INSERT INTO booksdb.librarian (full_name, password) VALUES (?, md5(?))";
-    private final static String GET_LIBRARIANS = "SELECT * FROM booksdb.librarian";
-    private final static String GET_ORDERS = "SELECT o.id, s.fullName, b.title, start_date, finishDate, status FROM booksdb.`order` o , booksdb.book b, booksdb.student s WHERE Student_id = s.id AND  Book_id = b.id AND Librarian_id = ?";
-    private final static String CHECK_PASSWORD = "SELECT password FROM booksdb.librarian WHERE  full_name = ?";
+    private final static String LIBRARIAN_ID = "librarian.id";
+    private final static String LIBRARIAN_FULL_NAME = "librarian.full_name";
+    private final static String LIBRARIAN_PASSWORD = "librarian.password";
+
+    private final static String FIND_ALL = "SELECT * FROM librarian";
+    private final static String FIND_BY_ID = "SELECT * FROM librarian WHERE id = ?";
+    private final static String INSERT_LIBRARIAN = "INSERT INTO librarian VALUES (DEFAULT, ?, md5(?))";
+
+    private OrderDAO orderDAO;
 
     @Override
-    public boolean insertLibrarian(Librarian librarian) {
+    public List<Librarian> findAll() {
+
+        orderDAO = new MySQLOrderDAO();
+
+        List<Librarian> librarians = new ArrayList<>();
+        try (Statement statement = MySQLDAOFactory.createConnection().createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            while (resultSet.next()) {
+
+                Librarian librarian = new Librarian();
+                int librarianId = resultSet.getInt(LIBRARIAN_ID);
+                librarian.setId(librarianId);
+                librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
+                librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
+                librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
+
+                librarians.add(librarian);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return librarians;
+    }
+
+    @Override
+    public Librarian findById(int id) {
+
+        try (Connection connection = MySQLDAOFactory.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Librarian librarian = new Librarian();
+            int librarianId = resultSet.getInt(LIBRARIAN_ID);
+            librarian.setId(librarianId);
+            librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
+            librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
+            librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
+            return librarian;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Librarian librarian) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_LIBRARIAN)) {
             preparedStatement.setString(1, librarian.getFullName());
@@ -34,79 +84,12 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean deleteLibrarian(Librarian librarian) {
+    public boolean delete(Librarian librarian) {
         return false;
     }
 
     @Override
-    public List<Librarian> selectLibrarians() {
-        List<Librarian> librarians = new ArrayList<>();
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet librarianResultSet = statement.executeQuery(GET_LIBRARIANS);
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDERS)) {
-
-            List<Order> orders = new ArrayList<>();
-            while (librarianResultSet.next()) {
-
-                preparedStatement.setInt(1, librarianResultSet.getInt("id"));
-                ResultSet orderResultSet = preparedStatement.executeQuery();
-
-                while (orderResultSet.next()) {
-
-                    Student student = new Student();
-                    student.setFullName(orderResultSet.getString("s.fullName"));
-
-                    Book book = new Book();
-                    book.setTitle(orderResultSet.getString("b.title"));
-
-                    Order order = new Order(
-                            orderResultSet.getInt("id"),
-                            student,
-                            book,
-                            new Date(orderResultSet.getDate("startDate").getTime()),
-                            new Date(orderResultSet.getDate("finishDate").getTime()),
-                            orderResultSet.getString("status")
-                    );
-                    orders.add(order);
-                }
-
-                Librarian librarian = new Librarian(
-                        librarianResultSet.getInt("id"),
-                        librarianResultSet.getString("fullName"),
-                        librarianResultSet.getString("password"),
-                        orders);
-
-                librarians.add(librarian);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return librarians;
-    }
-
-    @Override
-    public boolean updateLibrarian(Librarian librarian) {
-        return false;
-    }
-
-    @Override
-    public boolean checkPassword(Librarian librarian) {
-
-        try (Connection connection = MySQLDAOFactory.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     CHECK_PASSWORD)) {
-
-            preparedStatement.setString(1, librarian.getFullName());
-            try (ResultSet passwordsResultSet = preparedStatement.executeQuery()) {
-                passwordsResultSet.next();
-                if (passwordsResultSet.getString("password").equals(librarian.getPassword()))
-                    return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean update(Librarian librarian) {
         return false;
     }
 }

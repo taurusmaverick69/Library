@@ -7,22 +7,27 @@ import java.util.List;
 
 public class MongoDBGroupDAO implements GroupDAO {
     @Override
-    public boolean insertGroup(Group group) {
+    public boolean save(Group group) {
         return false;
     }
 
     @Override
-    public boolean deleteGroup(Group group) {
+    public boolean delete(Group group) {
         return false;
     }
 
     @Override
-    public List<Group> selectGroups() {
+    public List<Group> findAll() {
         return null;
     }
 
     @Override
-    public boolean updateGroup(Group group) {
+    public Group findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Group group) {
         return false;
     }
 }

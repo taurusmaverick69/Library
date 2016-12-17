@@ -1,5 +1,6 @@
 package com.maverick.oldDAO.dbmsentitydao.hibernate;
 
+import com.maverick.domain.Book;
 import com.maverick.domain.Order;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.OrderDAO;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class HibernateOrderDAO implements OrderDAO {
     @Override
-    public boolean insertOrder(Order order) {
+    public boolean save(Order order) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -25,7 +26,7 @@ public class HibernateOrderDAO implements OrderDAO {
 
 
     @Override
-    public boolean deleteOrder(Order order) {
+    public boolean delete(Order order) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -40,12 +41,17 @@ public class HibernateOrderDAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> selectOrders() {
+    public List<Order> findAll() {
         return null;
     }
 
     @Override
-    public boolean updateOrder(Order order) {
+    public List<Order> findByLibrarianId(int librarianId) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Order order) {
         Session session = HibernateDAOFactory.openSession();
         try {
             session.beginTransaction();
@@ -58,10 +64,5 @@ public class HibernateOrderDAO implements OrderDAO {
             HibernateDAOFactory.closeSession();
         }
         return true;
-    }
-
-    @Override
-    public List<Order> searchOrder(Order order) {
-        return null;
     }
 }

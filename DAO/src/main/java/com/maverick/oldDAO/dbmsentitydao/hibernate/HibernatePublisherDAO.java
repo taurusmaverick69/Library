@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HibernatePublisherDAO implements PublisherDAO {
     @Override
-    public boolean insertPublisher(Publisher publisher) {
+    public boolean save(Publisher publisher) {
 
         Session session = HibernateDAOFactory.openSession();
         try {
@@ -26,12 +26,12 @@ public class HibernatePublisherDAO implements PublisherDAO {
     }
 
     @Override
-    public boolean deletePublisher(Publisher publisher) {
+    public boolean delete(Publisher publisher) {
         return false;
     }
 
     @Override
-    public List<Publisher> selectPublishers() {
+    public List<Publisher> findAll() {
         Session session = HibernateDAOFactory.openSession();
         List<Publisher> publishers = new ArrayList<>();
         try {
@@ -47,7 +47,12 @@ public class HibernatePublisherDAO implements PublisherDAO {
     }
 
     @Override
-    public boolean updatePublisher(Publisher publisher) {
+    public Publisher findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Publisher publisher) {
         return false;
     }
 }

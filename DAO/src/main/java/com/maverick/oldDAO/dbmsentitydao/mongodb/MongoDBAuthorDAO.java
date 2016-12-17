@@ -15,13 +15,13 @@ public class MongoDBAuthorDAO implements AuthorDAO {
 
 
     @Override
-    public boolean insertAuthor(Author author) {
+    public boolean save(Author author) {
         authorCollection.insertOne(MongoDBDAOFactory.toDocument(author));
         return true;
     }
 
     @Override
-    public boolean deleteAuthor(Author author) {
+    public boolean delete(Author author) {
         try {
             authorCollection.deleteOne(new Document("_id", author.get_id()));
         } catch (Exception e) {
@@ -32,7 +32,7 @@ public class MongoDBAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public List<Author> selectAuthors() {
+    public List<Author> findAll() {
         List<Author> authors = new ArrayList<>();
         for (Document document : authorCollection.find()) {
             authors.add((Author) MongoDBDAOFactory.fromDocument(document, "Author"));
@@ -41,7 +41,12 @@ public class MongoDBAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean updateAuthor(Author author) {
+    public Author findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean update(Author author) {
         return false;
     }
 }

@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface LibrarianDAO {
 
-    boolean insertLibrarian(Librarian librarian);
+    List<Librarian> findAll();
 
-    boolean deleteLibrarian(Librarian librarian);
+    Librarian findById(int id);
 
-    List<Librarian> selectLibrarians();
+    boolean save(Librarian librarian);
 
-    boolean updateLibrarian(Librarian librarian);
+    boolean update(Librarian librarian);
 
-    boolean checkPassword(Librarian librarian);
+    boolean delete(Librarian librarian);
 }

@@ -39,13 +39,13 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
         labels[2] = new JLabel("Дата оформления:");
         labels[3] = new JLabel("Дата возврата:");
 
-        ArrayList<Student> students = new ArrayList<>(studentDAO.selectStudents());
+        ArrayList<Student> students = new ArrayList<>(studentDAO.findAll());
         Collections.sort(students, (o1, o2) -> o1.getFullName().compareTo(o2.getFullName()));
         studentComboBox.removeAllItems();
         for (Student student : students)
             studentComboBox.addItem(student);
 
-        ArrayList<Book> books = new ArrayList<>(bookDAO.selectBooks());
+        ArrayList<Book> books = new ArrayList<>(bookDAO.findAll());
         Collections.sort(books, (o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
         bookComboBox.removeAllItems();
         for (Book book : books)
@@ -173,12 +173,12 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
                 order.setFinishDate(finishDate);
                 order.setStatus("Не возвращена");
 
-                orderDAO.insertOrder(order);
+                orderDAO.save(order);
                 librarian.getOrders().add(order);
 
                 MainFrame.orderTableModel.addOrderData(librarian.getOrders());
                 MainFrame.orderTable.updateUI();
-                MainFrame.bookTableModel.addBookData(bookDAO.selectBooks());
+                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
                 MainFrame.bookTable.updateUI();
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Добавлено", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
