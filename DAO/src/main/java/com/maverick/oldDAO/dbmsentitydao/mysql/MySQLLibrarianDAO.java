@@ -37,7 +37,10 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
                 librarian.setId(librarianId);
                 librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
                 librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
+
+                System.out.println("resultSet = " + resultSet.isClosed());
                 librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
+                System.out.println("resultSet = " + resultSet.isClosed());
 
                 librarians.add(librarian);
             }

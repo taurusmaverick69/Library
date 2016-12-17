@@ -13,5 +13,4 @@ public interface GroupService {
     void save(Group group);
 
     void delete(int id);
-
 }

@@ -178,15 +178,13 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
 
                 Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
 
-
-                Order order = new Order(
-                        Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 0).toString()),
-                        (Student) studentComboBox.getSelectedItem(),
-                        (Book) bookComboBox.getSelectedItem(),
-                        startDate,
-                        finishDate,
-                        statusComboBox.getSelectedItem().toString());
-
+                Order order = new Order();
+                order.setId(Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 0).toString()));
+                order.setStudent((Student) studentComboBox.getSelectedItem());
+                order.setBook((Book) bookComboBox.getSelectedItem());
+                order.setStartDate(startDate);
+                order.setFinishDate(finishDate);
+                order.setStatus(statusComboBox.getSelectedItem().toString());
 
                 orderDAO.update(order);
 

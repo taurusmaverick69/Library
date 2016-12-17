@@ -19,7 +19,11 @@ public class AuthorRepositoryTest {
 
     @Test
     public void findByIdAndAssert() {
-        authorRepository.save(new Author(1, "1", "1"));
+        Author savingAuthor = new Author();
+        savingAuthor.setId(1);
+        savingAuthor.setFullName("1");
+        savingAuthor.setYearsOfLife("1");
+        authorRepository.save(savingAuthor);
         Author author = authorRepository.findOne(1);
         Assert.assertEquals(author.getFullName(), "1");
         Assert.assertEquals(author.getYearsOfLife(), "1");

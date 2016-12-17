@@ -169,7 +169,6 @@ public class AddBookFrame extends JDialog implements WindowClosing {
 
         addWindowListener(getWindowAdapter(this));
         setVisible(true);
-
     }
 
     public static JComboBox<Author> getAuthorComboBox() {
@@ -204,16 +203,13 @@ public class AddBookFrame extends JDialog implements WindowClosing {
         switch (JOptionPane.showOptionDialog(null, "Действительно добавить книгу?", "Добавить?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             case JOptionPane.YES_OPTION:
 
-                Book book = new Book(
-                        -1,
-                        (Author) authorComboBox.getSelectedItem(),
-                        titleTextField.getText(),
-                        Integer.parseInt(publishingYearTextField.getText()),
-                        (Genre) genreComboBox.getSelectedItem(),
-                        (Publisher) publisherComboBox.getSelectedItem(),
-                        Integer.parseInt(amountTextField.getText())
-                );
-
+                Book book = new Book();
+                book.setAuthor((Author) authorComboBox.getSelectedItem());
+                book.setTitle(titleTextField.getText());
+                book.setPublishingYear(Integer.parseInt(publishingYearTextField.getText()));
+                book.setGenre((Genre) genreComboBox.getSelectedItem());
+                book.setPublisher((Publisher) publisherComboBox.getSelectedItem());
+                book.setAmount(Integer.parseInt(amountTextField.getText()));
 
                 if (!bookDAO.save(book)) {
                     JOptionPane.showMessageDialog(null, "Данная запись уже существует в БД", "Ошибка", JOptionPane.ERROR_MESSAGE);

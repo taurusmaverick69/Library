@@ -1,7 +1,5 @@
 package com.maverick.domain;
 
-import org.bson.types.ObjectId;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,24 +27,6 @@ public class Order extends EntityClass {
 
     @Column
     private String status;
-
-    public Order(int id, Student student, Book book, Date startDate, Date finishDate, String status) {
-        this.id = id;
-        this.student = student;
-        this.book = book;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.status = status;
-    }
-
-    public Order(ObjectId id, Student student, Book book, Date startDate, Date finishDate, String status) {
-        this._id = id;
-        this.student = student;
-        this.book = book;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.status = status;
-    }
 
     public Order() {
     }

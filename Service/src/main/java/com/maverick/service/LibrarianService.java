@@ -13,5 +13,4 @@ public interface LibrarianService {
     void save(Librarian librarian);
 
     void delete(int id);
-
 }

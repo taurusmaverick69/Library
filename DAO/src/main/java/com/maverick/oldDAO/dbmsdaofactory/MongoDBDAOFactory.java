@@ -71,6 +71,7 @@ public class MongoDBDAOFactory extends DAOFactory {
     public static EntityClass fromDocument(Document document, String typeEntity) {
 
         switch (typeEntity) {
+
             case "Book":
                 Author author = new Author();
                 author.setFullName(document.getString("author"));
@@ -81,23 +82,24 @@ public class MongoDBDAOFactory extends DAOFactory {
                 Publisher publisher = new Publisher();
                 publisher.setName(document.getString("publisher"));
 
-                return new Book(
-                        document.getObjectId("_id"),
-                        author,
-                        document.getString("title"),
-                        document.getInteger("publishingYear"),
-                        genre,
-                        publisher,
-                        document.getInteger("amount")
-                );
-
+                Book book = new Book();
+                book.set_id(document.getObjectId("_id"));
+                book.setAuthor(author);
+                book.setTitle(document.getString("title"));
+                book.setPublishingYear(document.getInteger("publishingYear"));
+                book.setGenre(genre);
+                book.setPublisher(publisher);
+                book.setAmount( document.getInteger("amount"));
+               return book;
 
             case "Author":
-                return new Author(
-                        document.getObjectId("_id"),
-                        document.getString("fullName"),
-                        document.getString("yearsOfLife")
-                );
+
+                Author author1 = new Author();
+                author1.set_id(document.getObjectId("_id"));
+                author1.setFullName(document.getString("fullName"));
+                author1.setFullName(document.getString("yearsOfLife"));
+
+                return author1;
 
             case "Order":
 
@@ -105,28 +107,32 @@ public class MongoDBDAOFactory extends DAOFactory {
                 Student student = new Student();
                 student.setFullName(document.getString("student"));
 
-                Book book = new Book();
-                book.setTitle(document.getString("book"));
+                Book book1 = new Book();
+                book1.setTitle(document.getString("book"));
 
-                return new Order(
-                        document.getObjectId("_id"),
-                        student,
-                        book,
-                        document.getDate("startDate"),
-                        document.getDate("finishDate"),
-                        document.getString("status"));
+                Order order = new Order();
+                order.set_id( document.getObjectId("_id"));
+                order.setStudent(student);
+                order.setBook(book1);
+                order.setStartDate( document.getDate("startDate"));
+                order.setFinishDate(  document.getDate("finishDate"));
+                order.setStatus( document.getString("status"));
 
+               return order;
 
             case "Student":
 
                 Group group = new Group();
                 group.setName(document.getString("group"));
 
-                return new Student(
-                        document.getObjectId("_id"),
-                        document.getString("fullName"),
-                        document.getString("libraryCard"),
-                        group);
+                Student student1 = new Student();
+
+                student1.set_id( document.getObjectId("_id"));
+                student1.setFullName( document.getString("fullName"));
+                student1.setLibraryCard( document.getString("libraryCard"));
+                student1.setGroup(group);
+
+                return student1;
         }
         return null;
     }

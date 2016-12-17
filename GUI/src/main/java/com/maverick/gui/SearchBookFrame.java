@@ -123,7 +123,7 @@ public class SearchBookFrame extends JDialog implements WindowClosing {
                 Publisher publisher = new Publisher();
                 publisher.setName(publisherTextField.getText());
 
-                Book book = new Book(-1, author, titleTextField.getText(), NumberUtils.toInt(publishingYearTextField.getText(), -1), genre, publisher, (NumberUtils.toInt(amountTextField.getText(), -1)));
+              //  Book book = new Book(-1, author, titleTextField.getText(), NumberUtils.toInt(publishingYearTextField.getText(), -1), genre, publisher, (NumberUtils.toInt(amountTextField.getText(), -1)));
                // List<Book> books = bookDAO.searchBook(book);
 
                 List<Book> books = new ArrayList<>();

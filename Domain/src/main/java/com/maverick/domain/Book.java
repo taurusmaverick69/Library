@@ -31,26 +31,6 @@ public class Book extends EntityClass {
     public Book() {
     }
 
-    public Book(int id, Author author, String title, int publishingYear, Genre genre, Publisher publisher, int amount) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.publishingYear = publishingYear;
-        this.genre = genre;
-        this.publisher = publisher;
-        this.amount = amount;
-    }
-
-    public Book(ObjectId id, Author author, String title, int publishingYear, Genre genre, Publisher publisher, int amount) {
-        this._id = id;
-        this.author = author;
-        this.title = title;
-        this.publishingYear = publishingYear;
-        this.genre = genre;
-        this.publisher = publisher;
-        this.amount = amount;
-    }
-
     @Override
     public int getId() {
         return super.getId();

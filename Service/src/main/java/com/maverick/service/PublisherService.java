@@ -13,5 +13,4 @@ public interface PublisherService {
     void save(Publisher publisher);
 
     void delete(int id);
-
 }

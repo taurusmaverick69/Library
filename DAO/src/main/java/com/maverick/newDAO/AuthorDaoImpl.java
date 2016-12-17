@@ -11,11 +11,13 @@ import java.util.List;
 
 public class AuthorDaoImpl extends AbstractDao implements AuthorDao {
 
-    private static final RowMapper AUTHOR_MAPPER = (rs, i) -> new Author(
-            rs.getInt("id"),
-            rs.getString("fullName"),
-            rs.getString("yearsOfLife")
-    );
+    private static final RowMapper AUTHOR_MAPPER = (rs, i) -> {
+        Author author = new Author();
+        author.setId(rs.getInt("id"));
+        author.setFullName(rs.getString("fullName"));
+        author.setYearsOfLife(rs.getString("yearsOfLife"));
+        return author;
+    };
 
     public Author getById(int id) {
         return (Author) jdbcTemplate.queryForObject("SELECT * FROM booksdb.author WHERE id=?", new Object[]{id}, AUTHOR_MAPPER);

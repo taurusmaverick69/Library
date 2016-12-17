@@ -31,19 +31,12 @@ public class AuthorControllerTest {
 
     @Test
     public void getVehicleShouldReturnMakeAndModel() throws Exception {
-
-
-        given(this.authorService.findById(1)).willReturn(new Author(1, "1", "1"));
-
-
-        System.out.println("mvc = " + mvc);
-
+        Author author = new Author();
+        author.setId(1);
+        author.setFullName("1");
+        author.setYearsOfLife("1");
+        given(this.authorService.findById(1)).willReturn(author);
         MockHttpServletRequestBuilder mockHttpServletRequestBuilder = get("localhost:8080/author/1");
-
-        System.out.println("mockHttpServletRequestBuilder = " + mockHttpServletRequestBuilder);
-
         mvc.perform(mockHttpServletRequestBuilder.accept(MediaType.TEXT_PLAIN)).andExpect(status().isOk()).andExpect((ResultMatcher) content().string("Honda Civic"));
     }
-
-
 }

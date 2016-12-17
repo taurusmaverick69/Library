@@ -13,5 +13,4 @@ public interface GenreService {
     void save(Genre genre);
 
     void delete(int id);
-
 }

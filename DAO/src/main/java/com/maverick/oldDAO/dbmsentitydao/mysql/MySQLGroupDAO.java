@@ -23,8 +23,13 @@ public class MySQLGroupDAO implements GroupDAO {
         try (Connection connection = MySQLDAOFactory.createConnection();
              Statement statement = connection.createStatement();
              ResultSet groupResultSet = statement.executeQuery(FIND_ALL)) {
-            while (groupResultSet.next())
-                groups.add(new Group(groupResultSet.getInt(GROUP_ID), groupResultSet.getString(GROUP_NAME)));
+            while (groupResultSet.next()) {
+                Group group = new Group();
+                group.setId(groupResultSet.getInt(GROUP_ID));
+                group.setName(groupResultSet.getString(GROUP_NAME));
+                groups.add(group);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

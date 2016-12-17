@@ -24,8 +24,13 @@ public class MySQLGenreDAO implements GenreDAO {
         try (Connection connection = MySQLDAOFactory.createConnection();
              Statement statement = connection.createStatement();
              ResultSet genreResultSet = statement.executeQuery(FIND_ALL)) {
-            while (genreResultSet.next())
-                genres.add(new Genre(genreResultSet.getInt(GENRE_ID), genreResultSet.getString(GENRE_NAME)));
+            while (genreResultSet.next()) {
+                Genre genre = new Genre();
+                genre.setId(genreResultSet.getInt(GENRE_ID));
+                genre.setName(genreResultSet.getString(GENRE_NAME));
+                genres.add(genre);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

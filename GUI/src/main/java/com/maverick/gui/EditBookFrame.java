@@ -173,15 +173,16 @@ public class EditBookFrame extends JDialog implements WindowClosing {
         Object[] options = {"Да", "Нет"};
         switch (JOptionPane.showOptionDialog(null, "Сохранить изменения?", "Добавить?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             case JOptionPane.OK_OPTION:
-                Book book = new Book(
-                        Integer.parseInt(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 0).toString()),
-                        (Author) authorComboBox.getSelectedItem(),
-                        titleTextField.getText(),
-                        Integer.parseInt(publishingYearTextField.getText()),
-                        (Genre) genreComboBox.getSelectedItem(),
-                        (Publisher) publisherComboBox.getSelectedItem(),
-                        Integer.parseInt(amountTextField.getText())
-                );
+                Book book = new Book();
+
+                book.setId(Integer.parseInt(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 0).toString()));
+                book.setAuthor((Author) authorComboBox.getSelectedItem());
+                book.setTitle(titleTextField.getText());
+                book.setPublishingYear(Integer.parseInt(publishingYearTextField.getText()));
+                book.setGenre((Genre) genreComboBox.getSelectedItem());
+                book.setPublisher((Publisher) publisherComboBox.getSelectedItem());
+                book.setAmount(Integer.parseInt(amountTextField.getText()));
+
                 bookDAO.update(book);
                 MainFrame.bookTableModel.addBookData(bookDAO.findAll());
                 MainFrame.bookTable.updateUI();

@@ -1,7 +1,5 @@
 package com.maverick.domain;
 
-import org.bson.types.ObjectId;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -21,20 +19,6 @@ public class Student extends EntityClass {
     private Group group;
 
     public Student() {
-    }
-
-    public Student(int id, String fullName, String libraryCard, Group group) {
-        this.id = id;
-        this.fullName = fullName;
-        this.libraryCard = libraryCard;
-        this.group = group;
-    }
-
-    public Student(ObjectId _id, String fullName, String libraryCard, Group group) {
-        this._id = _id;
-        this.fullName = fullName;
-        this.libraryCard = libraryCard;
-        this.group = group;
     }
 
     public String getFullName() {

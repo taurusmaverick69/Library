@@ -21,14 +21,6 @@ public class Librarian extends EntityClass {
     public Librarian() {
     }
 
-    public Librarian(int id, String fullName, String password, List<Order> orders) {
-        this.orders = new ArrayList<>();
-        this.id = id;
-        this.fullName = fullName;
-        this.password = password;
-        this.orders = orders;
-    }
-
     public String getFullName() {
         return fullName;
     }

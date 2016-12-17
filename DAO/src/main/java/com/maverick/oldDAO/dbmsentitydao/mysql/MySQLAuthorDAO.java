@@ -27,12 +27,13 @@ public class MySQLAuthorDAO implements AuthorDAO {
              Statement statement = connection.createStatement();
              ResultSet authorResultSet = statement.executeQuery(FIND_ALL)) {
 
-            while (authorResultSet.next())
-                authors.add(new Author(
-                        authorResultSet.getInt(AUTHOR_ID),
-                        authorResultSet.getString(AUTHOR_FULL_NAME),
-                        authorResultSet.getString(AUTHOR_YEARS_OF_LIFE)));
-
+            while (authorResultSet.next()) {
+                Author author = new Author();
+                author.setId(authorResultSet.getInt(AUTHOR_ID));
+                author.setFullName(authorResultSet.getString(AUTHOR_FULL_NAME));
+                author.setYearsOfLife(authorResultSet.getString(AUTHOR_YEARS_OF_LIFE));
+                authors.add(author);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

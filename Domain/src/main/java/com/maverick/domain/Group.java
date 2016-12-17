@@ -14,11 +14,6 @@ public class Group extends EntityClass {
     public Group() {
     }
 
-    public Group(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
