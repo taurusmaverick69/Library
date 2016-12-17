@@ -45,11 +45,12 @@ public class MySQLPublisherDAO implements PublisherDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            Publisher publisher = new Publisher();
-            publisher.setId(resultSet.getInt(PUBLISHER_ID));
-            publisher.setName(resultSet.getString(PUBLISHER_NAME));
-            return publisher;
-
+            if (resultSet.next()) {
+                Publisher publisher = new Publisher();
+                publisher.setId(resultSet.getInt(PUBLISHER_ID));
+                publisher.setName(resultSet.getString(PUBLISHER_NAME));
+                return publisher;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

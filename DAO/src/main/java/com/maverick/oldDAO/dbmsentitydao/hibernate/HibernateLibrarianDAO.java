@@ -3,10 +3,9 @@ package com.maverick.oldDAO.dbmsentitydao.hibernate;
 import com.maverick.domain.Librarian;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.LibrarianDAO;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateLibrarianDAO implements LibrarianDAO {
@@ -33,23 +32,15 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     @Override
     public List<Librarian> findAll() {
         Session session = HibernateDAOFactory.openSession();
-        List<Librarian> librarians = new ArrayList<>();
-        try {
-            session.beginTransaction();
-            librarians.addAll(session.createCriteria(Librarian.class).list());
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-                try {
-                    session.close();
-                } catch (HibernateException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return librarians;
+
+
+        Query query = session.createQuery("from Librarian");
+
+//        List<Librarian> list = query.list();
+//
+//        list.forEach(System.out::println);
+
+        return null;
     }
 
     @Override

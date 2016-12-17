@@ -10,7 +10,7 @@ public abstract class EntityClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    int id;
+    private int id;
 
     @Transient
     ObjectId _id;

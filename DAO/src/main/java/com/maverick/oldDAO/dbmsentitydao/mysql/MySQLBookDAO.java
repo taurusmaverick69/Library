@@ -73,19 +73,21 @@ public class MySQLBookDAO implements BookDAO {
 
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            Book book = new Book();
-            book.setId(resultSet.getInt(BOOK_ID));
-            book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
-            book.setTitle(resultSet.getString(BOOK_TITLE));
-            book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
-            book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
-            book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
-            book.setAmount(resultSet.getInt(BOOK_AMOUNT));
-            return book;
-
+            if (resultSet.next()) {
+                Book book = new Book();
+                book.setId(resultSet.getInt(BOOK_ID));
+                book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
+                book.setTitle(resultSet.getString(BOOK_TITLE));
+                book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
+                book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
+                book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
+                book.setAmount(resultSet.getInt(BOOK_AMOUNT));
+                return book;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -53,7 +53,6 @@ public class MySQLOrderDAO implements OrderDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-
                 Order order = new Order();
                 order.setId(resultSet.getInt(ORDER_ID));
                 order.setStudent(studentDAO.findById(resultSet.getInt(ORDER_STUDENT_ID)));
@@ -62,10 +61,8 @@ public class MySQLOrderDAO implements OrderDAO {
                 order.setStartDate(resultSet.getDate(ORDER_START_DATE));
                 order.setFinishDate(resultSet.getDate(ORDER_FINISH_DATE));
                 order.setStatus(resultSet.getString(ORDER_STATUS));
-
                 orders.add(order);
             }
-
             return orders;
         } catch (SQLException e) {
             e.printStackTrace();

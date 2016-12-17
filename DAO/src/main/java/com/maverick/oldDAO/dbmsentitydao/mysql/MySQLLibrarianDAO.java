@@ -31,17 +31,12 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
 
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-
                 Librarian librarian = new Librarian();
                 int librarianId = resultSet.getInt(LIBRARIAN_ID);
                 librarian.setId(librarianId);
                 librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
                 librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
-
-                System.out.println("resultSet = " + resultSet.isClosed());
                 librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
-                System.out.println("resultSet = " + resultSet.isClosed());
-
                 librarians.add(librarian);
             }
         } catch (SQLException e) {
@@ -53,19 +48,22 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
     @Override
     public Librarian findById(int id) {
 
+        orderDAO = new MySQLOrderDAO();
+
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            Librarian librarian = new Librarian();
-            int librarianId = resultSet.getInt(LIBRARIAN_ID);
-            librarian.setId(librarianId);
-            librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
-            librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
-            librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
-            return librarian;
-
+            if (resultSet.next()) {
+                Librarian librarian = new Librarian();
+                int librarianId = resultSet.getInt(LIBRARIAN_ID);
+                librarian.setId(librarianId);
+                librarian.setFullName(resultSet.getString(LIBRARIAN_FULL_NAME));
+                librarian.setPassword(resultSet.getString(LIBRARIAN_PASSWORD));
+                librarian.setOrders(orderDAO.findByLibrarianId(librarianId));
+                return librarian;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

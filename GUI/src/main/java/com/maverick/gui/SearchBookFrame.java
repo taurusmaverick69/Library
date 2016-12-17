@@ -5,7 +5,6 @@ import com.maverick.domain.Book;
 import com.maverick.domain.Genre;
 import com.maverick.domain.Publisher;
 import com.maverick.oldDAO.entitydao.BookDAO;
-import org.apache.commons.lang.math.NumberUtils;
 
 import javax.swing.*;
 import java.awt.*;

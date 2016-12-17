@@ -3,12 +3,14 @@ package com.maverick.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name = "Author.findAll", query = "select a from Author a")
+@Table(name = "AUTHOR")
+//@NamedQuery(name = "Author.findAll", query = "select a.fullName from Author a")
 public class Author extends EntityClass {
 
-    @Column
+    @Column(name = "full_name")
     private String fullName;
 
     @Column

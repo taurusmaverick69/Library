@@ -16,7 +16,7 @@ import java.awt.event.WindowEvent;
 
 public class LoginFrame extends JFrame {
 
-    public static JComboBox<Librarian> librarianComboBox = new JComboBox<>();
+    static JComboBox<Librarian> librarianComboBox = new JComboBox<>();
     private static DAOFactory daoFactory;
     private LibrarianDAO librarianDAO;
     private JComboBox<TypeDAO> daoComboBox = new JComboBox<>(TypeDAO.values());
@@ -24,7 +24,7 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
 
-        daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
+        daoFactory = DAOFactory.getDAOFactory(TypeDAO.Hibernate);
         librarianDAO = daoFactory.getLibrarianDAO();
 
         JLabel[] labels = new JLabel[3];
@@ -88,9 +88,7 @@ public class LoginFrame extends JFrame {
         loginButton.addActionListener(e -> saveChanges());
 
         JButton registrationButton = new JButton("Регистрация");
-        registrationButton.addActionListener(e -> {
-            new RegistrationFrame();
-        });
+        registrationButton.addActionListener(e -> new RegistrationFrame());
 
         daoComboBox.addActionListener(e -> {
 

@@ -7,19 +7,23 @@ import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HibernateAuthorDAO implements AuthorDAO {
 
-    private EntityManager entityManager = Persistence.createEntityManagerFactory("MY_EM").createEntityManager();
+//    private EntityManager entityManager = Persistence.createEntityManagerFactory("MY_EM").createEntityManager();
 
     @Override
     public List<Author> findAll() {
-        TypedQuery<Author> namedQuery = entityManager.createNamedQuery("Author.findAll", Author.class);
-        return namedQuery.getResultList();
+
+        Session session = HibernateDAOFactory.openSession();
+        session.createQuery("from Author ");
+
+//        TypedQuery<Author> namedQuery = entityManager.createNamedQuery("Author.findAll", Author.class);
+//        return namedQuery.getResultList();
+
+        return null;
     }
 
     @Override

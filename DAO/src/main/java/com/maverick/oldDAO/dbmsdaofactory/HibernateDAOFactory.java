@@ -4,8 +4,10 @@ import com.maverick.oldDAO.DAOFactory;
 import com.maverick.oldDAO.dbmsentitydao.hibernate.*;
 import com.maverick.oldDAO.entitydao.*;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 
 
 public class HibernateDAOFactory extends DAOFactory {
@@ -13,8 +15,13 @@ public class HibernateDAOFactory extends DAOFactory {
     private static Session session;
 
     public static Session openSession() {
-        Configuration configure = new Configuration().configure();
-        session = configure.buildSessionFactory(new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry()).openSession();
+
+        if (session == null || !session.isConnected()) {
+            Configuration configure = new Configuration().configure();
+            ServiceRegistry sr = new StandardServiceRegistryBuilder().applySettings(configure.getProperties()).build();
+            SessionFactory sf = configure.buildSessionFactory(sr);
+            session = sf.openSession();
+        }
         return session;
     }
 
