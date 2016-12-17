@@ -6,7 +6,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AUTHOR")
 //@NamedQuery(name = "Author.findAll", query = "select a.fullName from Author a")
 public class Author extends EntityClass {
 
