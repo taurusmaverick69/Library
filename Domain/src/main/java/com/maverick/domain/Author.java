@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-//@NamedQuery(name = "Author.findAll", query = "select a.fullName from Author a")
 public class Author extends EntityClass {
 
     @Column(name = "full_name")
@@ -27,6 +26,22 @@ public class Author extends EntityClass {
 
     public void setYearsOfLife(String yearsOfLife) {
         this.yearsOfLife = yearsOfLife;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        return fullName.equals(author.fullName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return fullName.hashCode();
     }
 
     @Override
