@@ -12,7 +12,7 @@ public class HibernateAuthorDAO implements AuthorDAO {
     @Override
     public List<Author> findAll() {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
-            return session.createQuery("from Author ", Author.class).list();
+            return session.createNativeQuery("select * from author ", Author.class).list();
         }
     }
 

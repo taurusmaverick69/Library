@@ -1,11 +1,13 @@
 package com.maverick.oldDAO.dbmsentitydao.hibernate;
 
 import com.maverick.domain.Book;
+import com.maverick.domain.Student;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import org.hibernate.Session;
-import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
-import org.hibernate.jpa.criteria.CriteriaUpdateImpl;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -20,7 +22,11 @@ public class HibernateBookDAO implements BookDAO {
 
     @Override
     public Book findById(int id) {
-        return null;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            Query<Book> query = session.createQuery("from Book where id = :id", Book.class);
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        }
     }
 
     @Override
@@ -56,19 +62,14 @@ public class HibernateBookDAO implements BookDAO {
 
     @Override
     public int selectAmount(Book book) {
-//        Session session = HibernateDAOFactory.openSession();
-//        List amount = new ArrayList<>();
-//        try {
-//            session.beginTransaction();
-//            amount = session.createCriteria(Book.class).setProjection(Projections.property("amount")).add(Restrictions.eq("title", book.getTitle())).list();
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
-//        return (int) amount.get(0);
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            return (int) session.createCriteria(Book.class).setProjection(Projections.property("amount")).add(Restrictions.eq("title", book.getTitle())).uniqueResult();
+        }
+    }
 
-        return 0;
+    public long sumAmount() {
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            return session.createQuery("select sum (book.amount) from Book book", Long.class).uniqueResult();
+        }
     }
 }

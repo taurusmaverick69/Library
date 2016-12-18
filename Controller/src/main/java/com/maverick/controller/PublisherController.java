@@ -33,6 +33,4 @@ public class PublisherController {
     public void delete(@PathVariable("id") int id) {
         publisherService.delete(id);
     }
-
-
 }

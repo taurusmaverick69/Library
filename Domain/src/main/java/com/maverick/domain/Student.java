@@ -1,15 +1,16 @@
 package com.maverick.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Student extends EntityClass {
 
     @Column(name = "full_name")
     private String fullName;
+
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
+    private List<Order> orders;
 
     @Column(name = "library_card")
     private String libraryCard;

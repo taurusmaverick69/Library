@@ -33,5 +33,4 @@ public class StudentController {
     public void delete(@PathVariable("id") int id) {
         studentService.delete(id);
     }
-
 }

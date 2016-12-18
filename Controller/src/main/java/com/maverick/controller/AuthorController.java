@@ -33,5 +33,4 @@ public class AuthorController {
     public void delete(@PathVariable("id") int id) {
         authorService.delete(id);
     }
-
 }

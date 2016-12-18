@@ -21,7 +21,6 @@ public class HibernatePublisherDAO implements PublisherDAO {
         return null;
     }
 
-
     @Override
     public boolean save(Publisher publisher) {
 

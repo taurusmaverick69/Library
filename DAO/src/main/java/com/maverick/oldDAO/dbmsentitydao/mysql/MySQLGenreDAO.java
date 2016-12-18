@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MySQLGenreDAO implements GenreDAO {
 
     private final static String GENRE_ID = "genre.id";

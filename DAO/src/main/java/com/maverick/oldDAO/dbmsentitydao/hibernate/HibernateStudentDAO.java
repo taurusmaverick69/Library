@@ -4,6 +4,7 @@ import com.maverick.domain.Student;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.StudentDAO;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -18,7 +19,11 @@ public class HibernateStudentDAO implements StudentDAO {
 
     @Override
     public Student findById(int id) {
-        return null;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            Query<Student> query = session.createQuery("from Student where id = :id", Student.class);
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        }
     }
 
     @Override
@@ -52,17 +57,18 @@ public class HibernateStudentDAO implements StudentDAO {
 
     @Override
     public boolean delete(int id) {
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(findById(id));
+            session.getTransaction().commit();
+            return true;
 //            session.beginTransaction();
-//            session.delete(student);
+//            int executeUpdate = session
+//                    .createQuery("delete Student where id = :id")
+//                    .setParameter("id", id)
+//                    .executeUpdate();
 //            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
-        return true;
-
+//            return executeUpdate > 0;
+        }
     }
 }

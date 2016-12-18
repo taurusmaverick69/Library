@@ -11,7 +11,6 @@ public class HibernateOrderDAO implements OrderDAO {
 
     @Override
     public List<Order> findAll() {
-        System.err.println("HibernateOrderDAO.findAll");
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             return session.createQuery("from Order ", Order.class).list();
         }

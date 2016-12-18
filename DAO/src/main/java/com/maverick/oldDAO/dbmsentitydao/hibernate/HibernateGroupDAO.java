@@ -9,7 +9,6 @@ import java.util.List;
 
 public class HibernateGroupDAO implements GroupDAO {
 
-
     @Override
     public List<Group> findAll() {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
@@ -36,7 +35,6 @@ public class HibernateGroupDAO implements GroupDAO {
 //        }
         return true;
     }
-
 
     @Override
     public boolean update(Group group) {

@@ -9,7 +9,7 @@ public class Order extends EntityClass {
 
     @ManyToOne
     @JoinColumn(name = "Student_id")
-    private Student student = new Student();
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "Book_id")

@@ -33,5 +33,4 @@ public class LibrarianController {
     public void delete(@PathVariable("id") int id) {
         librarianService.delete(id);
     }
-
 }

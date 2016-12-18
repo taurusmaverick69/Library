@@ -33,5 +33,4 @@ public class GenreController {
     public void delete(@PathVariable("id") int id) {
         genreService.delete(id);
     }
-
 }

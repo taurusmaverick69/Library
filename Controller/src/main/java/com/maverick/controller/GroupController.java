@@ -33,5 +33,4 @@ public class GroupController {
     public void delete(@PathVariable("id") int id) {
         groupService.delete(id);
     }
-
 }

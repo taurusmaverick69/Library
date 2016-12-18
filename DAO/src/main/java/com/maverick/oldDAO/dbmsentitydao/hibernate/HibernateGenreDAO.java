@@ -3,11 +3,24 @@ package com.maverick.oldDAO.dbmsentitydao.hibernate;
 import com.maverick.domain.Genre;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.GenreDAO;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import java.util.List;
 
 public class HibernateGenreDAO implements GenreDAO {
+
+    @Override
+    public List<Genre> findAll() {
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            return session.createQuery("from Genre ", Genre.class).list();
+        }
+    }
+
+    @Override
+    public Genre findById(int id) {
+        return null;
+    }
 
     @Override
     public boolean save(Genre genre) {
@@ -26,24 +39,12 @@ public class HibernateGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean update(Genre genre) {
         return false;
     }
 
     @Override
-    public List<Genre> findAll() {
-        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
-            return session.createQuery("from Genre ", Genre.class).list();
-        }
-    }
-
-    @Override
-    public Genre findById(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean update(Genre genre) {
+    public boolean delete(int id) {
         return false;
     }
 }

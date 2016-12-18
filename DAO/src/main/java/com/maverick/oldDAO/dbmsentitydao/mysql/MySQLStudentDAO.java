@@ -98,11 +98,11 @@ public class MySQLStudentDAO implements StudentDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENT)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     @Override

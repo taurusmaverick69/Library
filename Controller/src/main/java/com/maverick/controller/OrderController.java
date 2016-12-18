@@ -33,5 +33,4 @@ public class OrderController {
     public void delete(@PathVariable("id") int id) {
         orderService.delete(id);
     }
-
 }
