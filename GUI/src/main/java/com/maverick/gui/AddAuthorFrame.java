@@ -15,7 +15,7 @@ public class AddAuthorFrame extends JDialog implements WindowClosing {
     private JTextField fullNameTextField = new JTextField();
     private JFormattedTextField yearsOfLifeTextfield;
 
-    public AddAuthorFrame(Window owner) {
+    AddAuthorFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

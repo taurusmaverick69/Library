@@ -14,7 +14,7 @@ public class Book extends EntityClass {
     @Column
     private String title;
 
-    @Column
+    @Column(name = "publishing_year")
     private Integer publishingYear;
 
     @ManyToOne
@@ -27,9 +27,6 @@ public class Book extends EntityClass {
 
     @Column
     private int amount;
-
-    public Book() {
-    }
 
     @Override
     public int getId() {

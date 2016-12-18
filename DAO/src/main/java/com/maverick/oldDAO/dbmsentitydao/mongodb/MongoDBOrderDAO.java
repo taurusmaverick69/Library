@@ -1,6 +1,5 @@
 package com.maverick.oldDAO.dbmsentitydao.mongodb;
 
-import com.maverick.domain.Book;
 import com.maverick.domain.Order;
 import com.maverick.oldDAO.dbmsdaofactory.MongoDBDAOFactory;
 import com.maverick.oldDAO.entitydao.OrderDAO;

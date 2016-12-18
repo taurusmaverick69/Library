@@ -13,7 +13,7 @@ public class AddPublisherFrame extends JDialog implements WindowClosing {
     private PublisherDAO publisherDAO;
     private JTextField nameTextField = new JTextField();
 
-    public AddPublisherFrame(Window owner) {
+    AddPublisherFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
         publisherDAO = LoginFrame.getDaoFactory().getPublisherDAO();

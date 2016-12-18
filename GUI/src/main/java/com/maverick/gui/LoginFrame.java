@@ -1,6 +1,5 @@
 package com.maverick.gui;
 
-
 import com.maverick.domain.Librarian;
 import com.maverick.oldDAO.DAOFactory;
 import com.maverick.oldDAO.TypeDAO;
@@ -24,7 +23,7 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
 
-        daoFactory = DAOFactory.getDAOFactory(TypeDAO.Hibernate);
+        daoFactory = DAOFactory.getDAOFactory(TypeDAO.MySQL);
         librarianDAO = daoFactory.getLibrarianDAO();
 
         JLabel[] labels = new JLabel[3];

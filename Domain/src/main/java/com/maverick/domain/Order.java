@@ -19,17 +19,14 @@ public class Order extends EntityClass {
     @JoinColumn(name = "Librarian_id")
     private Librarian librarian = new Librarian();
 
-    @Column
+    @Column(name = "start_date")
     private Date startDate;
 
-    @Column
+    @Column(name = "finish_date")
     private Date finishDate;
 
     @Column
     private String status;
-
-    public Order() {
-    }
 
     public Student getStudent() {
         return student;

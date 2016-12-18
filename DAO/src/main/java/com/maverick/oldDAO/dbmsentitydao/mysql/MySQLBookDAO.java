@@ -1,6 +1,9 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
+import com.maverick.domain.Author;
 import com.maverick.domain.Book;
+import com.maverick.domain.Genre;
+import com.maverick.domain.Publisher;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -49,11 +52,21 @@ public class MySQLBookDAO implements BookDAO {
 
                 Book book = new Book();
                 book.setId(resultSet.getInt(BOOK_ID));
-                book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
+
+                Author author = new Author();
+                author.setId(resultSet.getInt(BOOK_AUTHOR_ID));
+
+                Genre genre = new Genre();
+                genre.setId(resultSet.getInt(BOOK_GENRE_ID));
+
+                Publisher publisher = new Publisher();
+                publisher.setId(resultSet.getInt(BOOK_PUBLISHER_ID));
+
+                book.setAuthor(author);
                 book.setTitle(resultSet.getString(BOOK_TITLE));
                 book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
-                book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
-                book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
+                book.setGenre(genre);
+                book.setPublisher(publisher);
                 book.setAmount(resultSet.getInt(BOOK_AMOUNT));
 
                 books.add(book);
@@ -61,11 +74,20 @@ public class MySQLBookDAO implements BookDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        books.forEach(book -> {
+            book.setAuthor(authorDAO.findById(book.getAuthor().getId()));
+            book.setGenre(genreDAO.findById(book.getGenre().getId()));
+            book.setPublisher(publisherDAO.findById(book.getPublisher().getId()));
+        });
+
         return books;
     }
 
     @Override
     public Book findById(int id) {
+
+        Book book = new Book();
 
         authorDAO = new MySQLAuthorDAO();
         genreDAO = new MySQLGenreDAO();
@@ -78,20 +100,34 @@ public class MySQLBookDAO implements BookDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                Book book = new Book();
                 book.setId(resultSet.getInt(BOOK_ID));
-                book.setAuthor(authorDAO.findById(resultSet.getInt(BOOK_AUTHOR_ID)));
+
+                Author author = new Author();
+                author.setId(resultSet.getInt(BOOK_AUTHOR_ID));
+                book.setAuthor(author);
+
+                Genre genre = new Genre();
+                genre.setId(resultSet.getInt(BOOK_GENRE_ID));
+                book.setGenre(genre);
+
+                Publisher publisher = new Publisher();
+                publisher.setId(resultSet.getInt(BOOK_PUBLISHER_ID));
+                book.setPublisher(publisher);
+
                 book.setTitle(resultSet.getString(BOOK_TITLE));
                 book.setPublishingYear(resultSet.getInt(BOOK_PUBLISHING_YEAR));
-                book.setGenre(genreDAO.findById(resultSet.getInt(BOOK_GENRE_ID)));
-                book.setPublisher(publisherDAO.findById(resultSet.getInt(BOOK_PUBLISHER_ID)));
                 book.setAmount(resultSet.getInt(BOOK_AMOUNT));
-                return book;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+
+        book.setAuthor(authorDAO.findById(book.getAuthor().getId()));
+        book.setGenre(genreDAO.findById(book.getGenre().getId()));
+        book.setPublisher(publisherDAO.findById(book.getGenre().getId()));
+
+        return book;
     }
 
     @Override

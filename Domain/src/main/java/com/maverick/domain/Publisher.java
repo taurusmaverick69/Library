@@ -9,9 +9,6 @@ public class Publisher extends EntityClass {
     @Column
     private String name;
 
-    public Publisher() {
-    }
-
     public String getName() {
         return name;
     }

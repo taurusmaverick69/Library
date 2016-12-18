@@ -11,9 +11,6 @@ public class Group extends EntityClass {
     @Column
     private String name;
 
-    public Group() {
-    }
-
     public String getName() {
         return name;
     }

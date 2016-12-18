@@ -19,7 +19,7 @@ public class AddStudentFrame extends JDialog implements WindowClosing {
     private JTextField fullNameTextField = new JTextField();
     private JTextField libraryCardTextField;
 
-    public AddStudentFrame(Window owner) {
+    AddStudentFrame(Window owner) {
         super(owner, ModalityType.DOCUMENT_MODAL);
 
         GroupDAO groupDAO = LoginFrame.getDaoFactory().getGroupDAO();

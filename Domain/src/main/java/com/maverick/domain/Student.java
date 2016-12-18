@@ -8,18 +8,15 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Student extends EntityClass {
 
-    @Column
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column
+    @Column(name = "library_card")
     private String libraryCard;
 
     @ManyToOne
     @JoinColumn(name = "Group_id")
     private Group group;
-
-    public Student() {
-    }
 
     public String getFullName() {
         return fullName;
@@ -44,5 +41,4 @@ public class Student extends EntityClass {
     public void setGroup(Group group) {
         this.group = group;
     }
-
 }

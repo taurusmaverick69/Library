@@ -25,7 +25,7 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser startDateChooser = new JDateChooser();
     private JDateChooser finishDateChooser = new JDateChooser();
 
-    public AddOrderFrame(Window owner) {
+    AddOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

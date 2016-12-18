@@ -3,31 +3,23 @@ package com.maverick.oldDAO.dbmsdaofactory;
 import com.maverick.oldDAO.DAOFactory;
 import com.maverick.oldDAO.dbmsentitydao.hibernate.*;
 import com.maverick.oldDAO.entitydao.*;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 
 public class HibernateDAOFactory extends DAOFactory {
 
-    private static Session session;
+    private static SessionFactory sessionFactory;
 
-    public static Session openSession() {
-
-        if (session == null || !session.isConnected()) {
-            Configuration configure = new Configuration().configure();
-            ServiceRegistry sr = new StandardServiceRegistryBuilder().applySettings(configure.getProperties()).build();
-            SessionFactory sf = configure.buildSessionFactory(sr);
-            session = sf.openSession();
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure().build();
+            Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+            sessionFactory = metadata.getSessionFactoryBuilder().build();
         }
-        return session;
-    }
-
-    public static void closeSession() {
-        if (session != null && session.isOpen())
-            session.close();
+        return sessionFactory;
     }
 
     @Override

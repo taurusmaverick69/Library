@@ -30,7 +30,7 @@ public class AddBookFrame extends JDialog implements WindowClosing {
     private JTextField publishingYearTextField;
     private JTextField amountTextField = new JTextField();
 
-    public AddBookFrame(Window owner) {
+    AddBookFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 
@@ -69,17 +69,13 @@ public class AddBookFrame extends JDialog implements WindowClosing {
         });
 
         authorComboBox.removeAllItems();
-        for (Author author : authorDAO.findAll())
-            authorComboBox.addItem(author);
+        authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(author -> authorComboBox.addItem(author));
 
         genreComboBox.removeAllItems();
-        for (Genre genre : genreDAO.findAll())
-            genreComboBox.addItem(genre);
+        genreDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(genre -> genreComboBox.addItem(genre));
 
         publisherComboBox.removeAllItems();
-        for (Publisher publisher : publisherDAO.findAll())
-            publisherComboBox.addItem(publisher);
-
+        publisherDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(publisher -> publisherComboBox.addItem(publisher));
 
         setTitle("Добавить книгу");
         ImageIcon addIcon = new ImageIcon("images/20x20/add.png");
@@ -235,6 +231,5 @@ public class AddBookFrame extends JDialog implements WindowClosing {
             case JOptionPane.NO_OPTION:
                 break;
         }
-
     }
 }

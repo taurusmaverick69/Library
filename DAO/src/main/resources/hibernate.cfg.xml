@@ -11,6 +11,7 @@
         <property name="connection.password">root</property>
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
         <mapping class="com.maverick.domain.Author"/>
         <mapping class="com.maverick.domain.Book"/>
         <mapping class="com.maverick.domain.Genre"/>

@@ -29,7 +29,7 @@ public class EditBookFrame extends JDialog implements WindowClosing {
     private JComboBox<Genre> genreComboBox = new JComboBox<>();
     private JComboBox<Publisher> publisherComboBox = new JComboBox<>();
 
-    public EditBookFrame(Window owner) {
+    EditBookFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

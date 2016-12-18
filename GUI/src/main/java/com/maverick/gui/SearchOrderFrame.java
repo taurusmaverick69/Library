@@ -9,7 +9,6 @@ import com.toedter.calendar.JTextFieldDateEditor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class SearchOrderFrame extends JDialog implements WindowClosing {
 
@@ -21,7 +20,7 @@ public class SearchOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser finishDateChooser = new JDateChooser();
     private JComboBox<String> statusComboBox = new JComboBox<>();
 
-    public SearchOrderFrame(Window owner) {
+    SearchOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

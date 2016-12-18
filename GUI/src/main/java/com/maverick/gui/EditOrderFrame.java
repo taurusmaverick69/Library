@@ -29,7 +29,7 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser startDateChooser = new JDateChooser();
     private JDateChooser finishDateChooser = new JDateChooser();
 
-    public EditOrderFrame(Window owner) {
+    EditOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

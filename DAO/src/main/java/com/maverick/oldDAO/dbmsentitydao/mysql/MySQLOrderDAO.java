@@ -1,7 +1,9 @@
 package com.maverick.oldDAO.dbmsentitydao.mysql;
 
 import com.maverick.domain.Book;
+import com.maverick.domain.Librarian;
 import com.maverick.domain.Order;
+import com.maverick.domain.Student;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import com.maverick.oldDAO.entitydao.LibrarianDAO;
@@ -55,19 +57,35 @@ public class MySQLOrderDAO implements OrderDAO {
             while (resultSet.next()) {
                 Order order = new Order();
                 order.setId(resultSet.getInt(ORDER_ID));
-                order.setStudent(studentDAO.findById(resultSet.getInt(ORDER_STUDENT_ID)));
-                order.setBook(bookDAO.findById(resultSet.getInt(ORDER_BOOK_ID)));
-                order.setLibrarian(librarianDAO.findById(resultSet.getInt(ORDER_LIBRARIAN_ID)));
+
+                Student student = new Student();
+                student.setId(resultSet.getInt(ORDER_STUDENT_ID));
+
+                Book book = new Book();
+                book.setId(resultSet.getInt(ORDER_BOOK_ID));
+
+                Librarian librarian = new Librarian();
+                librarian.setId(resultSet.getInt(ORDER_STUDENT_ID));
+
+                order.setStudent(student);
+                order.setBook(book);
+                order.setLibrarian(librarian);
                 order.setStartDate(resultSet.getDate(ORDER_START_DATE));
                 order.setFinishDate(resultSet.getDate(ORDER_FINISH_DATE));
                 order.setStatus(resultSet.getString(ORDER_STATUS));
                 orders.add(order);
             }
-            return orders;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+
+
+        orders.forEach(order -> {
+            order.setStudent(studentDAO.findById(order.getStudent().getId()));
+            order.setBook(bookDAO.findById(order.getBook().getId()));
+            order.setLibrarian(librarianDAO.findById(order.getLibrarian().getId()));
+        });
+        return orders;
     }
 
     @Override

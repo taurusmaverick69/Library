@@ -11,7 +11,7 @@ public class AddGenreFrame extends JDialog implements WindowClosing {
     private GenreDAO genreDAO;
     private JTextField nameTextField = new JTextField();
 
-    public AddGenreFrame(Window owner) {
+    AddGenreFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
         genreDAO = LoginFrame.getDaoFactory().getGenreDAO();

@@ -13,7 +13,7 @@ public abstract class EntityClass {
     private int id;
 
     @Transient
-    ObjectId _id;
+    private ObjectId _id;
 
     public int getId() {
         return id;

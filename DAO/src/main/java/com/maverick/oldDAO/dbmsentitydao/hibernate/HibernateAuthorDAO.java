@@ -5,25 +5,15 @@ import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import org.hibernate.Session;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class HibernateAuthorDAO implements AuthorDAO {
 
-//    private EntityManager entityManager = Persistence.createEntityManagerFactory("MY_EM").createEntityManager();
-
     @Override
     public List<Author> findAll() {
-
-        Session session = HibernateDAOFactory.openSession();
-        session.createQuery("from Author ");
-
-//        TypedQuery<Author> namedQuery = entityManager.createNamedQuery("Author.findAll", Author.class);
-//        return namedQuery.getResultList();
-
-        return null;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            return session.createQuery("from Author ", Author.class).list();
+        }
     }
 
     @Override
@@ -33,16 +23,16 @@ public class HibernateAuthorDAO implements AuthorDAO {
 
     @Override
     public boolean save(Author author) {
-        Session session = HibernateDAOFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.save(author);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
+//        Session session = HibernateDAOFactory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.save(author);
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            HibernateDAOFactory.closeSession();
+//        }
         return true;
     }
 
@@ -53,16 +43,16 @@ public class HibernateAuthorDAO implements AuthorDAO {
 
     @Override
     public boolean delete(Author author) {
-        Session session = HibernateDAOFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.delete(author);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
+//        Session session = HibernateDAOFactory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.delete(author);
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            //    HibernateDAOFactory.closeSession();
+//        }
         return true;
     }
 }

@@ -89,8 +89,8 @@ public class MongoDBDAOFactory extends DAOFactory {
                 book.setPublishingYear(document.getInteger("publishingYear"));
                 book.setGenre(genre);
                 book.setPublisher(publisher);
-                book.setAmount( document.getInteger("amount"));
-               return book;
+                book.setAmount(document.getInteger("amount"));
+                return book;
 
             case "Author":
 
@@ -111,14 +111,14 @@ public class MongoDBDAOFactory extends DAOFactory {
                 book1.setTitle(document.getString("book"));
 
                 Order order = new Order();
-                order.set_id( document.getObjectId("_id"));
+                order.set_id(document.getObjectId("_id"));
                 order.setStudent(student);
                 order.setBook(book1);
-                order.setStartDate( document.getDate("startDate"));
-                order.setFinishDate(  document.getDate("finishDate"));
-                order.setStatus( document.getString("status"));
+                order.setStartDate(document.getDate("startDate"));
+                order.setFinishDate(document.getDate("finishDate"));
+                order.setStatus(document.getString("status"));
 
-               return order;
+                return order;
 
             case "Student":
 
@@ -127,9 +127,9 @@ public class MongoDBDAOFactory extends DAOFactory {
 
                 Student student1 = new Student();
 
-                student1.set_id( document.getObjectId("_id"));
-                student1.setFullName( document.getString("fullName"));
-                student1.setLibraryCard( document.getString("libraryCard"));
+                student1.set_id(document.getObjectId("_id"));
+                student1.setFullName(document.getString("fullName"));
+                student1.setLibraryCard(document.getString("libraryCard"));
                 student1.setGroup(group);
 
                 return student1;

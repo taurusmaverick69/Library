@@ -3,14 +3,13 @@ package com.maverick.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Librarian")
-public class Librarian extends EntityClass implements Serializable {
+public class Librarian extends EntityClass {
 
-    @Column
+    @Column(name = "full_name")
     private String fullName;
 
     @Column
@@ -18,9 +17,6 @@ public class Librarian extends EntityClass implements Serializable {
 
     @Transient
     private List<Order> orders = new ArrayList<>();
-
-    public Librarian() {
-    }
 
     public String getFullName() {
         return fullName;

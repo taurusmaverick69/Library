@@ -1,42 +1,39 @@
 package com.maverick.oldDAO.dbmsentitydao.hibernate;
 
-import com.maverick.domain.Book;
 import com.maverick.domain.Order;
-import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.OrderDAO;
-import org.hibernate.Session;
 
 import java.util.List;
 
 public class HibernateOrderDAO implements OrderDAO {
     @Override
     public boolean save(Order order) {
-        Session session = HibernateDAOFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.save(order);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
+//        Session session = HibernateDAOFactory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.save(order);
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            HibernateDAOFactory.closeSession();
+//        }
         return true;
     }
 
 
     @Override
     public boolean delete(Order order) {
-        Session session = HibernateDAOFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.delete(order);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
+//        Session session = HibernateDAOFactory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.delete(order);
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            HibernateDAOFactory.closeSession();
+//        }
         return true;
     }
 
@@ -52,17 +49,17 @@ public class HibernateOrderDAO implements OrderDAO {
 
     @Override
     public boolean update(Order order) {
-        Session session = HibernateDAOFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.update(order);
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            HibernateDAOFactory.closeSession();
-        }
+//        Session session = HibernateDAOFactory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.update(order);
+//            session.getTransaction().commit();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            HibernateDAOFactory.closeSession();
+//        }
         return true;
     }
 }
