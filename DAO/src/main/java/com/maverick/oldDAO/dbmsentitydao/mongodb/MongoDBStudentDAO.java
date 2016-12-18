@@ -21,9 +21,9 @@ public class MongoDBStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean delete(Student student) {
+    public boolean delete(int id) {
         try {
-            studentCollection.deleteOne(new Document("_id", student.get_id()));
+            studentCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

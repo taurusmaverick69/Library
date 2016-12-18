@@ -40,9 +40,9 @@ public class MongoDBBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean delete(Book book) {
+    public boolean delete(int id) {
         try {
-            bookCollection.deleteOne(new Document("_id", book.get_id()));
+            bookCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

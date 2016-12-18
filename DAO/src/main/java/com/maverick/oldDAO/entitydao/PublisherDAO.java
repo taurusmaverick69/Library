@@ -14,5 +14,5 @@ public interface PublisherDAO {
 
     boolean update(Publisher publisher);
 
-    boolean delete(Publisher publisher);
+    boolean delete(int id);
 }

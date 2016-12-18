@@ -75,7 +75,7 @@ public class MySQLGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean delete(Genre genre) {
+    public boolean delete(int id) {
         return false;
     }
 }

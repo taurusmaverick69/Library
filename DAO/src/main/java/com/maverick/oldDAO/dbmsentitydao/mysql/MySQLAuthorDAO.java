@@ -84,10 +84,10 @@ public class MySQLAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean delete(Author author) {
+    public boolean delete(int id) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_AUTHOR)) {
-            preparedStatement.setInt(1, author.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

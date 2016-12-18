@@ -14,5 +14,5 @@ public interface LibrarianDAO {
 
     boolean update(Librarian librarian);
 
-    boolean delete(Librarian librarian);
+    boolean delete(int id);
 }

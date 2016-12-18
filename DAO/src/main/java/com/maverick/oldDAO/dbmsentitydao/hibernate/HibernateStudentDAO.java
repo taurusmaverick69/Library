@@ -8,6 +8,19 @@ import org.hibernate.Session;
 import java.util.List;
 
 public class HibernateStudentDAO implements StudentDAO {
+
+    @Override
+    public List<Student> findAll() {
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            return session.createQuery("from Student ", Student.class).list();
+        }
+    }
+
+    @Override
+    public Student findById(int id) {
+        return null;
+    }
+
     @Override
     public boolean save(Student student) {
 
@@ -33,7 +46,12 @@ public class HibernateStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean delete(Student student) {
+    public boolean update(Student student) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
 //        Session session = HibernateDAOFactory.openSession();
 //        try {
 //            session.beginTransaction();
@@ -46,23 +64,5 @@ public class HibernateStudentDAO implements StudentDAO {
 //        }
         return true;
 
-    }
-
-    @Override
-    public List<Student> findAll() {
-        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
-            return session.createQuery("from Student ", Student.class).list();
-        }
-    }
-
-    @Override
-    public Student findById(int id) {
-        return null;
-    }
-
-
-    @Override
-    public boolean update(Student student) {
-        return false;
     }
 }

@@ -20,9 +20,9 @@ public class MongoDBOrderDAO implements OrderDAO {
     }
 
     @Override
-    public boolean delete(Order order) {
+    public boolean delete(int id) {
         try {
-            orderCollection.deleteOne(new Document("_id", order.get_id()));
+            orderCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

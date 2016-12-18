@@ -42,7 +42,7 @@ public class HibernateAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean delete(Author author) {
+    public boolean delete(int id) {
 //        Session session = HibernateDAOFactory.openSession();
 //        try {
 //            session.beginTransaction();

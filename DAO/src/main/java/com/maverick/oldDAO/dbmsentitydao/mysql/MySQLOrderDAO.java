@@ -127,10 +127,10 @@ public class MySQLOrderDAO implements OrderDAO {
     }
 
     @Override
-    public boolean delete(Order order) {
+    public boolean delete(int id) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER)) {
-            preparedStatement.setInt(1, order.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

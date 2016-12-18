@@ -24,7 +24,6 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     @Override
     public boolean save(Librarian librarian) {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
-//
 //            session.createQuery(Criteria.)
 //            session.save(librarian);
         }
@@ -37,7 +36,7 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean delete(Librarian librarian) {
+    public boolean delete(int id) {
         return false;
     }
 }

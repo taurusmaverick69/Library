@@ -4,6 +4,7 @@ import com.maverick.gui.LoginFrame;
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 
 import javax.swing.*;
+import java.util.logging.Level;
 
 public class UIRunner {
 

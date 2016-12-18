@@ -13,7 +13,6 @@ public class MongoDBAuthorDAO implements AuthorDAO {
 
     private MongoCollection<Document> authorCollection = MongoDBDAOFactory.createConnection().getCollection("author");
 
-
     @Override
     public boolean save(Author author) {
         authorCollection.insertOne(MongoDBDAOFactory.toDocument(author));
@@ -21,9 +20,9 @@ public class MongoDBAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean delete(Author author) {
+    public boolean delete(int id) {
         try {
-            authorCollection.deleteOne(new Document("_id", author.get_id()));
+            authorCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
             return false;

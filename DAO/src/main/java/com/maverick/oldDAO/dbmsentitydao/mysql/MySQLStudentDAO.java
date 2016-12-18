@@ -93,10 +93,10 @@ public class MySQLStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean delete(Student student) {
+    public boolean delete(int id) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENT)) {
-            preparedStatement.setInt(1, student.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

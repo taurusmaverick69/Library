@@ -4,6 +4,8 @@ import com.maverick.domain.Book;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import org.hibernate.Session;
+import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
+import org.hibernate.jpa.criteria.CriteriaUpdateImpl;
 
 import java.util.List;
 
@@ -23,48 +25,29 @@ public class HibernateBookDAO implements BookDAO {
 
     @Override
     public boolean save(Book book) {
-
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             session.save(book);
+            return true;
         }
-
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
-//            session.beginTransaction();
-//            session.save(book);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
-        return true;
     }
 
     @Override
     public boolean update(Book book) {
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
-//            session.beginTransaction();
-//            session.update(book);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
-
-        return true;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(book);
+            session.getTransaction().commit();
+            return true;
+        }
     }
 
     @Override
-    public boolean delete(Book book) {
+    public boolean delete(int id) {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
             int executeUpdate = session
                     .createQuery("delete Book where id = :id")
-                    .setParameter("id", book.getId())
+                    .setParameter("id", id)
                     .executeUpdate();
             session.getTransaction().commit();
             return executeUpdate > 0;

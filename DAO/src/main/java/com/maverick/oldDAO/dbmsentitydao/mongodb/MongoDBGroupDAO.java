@@ -12,7 +12,7 @@ public class MongoDBGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean delete(Group group) {
+    public boolean delete(int id) {
         return false;
     }
 

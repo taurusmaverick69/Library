@@ -12,7 +12,7 @@ public class MongoDBLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean delete(Librarian librarian) {
+    public boolean delete(int id) {
         return false;
     }
 

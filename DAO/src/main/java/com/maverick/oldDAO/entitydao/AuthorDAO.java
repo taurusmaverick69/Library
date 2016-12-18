@@ -14,5 +14,5 @@ public interface AuthorDAO {
 
     boolean update(Author author);
 
-    boolean delete(Author author);
+    boolean delete(int id);
 }

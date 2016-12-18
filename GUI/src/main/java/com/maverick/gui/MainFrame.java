@@ -207,9 +207,7 @@ public class MainFrame extends JFrame {
             switch (JOptionPane.showConfirmDialog(null, "Вы действительно хотите удалить данные записи?", "Подтвердите", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.OK_OPTION:
                     for (int i : bookTable.getSelectedRows()) {
-                        Book book = new Book();
-                        book.setId(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
-                        if (!bookDAO.delete(book)) {
+                        if (!bookDAO.delete(Integer.parseInt(bookTable.getValueAt(i, 0).toString()))) {
                             JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
                                     bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
                                     ' ' +

@@ -41,4 +41,9 @@ public class Student extends EntityClass {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
 }
