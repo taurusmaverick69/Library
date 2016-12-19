@@ -122,7 +122,6 @@ public class MySQLBookDAO implements BookDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         book.setAuthor(authorDAO.findById(book.getAuthor().getId()));
         book.setGenre(genreDAO.findById(book.getGenre().getId()));
         book.setPublisher(publisherDAO.findById(book.getGenre().getId()));
@@ -189,7 +188,6 @@ public class MySQLBookDAO implements BookDAO {
     @Override
     public int selectAmount(Book book) {
         int amount;
-
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_AMOUNT)) {
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LibrarianDAO {
 
-    List<Librarian> findAll();
+    List<Librarian> findAllWithOrders();
 
     Librarian findById(int id);
 

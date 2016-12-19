@@ -22,7 +22,7 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
     private OrderDAO orderDAO;
 
     @Override
-    public List<Librarian> findAll() {
+    public List<Librarian> findAllWithOrders() {
 
         orderDAO = new MySQLOrderDAO();
 
@@ -41,11 +41,7 @@ public class MySQLLibrarianDAO implements LibrarianDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        librarians.forEach(librarian -> {
-            librarian.setOrders(orderDAO.findByLibrarianId(librarian.getId()));
-        });
-
+        librarians.forEach(librarian -> librarian.setOrders(orderDAO.findByLibrarianId(librarian.getId())));
         return librarians;
     }
 

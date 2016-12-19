@@ -10,7 +10,7 @@ import java.util.List;
 public class HibernateLibrarianDAO implements LibrarianDAO {
 
     @Override
-    public List<Librarian> findAll() {
+    public List<Librarian> findAllWithOrders() {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             return session.createQuery("from Librarian ", Librarian.class).list();
         }

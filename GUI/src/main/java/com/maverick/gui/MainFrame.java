@@ -281,7 +281,6 @@ public class MainFrame extends JFrame {
             }
         });
 
-
         searchOrderMenuItem.addActionListener(e -> new SearchOrderFrame(this));
 
         refreshOrderMenuItem.addActionListener(e -> {
@@ -300,9 +299,7 @@ public class MainFrame extends JFrame {
                 editBookMenuItem.setEnabled(true);
                 deleteBookMenuItem.setEnabled(true);
             }
-
         });
-
 
 //        mySQLToMongoAuthorMenuItem.addActionListener(e -> {
 //
@@ -326,7 +323,7 @@ public class MainFrame extends JFrame {
 //                    int rowCount = bookTable.getRowCount();
 //                 //   mysqlDao.initMigrateDB();
 //                  //  int migrate = LoginFrame.getDaoInstance().migrateBooks();
-//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAll());
+//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAllWithOrders());
 //
 //                 //   JOptionPane.showMessageDialog(null, "Миграция завершена\nПеренесено " + (rowCount - migrate) + " записей\n" +
 //                 //           "Не перенесено " + migrate + " записей", "Завершено",JOptionPane.INFORMATION_MESSAGE);
@@ -386,7 +383,7 @@ public class MainFrame extends JFrame {
 //            switch (JOptionPane.showOptionDialog(null, "Действительно перенести книги из MongoDB в MYSQL?", "Перенести?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
 //                case JOptionPane.OK_OPTION:
 //                    int migrate = mongoDao.migrateBooks();
-//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAll());
+//                    bookTableModel.addBookData(LoginFrame.getDaoInstance().findAllWithOrders());
 //                    JOptionPane.showMessageDialog(null, "Миграция завершена\nПеренесено " + migrate + " записей\n", "Завершено",JOptionPane.INFORMATION_MESSAGE);
 //                    break;
 //                case JOptionPane.CANCEL_OPTION:

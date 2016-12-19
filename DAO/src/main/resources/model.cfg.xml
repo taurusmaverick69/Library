@@ -14,5 +14,6 @@
     </bean>
 
     <bean id="author-dao" class="com.maverick.newDAO.AuthorDaoImpl" parent="abstract-dao"/>
+    <bean id="sessionFactory"/>
 
 </beans>

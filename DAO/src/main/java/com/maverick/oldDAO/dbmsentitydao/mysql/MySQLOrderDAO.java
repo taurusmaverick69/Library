@@ -28,7 +28,6 @@ public class MySQLOrderDAO implements OrderDAO {
     private final static String INSERT_ORDER = "INSERT INTO `order` VALUES(DEFAULT, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'), ?)";
     private final static String DELETE_ORDER = "DELETE FROM `order` WHERE id = ?";
     private final static String UPDATE_ORDER = "UPDATE `order` SET Student_id = ?, Book_id = ?, start_date = STR_TO_DATE(?, '%Y-%m-%d'), finish_date = STR_TO_DATE(?, '%Y-%m-%d'), status = ? WHERE id = ?";
-    private final static String IS_ORDERED = "SELECT Book_id FROM `order`";
 
     private StudentDAO studentDAO;
     private BookDAO bookDAO;

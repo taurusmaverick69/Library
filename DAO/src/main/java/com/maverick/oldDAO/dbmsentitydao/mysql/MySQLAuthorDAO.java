@@ -4,7 +4,10 @@ import com.maverick.domain.Author;
 import com.maverick.oldDAO.dbmsdaofactory.MySQLDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +27,12 @@ public class MySQLAuthorDAO implements AuthorDAO {
         List<Author> authors = new ArrayList<>();
 
         try (Connection connection = MySQLDAOFactory.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet authorResultSet = statement.executeQuery(FIND_ALL)) {
-
-            while (authorResultSet.next()) {
+             ResultSet resultSet = connection.createStatement().executeQuery(FIND_ALL)) {
+            while (resultSet.next()) {
                 Author author = new Author();
-                author.setId(authorResultSet.getInt(AUTHOR_ID));
-                author.setFullName(authorResultSet.getString(AUTHOR_FULL_NAME));
-                author.setYearsOfLife(authorResultSet.getString(AUTHOR_YEARS_OF_LIFE));
+                author.setId(resultSet.getInt(AUTHOR_ID));
+                author.setFullName(resultSet.getString(AUTHOR_FULL_NAME));
+                author.setYearsOfLife(resultSet.getString(AUTHOR_YEARS_OF_LIFE));
                 authors.add(author);
             }
         } catch (SQLException e) {
@@ -62,7 +63,6 @@ public class MySQLAuthorDAO implements AuthorDAO {
         return null;
     }
 
-
     @Override
     public boolean save(Author author) {
         try (Connection connection = MySQLDAOFactory.createConnection();
@@ -89,10 +89,10 @@ public class MySQLAuthorDAO implements AuthorDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_AUTHOR)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 }

@@ -17,7 +17,7 @@ public class MongoDBLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public List<Librarian> findAll() {
+    public List<Librarian> findAllWithOrders() {
         return null;
     }
 
