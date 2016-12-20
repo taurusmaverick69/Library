@@ -1,7 +1,6 @@
 package com.maverick.oldDAO.dbmsentitydao.hibernate;
 
 import com.maverick.domain.Author;
-import com.maverick.domain.Book;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import org.hibernate.Session;
@@ -29,19 +28,11 @@ public class HibernateAuthorDAO implements AuthorDAO {
 
     @Override
     public boolean save(Author author) {
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
-//            session.beginTransaction();
-//            session.save(author);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            session.save(author);
+        }
         return true;
     }
-
 
     @Override
     public boolean update(Author author) {
@@ -50,16 +41,14 @@ public class HibernateAuthorDAO implements AuthorDAO {
 
     @Override
     public boolean delete(int id) {
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
-//            session.beginTransaction();
-//            session.delete(author);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            //    HibernateDAOFactory.closeSession();
-//        }
-        return true;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            int executeUpdate = session
+                    .createQuery("delete Author where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            session.getTransaction().commit();
+            return executeUpdate > 0;
+        }
     }
 }

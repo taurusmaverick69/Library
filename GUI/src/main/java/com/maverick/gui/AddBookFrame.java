@@ -216,6 +216,7 @@ public class AddBookFrame extends JDialog implements WindowClosing {
 
                 List<Book> books = bookDAO.findAll();
                 ArrayList<Book> booksList = new ArrayList<>(books);
+                // TODO: 19.12.2016 WTF?
 
                 MainFrame.bookTableModel.addBookData(books);
                 MainFrame.bookTable.updateUI();

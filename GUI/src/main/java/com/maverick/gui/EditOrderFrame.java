@@ -161,22 +161,7 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
         Object[] options = {"Да", "Нет"};
         switch (JOptionPane.showOptionDialog(null, "Редактировать заказ?", "Редактировать?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             case JOptionPane.YES_OPTION:
-
-
-//                Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
-//
-//                Order order = Order.newBuilder()
-//                        .setStudent((Student) studentComboBox.getSelectedItem())
-//                        .setBook((Book) bookComboBox.getSelectedItem())
-//                        .setStartDate(startDate)
-//                        .setFinishDate(finishDate)
-//                        .setStatus("Не возвращена")
-//                        .build();
-//
-//                orderDAO.save(order);
-//                librarian.getOrders().add(order);
-
-                Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
+                Librarian librarian = LoginFrame.getLoggedLibrarian();
 
                 Order order = new Order();
                 order.setId(Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 0).toString()));
@@ -190,7 +175,6 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
 
                 List<Order> orders = librarian.getOrders();
                 orders.set(MainFrame.orderTable.getSelectedRow(), order);
-
                 MainFrame.orderTableModel.addOrderData(orders);
                 MainFrame.orderTable.updateUI();
                 MainFrame.bookTableModel.addBookData(bookDAO.findAll());

@@ -1,7 +1,6 @@
 package com.maverick.gui;
 
 import com.maverick.domain.Book;
-import com.maverick.domain.Librarian;
 import com.maverick.gui.model.BookTableModel;
 import com.maverick.gui.model.OrderTableModel;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -9,28 +8,27 @@ import com.maverick.patterns.memnto.CareTaker;
 import com.maverick.patterns.memnto.Originator;
 
 import javax.swing.*;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainFrame extends JFrame {
 
-    public static BookTableModel bookTableModel;
-    public static JTable bookTable;
-    public static OrderTableModel orderTableModel;
-    public static JTable orderTable;
+    static BookTableModel bookTableModel;
+    static JTable bookTable;
+    static OrderTableModel orderTableModel;
+    static JTable orderTable;
     private static JScrollPane bookScrollPane;
     private static JScrollPane orderScrollPane;
+
     private int selectedRow;
     private int indexState = -1;
     private Originator originator = new Originator();
     private CareTaker careTaker = new CareTaker();
-    private BookDAO bookDAO;
+
     private List<Book> books;
-    private Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
+
     private JTabbedPane tabbedPane = new JTabbedPane();
 
     private JMenuBar menuBar = new JMenuBar();
@@ -63,12 +61,12 @@ public class MainFrame extends JFrame {
     private JMenuItem mongoToMySQLOrderMenuItem = new JMenuItem("Заказы");
     private JMenuItem mongoToMySQLStudentMenuItem = new JMenuItem("Студенты");
 
-    private JMenu userMenu = new JMenu(LoginFrame.librarianComboBox.getSelectedItem().toString());
+    private JMenu userMenu = new JMenu(LoginFrame.getLoggedLibrarian().toString());
     private JMenuItem changeUserMenuItem = new JMenuItem("Сменить пользователя");
 
-    public MainFrame() {
+    MainFrame() {
 
-        bookDAO = LoginFrame.getDaoFactory().getBookDAO();
+        BookDAO bookDAO = LoginFrame.getDaoFactory().getBookDAO();
 
         bookTableModel = new BookTableModel();
         bookTable = new JTable(bookTableModel);
@@ -77,61 +75,10 @@ public class MainFrame extends JFrame {
         books = bookDAO.findAll();
         bookTableModel.addBookData(books);
 
-        TableRowSorter<BookTableModel> bookRowSorter = new TableRowSorter<>(bookTableModel);
-        bookTable.setRowSorter(bookRowSorter);
-
-        for (int i = 0; i <= 6; i += 3) {
-
-            bookRowSorter.setComparator(i, new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    try {
-                        Integer integer1 = Integer.parseInt(o1);
-                        Integer integer2 = Integer.parseInt(o2);
-                        return integer1.compareTo(integer2);
-                    } catch (Exception e) {
-                        return o1.compareTo(o2);
-                    }
-                }
-            });
-        }
-
         orderTableModel = new OrderTableModel();
         orderTable = new JTable(orderTableModel);
         orderScrollPane = new JScrollPane(orderTable);
-        orderTableModel.addOrderData(librarian.getOrders());
-
-        TableRowSorter<OrderTableModel> orderRowSorter = new TableRowSorter<>(orderTableModel);
-        orderTable.setRowSorter(orderRowSorter);
-
-        orderRowSorter.setComparator(0, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                try {
-                    Integer integer1 = Integer.parseInt(o1);
-                    Integer integer2 = Integer.parseInt(o2);
-                    return integer1.compareTo(integer2);
-                } catch (Exception e) {
-                    return o1.compareTo(o2);
-                }
-            }
-        });
-
-        for (int i = 3; i <= 4; i++) {
-            orderRowSorter.setComparator(i, new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    String[] split1 = o1.split("\\.");
-                    String[] split2 = o2.split("\\.");
-
-                    if (split1[2].compareTo(split2[2]) == 0) {
-                        if (split1[1].compareTo(split2[1]) == 0) {
-                            return split1[0].compareTo(split2[0]);
-                        } else return split1[1].compareTo(split2[1]);
-                    } else return split1[2].compareTo(split2[2]);
-                }
-            });
-        }
+        orderTableModel.addOrderData(LoginFrame.getLoggedLibrarian().getOrders());
 
         menuBar.add(bookMenu);
         bookMenu.add(addBookMenuItem);
@@ -287,7 +234,7 @@ public class MainFrame extends JFrame {
             Object[] options = {"Да", "Нет"};
             switch (JOptionPane.showOptionDialog(null, "Обновить таблицу?", "Обновить?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
                 case JOptionPane.OK_OPTION:
-                    orderTableModel.addOrderData(librarian.getOrders());
+                    orderTableModel.addOrderData(LoginFrame.getLoggedLibrarian().getOrders());
                     break;
                 case JOptionPane.CANCEL_OPTION:
                     break;

@@ -102,11 +102,11 @@ public class RegistrationFrame extends JDialog implements WindowClosing {
                 librarianDAO.save(librarian);
                 JOptionPane.showMessageDialog(null, "Добавление успешно!", "Успешно", JOptionPane.INFORMATION_MESSAGE);
 
-                LoginFrame.librarianComboBox.removeAllItems();
-                for (Librarian anotherLibrarian : librarianDAO.findAllWithOrders())
-                    LoginFrame.librarianComboBox.addItem(anotherLibrarian);
-                dispose();
-                setVisible(false);
+//                LoginFrame.librarianComboBox.removeAllItems();
+//                for (Librarian anotherLibrarian : librarianDAO.findAllWithOrders())
+//                    LoginFrame.librarianComboBox.addItem(anotherLibrarian);
+//                dispose();
+//                setVisible(false);
         }
     }
 }

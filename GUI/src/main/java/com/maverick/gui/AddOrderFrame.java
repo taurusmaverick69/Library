@@ -138,7 +138,6 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
         Date startDate = startDateChooser.getDate();
         Date finishDate = finishDateChooser.getDate();
 
-
         if (bookDAO.selectAmount((Book) bookComboBox.getSelectedItem()) == 0) {
             JOptionPane.showMessageDialog(null, "Все экземпляры нужной Вам книги отсутствуют в библиотеке", "Отсутствует", JOptionPane.WARNING_MESSAGE);
             return;
@@ -161,7 +160,7 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
         switch (JOptionPane.showOptionDialog(null, "Добавить заказ?", "Добавить?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             case JOptionPane.YES_OPTION:
 
-                Librarian librarian = (Librarian) LoginFrame.librarianComboBox.getSelectedItem();
+                Librarian librarian = LoginFrame.getLoggedLibrarian();
                 int id = Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getRowCount() - 1, 0).toString());
 
                 Order order = new Order();
@@ -188,5 +187,4 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
                 break;
         }
     }
-
 }

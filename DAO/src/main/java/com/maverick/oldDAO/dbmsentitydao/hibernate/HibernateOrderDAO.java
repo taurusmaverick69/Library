@@ -4,6 +4,7 @@ import com.maverick.domain.Order;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.OrderDAO;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -18,22 +19,21 @@ public class HibernateOrderDAO implements OrderDAO {
 
     @Override
     public List<Order> findByLibrarianId(int librarianId) {
-        return null;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            Query<Order> query = session.createQuery("from Order where librarian.id = :librarianId", Order.class);
+            query.setParameter("librarianId", librarianId);
+            return query.list();
+        }
     }
 
     @Override
     public boolean save(Order order) {
-//        Session session = HibernateDAOFactory.openSession();
-//        try {
-//            session.beginTransaction();
-//            session.save(order);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            HibernateDAOFactory.closeSession();
-//        }
-        return true;
+        try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(order);
+            session.getTransaction().commit();
+            return true;
+        }
     }
 
     @Override
