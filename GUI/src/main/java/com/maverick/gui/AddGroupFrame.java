@@ -11,7 +11,7 @@ public class AddGroupFrame extends JDialog implements WindowClosing {
     private GroupDAO groupDAO;
     private JTextField nameTextField = new JTextField();
 
-    AddGroupFrame(Window owner) {
+    public AddGroupFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
         groupDAO = LoginFrame.getDaoFactory().getGroupDAO();

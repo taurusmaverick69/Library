@@ -29,7 +29,7 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser startDateChooser = new JDateChooser();
     private JDateChooser finishDateChooser = new JDateChooser();
 
-    EditOrderFrame(Window owner) {
+    public EditOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 
@@ -56,20 +56,20 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
         statusComboBox.addItem("Возвращена");
         statusComboBox.addItem("Не возвращена");
 
-        studentComboBox.setSelectedItem(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 1));
-        bookComboBox.setSelectedItem(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 2));
+        studentComboBox.setSelectedItem(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 1));
+        bookComboBox.setSelectedItem(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 2));
 
 
         try {
-            Date startDate = new SimpleDateFormat("dd.MM.yyyy").parse(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 3).toString());
-            Date finishDate = new SimpleDateFormat("dd.MM.yyyy").parse(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 4).toString());
+            Date startDate = new SimpleDateFormat("dd.MM.yyyy").parse(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 3).toString());
+            Date finishDate = new SimpleDateFormat("dd.MM.yyyy").parse(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 4).toString());
             startDateChooser.setDate(startDate);
             finishDateChooser.setDate(finishDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        statusComboBox.setSelectedItem(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 5));
+        statusComboBox.setSelectedItem(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 5));
 
         setTitle("Редактировать заказ");
         ImageIcon editIcon = new ImageIcon("images/20x20/edit.png");
@@ -164,7 +164,7 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
                 Librarian librarian = LoginFrame.getLoggedLibrarian();
 
                 Order order = new Order();
-                order.setId(Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getSelectedRow(), 0).toString()));
+                order.setId(Integer.parseInt(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getSelectedRow(), 0).toString()));
                 order.setStudent((Student) studentComboBox.getSelectedItem());
                 order.setBook((Book) bookComboBox.getSelectedItem());
                 order.setStartDate(startDate);
@@ -174,11 +174,11 @@ public class EditOrderFrame extends JDialog implements WindowClosing {
                 orderDAO.update(order);
 
                 List<Order> orders = librarian.getOrders();
-                orders.set(MainFrame.orderTable.getSelectedRow(), order);
-                MainFrame.orderTableModel.addOrderData(orders);
-                MainFrame.orderTable.updateUI();
-                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
-                MainFrame.bookTable.updateUI();
+                orders.set(MainFrame.getOrderTable().getSelectedRow(), order);
+                MainFrame.getOrderTableModel().addOrderData(orders);
+                MainFrame.getOrderTable().updateUI();
+                MainFrame.getBookTableModel().addBookData(bookDAO.findAll());
+                MainFrame.getBookTable().updateUI();
                 JOptionPane.showMessageDialog(null, "Редактирование успешно", "Редактировано", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 setVisible(false);

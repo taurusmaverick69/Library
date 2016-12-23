@@ -1,6 +1,7 @@
 package com.maverick.gui;
 
 import com.maverick.domain.Author;
+import com.maverick.gui.bookframe.AddBookFrame;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class AddAuthorFrame extends JDialog implements WindowClosing {
     private JTextField fullNameTextField = new JTextField();
     private JFormattedTextField yearsOfLifeTextfield;
 
-    AddAuthorFrame(Window owner) {
+    public AddAuthorFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

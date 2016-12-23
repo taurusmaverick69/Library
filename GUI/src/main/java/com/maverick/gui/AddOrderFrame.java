@@ -4,6 +4,7 @@ import com.maverick.domain.Book;
 import com.maverick.domain.Librarian;
 import com.maverick.domain.Order;
 import com.maverick.domain.Student;
+import com.maverick.gui.bookframe.AddBookFrame;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import com.maverick.oldDAO.entitydao.OrderDAO;
 import com.maverick.oldDAO.entitydao.StudentDAO;
@@ -25,7 +26,7 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser startDateChooser = new JDateChooser();
     private JDateChooser finishDateChooser = new JDateChooser();
 
-    AddOrderFrame(Window owner) {
+    public AddOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 
@@ -161,7 +162,7 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
             case JOptionPane.YES_OPTION:
 
                 Librarian librarian = LoginFrame.getLoggedLibrarian();
-                int id = Integer.parseInt(MainFrame.orderTable.getValueAt(MainFrame.orderTable.getRowCount() - 1, 0).toString());
+                int id = Integer.parseInt(MainFrame.getOrderTable().getValueAt(MainFrame.getOrderTable().getRowCount() - 1, 0).toString());
 
                 Order order = new Order();
                 order.setId(++id);
@@ -175,10 +176,10 @@ public class AddOrderFrame extends JDialog implements WindowClosing {
                 orderDAO.save(order);
                 librarian.getOrders().add(order);
 
-                MainFrame.orderTableModel.addOrderData(librarian.getOrders());
-                MainFrame.orderTable.updateUI();
-                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
-                MainFrame.bookTable.updateUI();
+                MainFrame.getOrderTableModel().addOrderData(librarian.getOrders());
+                MainFrame.getOrderTable().updateUI();
+                MainFrame.getBookTableModel().addBookData(bookDAO.findAll());
+                MainFrame.getBookTable().updateUI();
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Добавлено", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 setVisible(false);

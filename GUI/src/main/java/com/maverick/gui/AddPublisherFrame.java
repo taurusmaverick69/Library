@@ -1,6 +1,7 @@
 package com.maverick.gui;
 
 import com.maverick.domain.Publisher;
+import com.maverick.gui.bookframe.AddBookFrame;
 import com.maverick.oldDAO.entitydao.PublisherDAO;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ public class AddPublisherFrame extends JDialog implements WindowClosing {
     private PublisherDAO publisherDAO;
     private JTextField nameTextField = new JTextField();
 
-    AddPublisherFrame(Window owner) {
+    public AddPublisherFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
         publisherDAO = LoginFrame.getDaoFactory().getPublisherDAO();

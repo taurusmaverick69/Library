@@ -15,7 +15,7 @@ public class RegistrationFrame extends JDialog implements WindowClosing {
     private JPasswordField passwordField = new JPasswordField();
     private JPasswordField confirmPasswordField = new JPasswordField();
 
-    RegistrationFrame() {
+    public RegistrationFrame() {
 
         librarianDAO = LoginFrame.getDaoFactory().getLibrarianDAO();
 

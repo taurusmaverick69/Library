@@ -2,6 +2,8 @@ package com.maverick.gui;
 
 import com.maverick.domain.Book;
 import com.maverick.domain.Order;
+import com.maverick.gui.bookframe.AddBookFrame;
+import com.maverick.gui.bookframe.EditBookFrame;
 import com.maverick.gui.model.BookTableModel;
 import com.maverick.gui.model.OrderTableModel;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -16,10 +18,10 @@ import java.util.List;
 
 public class MainFrame extends JFrame {
 
-    static BookTableModel bookTableModel;
-    static JTable bookTable;
-    static OrderTableModel orderTableModel;
-    static JTable orderTable;
+    private static BookTableModel bookTableModel;
+    private static JTable bookTable;
+    private static OrderTableModel orderTableModel;
+    private static JTable orderTable;
     private static JScrollPane bookScrollPane;
     private static JScrollPane orderScrollPane;
     private static List<Book> books;
@@ -190,7 +192,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        searchBookMenuItem.addActionListener(e -> new SearchBookFrame(this));
+//        searchBookMenuItem.addActionListener(e -> new SearchBookFrame(this));
 
         refreshBookMenuItem.addActionListener(e -> {
             switch (JOptionPane.showConfirmDialog(null, "Обновить таблицу?", "Обновить", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
@@ -405,5 +407,21 @@ public class MainFrame extends JFrame {
 
     public static List<Order> getOrders() {
         return orders;
+    }
+
+    public static BookTableModel getBookTableModel() {
+        return bookTableModel;
+    }
+
+    public static JTable getBookTable() {
+        return bookTable;
+    }
+
+    public static OrderTableModel getOrderTableModel() {
+        return orderTableModel;
+    }
+
+    public static JTable getOrderTable() {
+        return orderTable;
     }
 }

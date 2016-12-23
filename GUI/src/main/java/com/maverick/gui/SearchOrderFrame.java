@@ -20,7 +20,7 @@ public class SearchOrderFrame extends JDialog implements WindowClosing {
     private JDateChooser finishDateChooser = new JDateChooser();
     private JComboBox<String> statusComboBox = new JComboBox<>();
 
-    SearchOrderFrame(Window owner) {
+    public SearchOrderFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
 

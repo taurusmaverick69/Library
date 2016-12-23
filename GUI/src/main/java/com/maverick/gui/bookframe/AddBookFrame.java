@@ -1,9 +1,10 @@
-package com.maverick.gui;
+package com.maverick.gui.bookframe;
 
 import com.maverick.domain.Author;
 import com.maverick.domain.Book;
 import com.maverick.domain.Genre;
 import com.maverick.domain.Publisher;
+import com.maverick.gui.*;
 import com.maverick.oldDAO.DAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -11,69 +12,33 @@ import com.maverick.oldDAO.entitydao.GenreDAO;
 import com.maverick.oldDAO.entitydao.PublisherDAO;
 
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.*;
-import java.text.ParseException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class AddBookFrame extends JDialog implements WindowClosing {
+public class AddBookFrame extends JDialog implements BookFrame, WindowClosing {
 
-    private static JComboBox<Author> authorComboBox = new JComboBox<>();
-    private static JComboBox<Genre> genreComboBox = new JComboBox<>();
-    private static JComboBox<Publisher> publisherComboBox = new JComboBox<>();
     private BookDAO bookDAO;
-    private JTextField titleTextField = new JTextField();
-    private JTextField publishingYearTextField;
-    private JTextField amountTextField = new JTextField();
 
-    AddBookFrame(Window owner) {
+    public AddBookFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
-
-        JLabel[] labels = new JLabel[6];
-        labels[0] = new JLabel("Автор:");
-        labels[1] = new JLabel("Название:");
-        labels[2] = new JLabel("Год издательства:");
-        labels[3] = new JLabel("Жанр:");
-        labels[4] = new JLabel("Издательство:");
-        labels[5] = new JLabel("Количество:");
-
-        try {
-            publishingYearTextField = new JFormattedTextField(new MaskFormatter("####"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        ((AbstractDocument) amountTextField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            Pattern regEx = Pattern.compile("\\d+");
-
-            @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                Matcher matcher = regEx.matcher(text);
-                if (!matcher.matches()) {
-                    return;
-                }
-                super.replace(fb, offset, length, text, attrs);
-            }
-        });
+        initAndPlaceStatic();
 
         DAOFactory daoFactory = LoginFrame.getDaoFactory();
-
         bookDAO = daoFactory.getBookDAO();
+
         AuthorDAO authorDAO = daoFactory.getAuthorDAO();
         GenreDAO genreDAO = daoFactory.getGenreDAO();
         PublisherDAO publisherDAO = daoFactory.getPublisherDAO();
 
         authorComboBox.removeAllItems();
-        authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(author -> authorComboBox.addItem(author));
+        authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(authorComboBox::addItem);
 
         genreComboBox.removeAllItems();
-        genreDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(genre -> genreComboBox.addItem(genre));
+        genreDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(genreComboBox::addItem);
 
         publisherComboBox.removeAllItems();
-        publisherDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(publisher -> publisherComboBox.addItem(publisher));
+        publisherDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(publisherComboBox::addItem);
 
         setTitle("Добавить книгу");
         ImageIcon addIcon = new ImageIcon("images/20x20/add.png");
@@ -144,7 +109,6 @@ public class AddBookFrame extends JDialog implements WindowClosing {
                 GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
                 new Insets(2, 2, 2, 2), 0, 0));
 
-
         pack();
         setLocationRelativeTo(null);
 
@@ -156,9 +120,7 @@ public class AddBookFrame extends JDialog implements WindowClosing {
         });
 
         addAuthorButton.addActionListener(e -> new AddAuthorFrame(this));
-
         addGenreButton.addActionListener(e -> new AddGenreFrame(this));
-
         addPublisherButton.addActionListener(e -> new AddPublisherFrame(this));
 
         addWindowListener(getWindowAdapter(this));
@@ -213,8 +175,8 @@ public class AddBookFrame extends JDialog implements WindowClosing {
                 List<Book> books = MainFrame.getBooks();
                 books.add(book);
 
-                MainFrame.bookTableModel.addBookData(books);
-                MainFrame.bookTable.updateUI();
+                MainFrame.getBookTableModel().addBookData(books);
+                MainFrame.getBookTable().updateUI();
 
                 AddOrderFrame.getBookComboBox().removeAllItems();
                 for (Book anotherBook : books)

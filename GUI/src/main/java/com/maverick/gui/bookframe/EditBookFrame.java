@@ -1,9 +1,12 @@
-package com.maverick.gui;
+package com.maverick.gui.bookframe;
 
 import com.maverick.domain.Author;
 import com.maverick.domain.Book;
 import com.maverick.domain.Genre;
 import com.maverick.domain.Publisher;
+import com.maverick.gui.LoginFrame;
+import com.maverick.gui.MainFrame;
+import com.maverick.gui.WindowClosing;
 import com.maverick.oldDAO.DAOFactory;
 import com.maverick.oldDAO.entitydao.AuthorDAO;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -11,82 +14,39 @@ import com.maverick.oldDAO.entitydao.GenreDAO;
 import com.maverick.oldDAO.entitydao.PublisherDAO;
 
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.*;
-import java.text.ParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class EditBookFrame extends JDialog implements WindowClosing {
+public class EditBookFrame extends JDialog implements BookFrame, WindowClosing {
 
     private BookDAO bookDAO;
 
-    private JTextField titleTextField = new JTextField();
-    private JTextField publishingYearTextField;
-    private JTextField amountTextField = new JTextField();
-
-    private JComboBox<Author> authorComboBox = new JComboBox<>();
-    private JComboBox<Genre> genreComboBox = new JComboBox<>();
-    private JComboBox<Publisher> publisherComboBox = new JComboBox<>();
-
-    EditBookFrame(Window owner) {
+    public EditBookFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
+        initAndPlaceStatic();
 
         DAOFactory daoFactory = LoginFrame.getDaoFactory();
-
         bookDAO = daoFactory.getBookDAO();
 
         AuthorDAO authorDAO = daoFactory.getAuthorDAO();
         GenreDAO genreDAO = daoFactory.getGenreDAO();
         PublisherDAO publisherDAO = daoFactory.getPublisherDAO();
 
-        JLabel[] labels = new JLabel[6];
-        labels[0] = new JLabel("Автор:");
-        labels[1] = new JLabel("Название:");
-        labels[2] = new JLabel("Год издательства:");
-        labels[3] = new JLabel("Жанр:");
-        labels[4] = new JLabel("Издательство:");
-        labels[5] = new JLabel("Количество:");
-
-        try {
-            publishingYearTextField = new JFormattedTextField(new MaskFormatter("####"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        ((AbstractDocument) amountTextField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            Pattern regEx = Pattern.compile("\\d+");
-
-            @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                Matcher matcher = regEx.matcher(text);
-                if (!matcher.matches()) {
-                    return;
-                }
-                super.replace(fb, offset, length, text, attrs);
-            }
-        });
-
         authorComboBox.removeAllItems();
-        for (Author author : authorDAO.findAll())
-            authorComboBox.addItem(author);
+        authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(authorComboBox::addItem);
 
         genreComboBox.removeAllItems();
-        for (Genre genre : genreDAO.findAll())
-            genreComboBox.addItem(genre);
+        genreDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(genreComboBox::addItem);
 
         publisherComboBox.removeAllItems();
-        for (Publisher publisher : publisherDAO.findAll())
-            publisherComboBox.addItem(publisher);
+        publisherDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(publisherComboBox::addItem);
 
-        authorComboBox.setSelectedItem(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 1));
-        genreComboBox.setSelectedItem(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 4));
-        publisherComboBox.setSelectedItem(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 5));
-
-        titleTextField.setText(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 2).toString());
-        publishingYearTextField.setText(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 3).toString());
-        amountTextField.setText(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 6).toString());
+        authorComboBox.setSelectedItem(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 1));
+        genreComboBox.setSelectedItem(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 4));
+        publisherComboBox.setSelectedItem(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 5));
+        titleTextField.setText(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 2).toString());
+        publishingYearTextField.setText(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 3).toString());
+        amountTextField.setText(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 6).toString());
 
         setTitle("Редактировать книгу");
         ImageIcon editIcon = new ImageIcon("images/20x20/edit.png");
@@ -99,7 +59,6 @@ public class EditBookFrame extends JDialog implements WindowClosing {
             add(labels[i], new GridBagConstraints(0, i, 1, 1, 1.0, 1.0,
                     GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                     new Insets(10, 10, 2, 2), 0, 0));
-
 
         authorComboBox.setPreferredSize(new Dimension(200, 30));
         add(authorComboBox, new GridBagConstraints(1, 0, 1, 1, 1.0, 1.0,
@@ -173,9 +132,9 @@ public class EditBookFrame extends JDialog implements WindowClosing {
         Object[] options = {"Да", "Нет"};
         switch (JOptionPane.showOptionDialog(null, "Сохранить изменения?", "Добавить?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             case JOptionPane.OK_OPTION:
-                Book book = new Book();
 
-                book.setId(Integer.parseInt(MainFrame.bookTable.getValueAt(MainFrame.bookTable.getSelectedRow(), 0).toString()));
+                Book book = new Book();
+                book.setId(Integer.parseInt(MainFrame.getBookTable().getValueAt(MainFrame.getBookTable().getSelectedRow(), 0).toString()));
                 book.setAuthor((Author) authorComboBox.getSelectedItem());
                 book.setTitle(titleTextField.getText());
                 book.setPublishingYear(Integer.parseInt(publishingYearTextField.getText()));
@@ -184,8 +143,8 @@ public class EditBookFrame extends JDialog implements WindowClosing {
                 book.setAmount(Integer.parseInt(amountTextField.getText()));
 
                 bookDAO.update(book);
-                MainFrame.bookTableModel.addBookData(bookDAO.findAll());
-                MainFrame.bookTable.updateUI();
+                MainFrame.getBookTableModel().addBookData(bookDAO.findAll());
+                MainFrame.getBookTable().updateUI();
                 JOptionPane.showMessageDialog(null, "Редактирование успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 setVisible(false);

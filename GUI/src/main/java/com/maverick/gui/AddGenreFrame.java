@@ -1,6 +1,7 @@
 package com.maverick.gui;
 
 import com.maverick.domain.Genre;
+import com.maverick.gui.bookframe.AddBookFrame;
 import com.maverick.oldDAO.entitydao.GenreDAO;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ public class AddGenreFrame extends JDialog implements WindowClosing {
     private GenreDAO genreDAO;
     private JTextField nameTextField = new JTextField();
 
-    AddGenreFrame(Window owner) {
+    public AddGenreFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
         genreDAO = LoginFrame.getDaoFactory().getGenreDAO();
