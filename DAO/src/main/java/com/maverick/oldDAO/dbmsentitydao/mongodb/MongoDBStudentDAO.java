@@ -21,14 +21,12 @@ public class MongoDBStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try {
             studentCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     @Override

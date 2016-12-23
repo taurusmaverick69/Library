@@ -1,6 +1,7 @@
 package com.maverick.gui;
 
 import com.maverick.domain.Book;
+import com.maverick.domain.Order;
 import com.maverick.gui.model.BookTableModel;
 import com.maverick.gui.model.OrderTableModel;
 import com.maverick.oldDAO.entitydao.BookDAO;
@@ -21,14 +22,12 @@ public class MainFrame extends JFrame {
     static JTable orderTable;
     private static JScrollPane bookScrollPane;
     private static JScrollPane orderScrollPane;
-
+    private static List<Book> books;
+    private static List<Order> orders = LoginFrame.getLoggedLibrarian().getOrders();
     private int selectedRow;
     private int indexState = -1;
     private Originator originator = new Originator();
     private CareTaker careTaker = new CareTaker();
-
-    private List<Book> books;
-
     private JTabbedPane tabbedPane = new JTabbedPane();
 
     private JMenuBar menuBar = new JMenuBar();
@@ -78,7 +77,8 @@ public class MainFrame extends JFrame {
         orderTableModel = new OrderTableModel();
         orderTable = new JTable(orderTableModel);
         orderScrollPane = new JScrollPane(orderTable);
-        orderTableModel.addOrderData(LoginFrame.getLoggedLibrarian().getOrders());
+
+        orderTableModel.addOrderData(orders);
 
         menuBar.add(bookMenu);
         bookMenu.add(addBookMenuItem);
@@ -148,20 +148,17 @@ public class MainFrame extends JFrame {
         pack();
         setLocationRelativeTo(null);
 
-
         addBookMenuItem.addActionListener(e -> new AddBookFrame(this));
         deleteBookMenuItem.addActionListener(e -> {
             switch (JOptionPane.showConfirmDialog(null, "Вы действительно хотите удалить данные записи?", "Подтвердите", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.OK_OPTION:
                     for (int i : bookTable.getSelectedRows()) {
-                        if (!bookDAO.delete(Integer.parseInt(bookTable.getValueAt(i, 0).toString()))) {
-                            JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
-                                    bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
-                                    ' ' +
-                                    bookTable.getValueAt(bookTable.getSelectedRow(), 2) +
-                                    ",пока есть заказы на неё", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
+                        bookDAO.delete(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
+                        JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
+                                bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
+                                ' ' +
+                                bookTable.getValueAt(bookTable.getSelectedRow(), 2) +
+                                ",пока есть заказы на неё", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     }
                     selectedRow = bookTable.getSelectedRow();
                     Book book = books.get(selectedRow);
@@ -176,7 +173,6 @@ public class MainFrame extends JFrame {
                 case JOptionPane.CANCEL_OPTION:
                     break;
             }
-
         });
 
         editBookMenuItem.addActionListener(e -> {
@@ -401,5 +397,13 @@ public class MainFrame extends JFrame {
             }
         });
         setVisible(true);
+    }
+
+    public static List<Book> getBooks() {
+        return books;
+    }
+
+    public static List<Order> getOrders() {
+        return orders;
     }
 }

@@ -3,7 +3,6 @@ package com.maverick.oldDAO.dbmsentitydao.hibernate;
 import com.maverick.domain.Genre;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.GenreDAO;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class HibernateGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
+
     }
 }

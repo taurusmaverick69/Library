@@ -12,8 +12,7 @@ public class MongoDBPublisherDAO implements PublisherDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
     }
 
     @Override

@@ -174,15 +174,14 @@ public class MySQLBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Connection connection = MySQLDAOFactory.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BOOK)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
         }
-        return true;
     }
 
     @Override

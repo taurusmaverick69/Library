@@ -14,7 +14,7 @@ public interface BookDAO {
 
     boolean update(Book book);
 
-    boolean delete(int id);
+    void delete(int id);
 
     int selectAmount(Book book);
 }

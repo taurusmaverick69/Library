@@ -56,12 +56,11 @@ public class HibernateStudentDAO implements StudentDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.delete(findById(id));
             session.getTransaction().commit();
-            return true;
 //            session.beginTransaction();
 //            int executeUpdate = session
 //                    .createQuery("delete Student where id = :id")

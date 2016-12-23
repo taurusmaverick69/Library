@@ -75,7 +75,7 @@ public class MySQLGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
+
     }
 }

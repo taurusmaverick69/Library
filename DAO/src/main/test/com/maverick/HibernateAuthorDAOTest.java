@@ -52,14 +52,20 @@ public class HibernateAuthorDAOTest {
     }
 
     @Test
-    public void findById() {
-        Author author = authors.get(0);
-        when(dao.findById(anyInt())).thenReturn(author);
-        Assert.assertEquals(hibernateAuthorDAO.findById(author.getId()), author);
+    public void findAllTest() {
+        when(dao.findAll()).thenReturn(authors);
+        Assert.assertEquals(dao.findAll(), authors);
     }
 
     @Test
-    public void saveAuthor(){
+    public void findById() {
+        Author author = authors.get(0);
+        when(dao.findById(anyInt())).thenReturn(author);
+        Assert.assertEquals(dao.findById(author.getId()), author);
+    }
+
+    @Test
+    public void save() {
         dao.save(new Author());
         verify(dao, atLeastOnce()).save(any(Author.class));
     }
@@ -67,5 +73,20 @@ public class HibernateAuthorDAOTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void nonExistsEntityTest() {
         hibernateAuthorDAO.findById(-1).getId();
+    }
+
+    @Test
+    public void updateTest() {
+        Author author = authors.get(0);
+        when(dao.findById(anyInt())).thenReturn(author);
+        hibernateAuthorDAO.update(author);
+        verify(dao, atLeastOnce()).findById(anyInt());
+    }
+
+    @Test
+    public void deleteTest() {
+        doNothing().when(dao).delete(anyInt());
+        dao.delete(anyInt());
+        verify(dao, atLeastOnce()).delete(anyInt());
     }
 }

@@ -42,7 +42,7 @@ public class HibernateGroupDAO implements GroupDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
 //        Session session = HibernateDAOFactory.openSession();
 //        try {
 //            session.beginTransaction();
@@ -58,6 +58,5 @@ public class HibernateGroupDAO implements GroupDAO {
 //        } finally {
 //            HibernateDAOFactory.closeSession();
 //        }
-        return true;
     }
 }

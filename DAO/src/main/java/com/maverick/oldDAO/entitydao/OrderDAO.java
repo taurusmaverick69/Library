@@ -14,5 +14,5 @@ public interface OrderDAO {
 
     boolean update(Order order);
 
-    boolean delete(int id);
+    void delete(int id);
 }

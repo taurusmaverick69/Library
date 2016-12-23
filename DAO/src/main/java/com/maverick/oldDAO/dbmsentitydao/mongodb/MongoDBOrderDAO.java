@@ -20,14 +20,12 @@ public class MongoDBOrderDAO implements OrderDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try {
             orderCollection.deleteOne(new Document("_id", id));
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     @Override

@@ -29,7 +29,6 @@ public class MySQLGenreDAO implements GenreDAO {
                 genre.setName(genreResultSet.getString(GENRE_NAME));
                 genres.add(genre);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,7 +73,7 @@ public class MySQLGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
+
     }
 }

@@ -35,7 +35,6 @@ public class HibernateLibrarianDAO implements LibrarianDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
     }
 }

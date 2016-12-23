@@ -30,12 +30,10 @@ public class LoginFrame extends JFrame {
         labels[1] = new JLabel("Пароль:");
         labels[2] = new JLabel("Выбирите СУБД (DAO):");
 
-        librarianDAO = DAOFactory.getDAOFactory(MySQL).getLibrarianDAO();
-
+        daoFactory = DAOFactory.getDAOFactory(MySQL);
+        librarianDAO = daoFactory.getLibrarianDAO();
         librarianComboBox.removeAllItems();
-        for (Librarian librarian : librarianDAO.findAllWithOrders()) {
-            librarianComboBox.addItem(librarian);
-        }
+        librarianDAO.findAllWithOrders().forEach(librarian -> librarianComboBox.addItem(librarian));
 
         setTitle("Добро пожаловать");
         setIconImage(new ImageIcon("images/login.png").getImage());
@@ -89,8 +87,8 @@ public class LoginFrame extends JFrame {
         registrationButton.addActionListener(e -> new RegistrationFrame());
 
         daoComboBox.addActionListener(e -> {
-            daoFactory = DAOFactory.getDAOFactory((TypeDAO) daoComboBox.getSelectedItem());
-            librarianDAO = daoFactory.getLibrarianDAO();
+            LoginFrame.daoFactory = DAOFactory.getDAOFactory((TypeDAO) daoComboBox.getSelectedItem());
+            librarianDAO = LoginFrame.daoFactory.getLibrarianDAO();
             try {
                 librarianComboBox.removeAllItems();
                 librarianDAO.findAllWithOrders().forEach(librarian -> librarianComboBox.addItem(librarian));

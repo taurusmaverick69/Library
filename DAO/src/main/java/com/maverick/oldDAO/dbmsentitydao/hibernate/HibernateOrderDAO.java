@@ -53,7 +53,7 @@ public class HibernateOrderDAO implements OrderDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
 //        Session session = HibernateDAOFactory.openSession();
 //        try {
 //            session.beginTransaction();
@@ -64,6 +64,5 @@ public class HibernateOrderDAO implements OrderDAO {
 //        } finally {
 //            HibernateDAOFactory.closeSession();
 //        }
-        return true;
     }
 }

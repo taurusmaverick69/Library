@@ -76,7 +76,6 @@ public class MySQLPublisherDAO implements PublisherDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
     }
 }

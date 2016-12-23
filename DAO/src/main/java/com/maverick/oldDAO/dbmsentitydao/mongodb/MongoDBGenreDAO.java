@@ -12,8 +12,7 @@ public class MongoDBGenreDAO implements GenreDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public void delete(int id) {
     }
 
     @Override

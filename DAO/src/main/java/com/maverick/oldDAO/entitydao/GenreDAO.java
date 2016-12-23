@@ -14,5 +14,5 @@ public interface GenreDAO {
 
     boolean update(Genre genre);
 
-    boolean delete(int id);
+    void delete(int id);
 }

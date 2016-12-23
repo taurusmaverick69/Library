@@ -14,8 +14,6 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,13 +31,6 @@ public class AddBookFrame extends JDialog implements WindowClosing {
     AddBookFrame(Window owner) {
 
         super(owner, ModalityType.DOCUMENT_MODAL);
-
-        DAOFactory daoFactory = LoginFrame.getDaoFactory();
-
-        bookDAO = daoFactory.getBookDAO();
-        AuthorDAO authorDAO = daoFactory.getAuthorDAO();
-        GenreDAO genreDAO = daoFactory.getGenreDAO();
-        PublisherDAO publisherDAO = daoFactory.getPublisherDAO();
 
         JLabel[] labels = new JLabel[6];
         labels[0] = new JLabel("Автор:");
@@ -67,6 +58,13 @@ public class AddBookFrame extends JDialog implements WindowClosing {
                 super.replace(fb, offset, length, text, attrs);
             }
         });
+
+        DAOFactory daoFactory = LoginFrame.getDaoFactory();
+
+        bookDAO = daoFactory.getBookDAO();
+        AuthorDAO authorDAO = daoFactory.getAuthorDAO();
+        GenreDAO genreDAO = daoFactory.getGenreDAO();
+        PublisherDAO publisherDAO = daoFactory.getPublisherDAO();
 
         authorComboBox.removeAllItems();
         authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(author -> authorComboBox.addItem(author));
@@ -212,23 +210,19 @@ public class AddBookFrame extends JDialog implements WindowClosing {
                     return;
                 }
 
-                JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
-
-                List<Book> books = bookDAO.findAll();
-                ArrayList<Book> booksList = new ArrayList<>(books);
-                // TODO: 19.12.2016 WTF?
+                List<Book> books = MainFrame.getBooks();
+                books.add(book);
 
                 MainFrame.bookTableModel.addBookData(books);
                 MainFrame.bookTable.updateUI();
 
-                Collections.sort(booksList, (o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
                 AddOrderFrame.getBookComboBox().removeAllItems();
                 for (Book anotherBook : books)
                     AddOrderFrame.getBookComboBox().addItem(anotherBook);
 
+                JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 setVisible(false);
-
             case JOptionPane.NO_OPTION:
                 break;
         }

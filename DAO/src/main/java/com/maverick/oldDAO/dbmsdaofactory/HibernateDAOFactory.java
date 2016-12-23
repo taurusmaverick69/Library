@@ -14,7 +14,7 @@ public class HibernateDAOFactory extends DAOFactory {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
+        if (sessionFactory == null || sessionFactory.isClosed()) {
             StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure().build();
             Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
             sessionFactory = metadata.getSessionFactoryBuilder().build();

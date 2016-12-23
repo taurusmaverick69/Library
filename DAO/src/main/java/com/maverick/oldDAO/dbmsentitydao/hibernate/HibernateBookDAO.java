@@ -1,7 +1,6 @@
 package com.maverick.oldDAO.dbmsentitydao.hibernate;
 
 import com.maverick.domain.Book;
-import com.maverick.domain.Student;
 import com.maverick.oldDAO.dbmsdaofactory.HibernateDAOFactory;
 import com.maverick.oldDAO.entitydao.BookDAO;
 import org.hibernate.Session;
@@ -48,7 +47,7 @@ public class HibernateBookDAO implements BookDAO {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Session session = HibernateDAOFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
             int executeUpdate = session
@@ -56,7 +55,6 @@ public class HibernateBookDAO implements BookDAO {
                     .setParameter("id", id)
                     .executeUpdate();
             session.getTransaction().commit();
-            return executeUpdate > 0;
         }
     }
 
