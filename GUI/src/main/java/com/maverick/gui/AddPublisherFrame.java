@@ -99,9 +99,9 @@ public class AddPublisherFrame extends JDialog implements WindowClosing {
                     return;
                 }
 
-                AddBookFrame.getPublisherComboBox().removeAllItems();
-                for (Publisher publisher : publisherDAO.findAll())
-                    AddBookFrame.getPublisherComboBox().addItem(publisher);
+//                AddBookFrame.getPublisherComboBox().removeAllItems();
+//                for (Publisher publisher : publisherDAO.findAll())
+//                    AddBookFrame.getPublisherComboBox().addItem(publisher);
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

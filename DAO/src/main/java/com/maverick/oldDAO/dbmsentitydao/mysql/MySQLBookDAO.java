@@ -124,7 +124,7 @@ public class MySQLBookDAO implements BookDAO {
         }
         book.setAuthor(authorDAO.findById(book.getAuthor().getId()));
         book.setGenre(genreDAO.findById(book.getGenre().getId()));
-        book.setPublisher(publisherDAO.findById(book.getGenre().getId()));
+        book.setPublisher(publisherDAO.findById(book.getPublisher().getId()));
 
         return book;
     }

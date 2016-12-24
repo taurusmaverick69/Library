@@ -77,9 +77,9 @@ public class AddGenreFrame extends JDialog implements WindowClosing {
                     return;
                 }
 
-                AddBookFrame.getGenreComboBox().removeAllItems();
-                for (Genre genre : genreDAO.findAll())
-                    AddBookFrame.getGenreComboBox().addItem(genre);
+//                AddBookFrame.getGenreComboBox().removeAllItems();
+//                for (Genre genre : genreDAO.findAll())
+//                    AddBookFrame.getGenreComboBox().addItem(genre);
 
                 JOptionPane.showMessageDialog(null, "Добавление успешно", "Успешно", JOptionPane.INFORMATION_MESSAGE);
                 dispose();

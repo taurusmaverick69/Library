@@ -3,16 +3,13 @@ package com.maverick.gui.bookframe;
 import com.maverick.domain.Author;
 import com.maverick.domain.Genre;
 import com.maverick.domain.Publisher;
+import com.maverick.gui.WindowClosing;
 
 import javax.swing.*;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.awt.*;
 
-public interface BookFrame {
+public interface BookFrame extends WindowClosing {
+
     JComboBox<Author> authorComboBox = new JComboBox<>();
     JComboBox<Genre> genreComboBox = new JComboBox<>();
     JComboBox<Publisher> publisherComboBox = new JComboBox<>();
@@ -21,38 +18,64 @@ public interface BookFrame {
     JTextField publishingYearTextField = new JFormattedTextField();
     JTextField amountTextField = new JTextField();
 
-    JLabel[] labels = new JLabel[6];
+    ImageIcon addIcon = new ImageIcon("images/20x20/add.png");
+    JButton addPublisherButton = new JButton(addIcon);
+    JButton addAuthorButton = new JButton(addIcon);
+    JButton addGenreButton = new JButton(addIcon);
+
+    JPanel panel = new JPanel(new FlowLayout());
+    JButton okButton = new JButton("Ок");
+    JButton cancelButton = new JButton("Отмена");
+
+    JLabel[] labels = {
+            new JLabel("Автор:"),
+            new JLabel("Название:"),
+            new JLabel("Год издательства:"),
+            new JLabel("Жанр:"),
+            new JLabel("Издательство:"),
+            new JLabel("Количество:")
+    };
 
     default void clearFields() {
         authorComboBox.removeAllItems();
         genreComboBox.removeAllItems();
         publisherComboBox.removeAllItems();
-
         titleTextField.setText("");
         publishingYearTextField.setText("");
         amountTextField.setText("");
     }
 
-    default void initAndPlaceStatic() {
+    default void setFieldsSize() {
+        authorComboBox.setPreferredSize(new Dimension(200, 30));
+        genreComboBox.setPreferredSize(new Dimension(200, 30));
+        publisherComboBox.setPreferredSize(new Dimension(200, 30));
 
-        labels[0] = new JLabel("Автор:");
-        labels[1] = new JLabel("Название:");
-        labels[2] = new JLabel("Год издательства:");
-        labels[3] = new JLabel("Жанр:");
-        labels[4] = new JLabel("Издательство:");
-        labels[5] = new JLabel("Количество:");
+        titleTextField.setPreferredSize(new Dimension(200, 30));
+        publishingYearTextField.setPreferredSize(new Dimension(200, 30));
+        amountTextField.setPreferredSize(new Dimension(200, 30));
 
-        ((AbstractDocument) amountTextField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            Pattern regEx = Pattern.compile("\\d+");
+        addPublisherButton.setPreferredSize(new Dimension(30, 30));
+        addAuthorButton.setPreferredSize(new Dimension(30, 30));
+        addGenreButton.setPreferredSize(new Dimension(30, 30));
+    }
 
-            @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                Matcher matcher = regEx.matcher(text);
-                if (!matcher.matches()) {
-                    return;
-                }
-                super.replace(fb, offset, length, text, attrs);
-            }
-        });
+    default boolean isInputCorrect() {
+        if (titleTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Поле 'Название' должно быть заполнено!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (publishingYearTextField.getText().isEmpty() || publishingYearTextField.getText().equals("    ")) {
+            JOptionPane.showMessageDialog(null, "Поле 'Год издательства' должно быть заполнено!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (amountTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Поле 'Количество' должно быть заполнено!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (amountTextField.getText().length() > 9) {
+            JOptionPane.showMessageDialog(null, "Поле 'Количество' не более 9 символов!", "Предупреждение", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }

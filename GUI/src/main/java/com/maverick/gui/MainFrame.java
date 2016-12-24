@@ -20,11 +20,12 @@ public class MainFrame extends JFrame {
 
     private static BookTableModel bookTableModel;
     private static JTable bookTable;
+    private static JScrollPane bookScrollPane;
+
     private static OrderTableModel orderTableModel;
     private static JTable orderTable;
-    private static JScrollPane bookScrollPane;
     private static JScrollPane orderScrollPane;
-    private static List<Book> books;
+
     private static List<Order> orders = LoginFrame.getLoggedLibrarian().getOrders();
     private int selectedRow;
     private int indexState = -1;
@@ -73,8 +74,7 @@ public class MainFrame extends JFrame {
         bookTable = new JTable(bookTableModel);
         bookScrollPane = new JScrollPane(bookTable);
 
-        books = bookDAO.findAll();
-        bookTableModel.addBookData(books);
+        bookTableModel.addBookData(bookDAO.findAll());
 
         orderTableModel = new OrderTableModel();
         orderTable = new JTable(orderTableModel);
@@ -158,12 +158,10 @@ public class MainFrame extends JFrame {
                         bookDAO.delete(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
                     }
                     selectedRow = bookTable.getSelectedRow();
-                    Book book = books.get(selectedRow);
-                    books.remove(selectedRow);
-                    originator.setState(book);
+                    originator.setState(bookDAO.findById(selectedRow));
                     careTaker.add(originator.saveStateToMemento());
                     indexState++;
-                    bookTableModel.addBookData(books);
+                    bookTableModel.addBookData(bookDAO.findAll());
                     bookTable.updateUI();
                     bookTable.setRowSelectionInterval(0, 0);
                     JOptionPane.showMessageDialog(null, "Удаление успешно", "Выполнено", JOptionPane.INFORMATION_MESSAGE);
@@ -371,8 +369,8 @@ public class MainFrame extends JFrame {
                 return;
             }
             originator.getStateFromMemento(careTaker.get(indexState--));
-            books.add(selectedRow, originator.getState());
-            bookTableModel.addBookData(books);
+          //  books.add(selectedRow, originator.getState());
+         //   bookTableModel.addBookData(books);
             bookTable.updateUI();
 
         });
@@ -394,10 +392,6 @@ public class MainFrame extends JFrame {
             }
         });
         setVisible(true);
-    }
-
-    public static List<Book> getBooks() {
-        return books;
     }
 
     public static List<Order> getOrders() {
