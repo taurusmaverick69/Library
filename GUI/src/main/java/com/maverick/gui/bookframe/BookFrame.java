@@ -12,12 +12,7 @@ import javax.swing.text.DocumentFilter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Vladislav on 23.12.2016.
- */
 public interface BookFrame {
-
-
     JComboBox<Author> authorComboBox = new JComboBox<>();
     JComboBox<Genre> genreComboBox = new JComboBox<>();
     JComboBox<Publisher> publisherComboBox = new JComboBox<>();
@@ -28,7 +23,18 @@ public interface BookFrame {
 
     JLabel[] labels = new JLabel[6];
 
+    default void clearFields() {
+        authorComboBox.removeAllItems();
+        genreComboBox.removeAllItems();
+        publisherComboBox.removeAllItems();
+
+        titleTextField.setText("");
+        publishingYearTextField.setText("");
+        amountTextField.setText("");
+    }
+
     default void initAndPlaceStatic() {
+
         labels[0] = new JLabel("Автор:");
         labels[1] = new JLabel("Название:");
         labels[2] = new JLabel("Год издательства:");
@@ -49,5 +55,4 @@ public interface BookFrame {
             }
         });
     }
-
 }

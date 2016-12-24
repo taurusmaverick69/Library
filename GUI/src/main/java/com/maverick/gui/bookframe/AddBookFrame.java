@@ -31,13 +31,8 @@ public class AddBookFrame extends JDialog implements BookFrame, WindowClosing {
         GenreDAO genreDAO = daoFactory.getGenreDAO();
         PublisherDAO publisherDAO = daoFactory.getPublisherDAO();
 
-        authorComboBox.removeAllItems();
         authorDAO.findAll().stream().sorted((o1, o2) -> o1.getFullName().compareTo(o2.getFullName())).forEach(authorComboBox::addItem);
-
-        genreComboBox.removeAllItems();
         genreDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(genreComboBox::addItem);
-
-        publisherComboBox.removeAllItems();
         publisherDAO.findAll().stream().sorted((o1, o2) -> o1.getName().compareTo(o2.getName())).forEach(publisherComboBox::addItem);
 
         setTitle("Добавить книгу");

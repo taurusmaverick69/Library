@@ -156,11 +156,6 @@ public class MainFrame extends JFrame {
                 case JOptionPane.OK_OPTION:
                     for (int i : bookTable.getSelectedRows()) {
                         bookDAO.delete(Integer.parseInt(bookTable.getValueAt(i, 0).toString()));
-                        JOptionPane.showMessageDialog(null, "Нельзя удалить книгу " +
-                                bookTable.getValueAt(bookTable.getSelectedRow(), 1) +
-                                ' ' +
-                                bookTable.getValueAt(bookTable.getSelectedRow(), 2) +
-                                ",пока есть заказы на неё", "Ошибка", JOptionPane.ERROR_MESSAGE);
                     }
                     selectedRow = bookTable.getSelectedRow();
                     Book book = books.get(selectedRow);
