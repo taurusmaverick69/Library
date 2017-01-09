@@ -67,7 +67,7 @@ public class HibernateAuthorDAOTest {
     @Test
     public void save() {
         dao.save(new Author());
-        verify(dao, atLeastOnce()).save(any(Author.class));
+        verify(dao, times(5)).save(any(Author.class));
     }
 
     @Test(expectedExceptions = NullPointerException.class)
