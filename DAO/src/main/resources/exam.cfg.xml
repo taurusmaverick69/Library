@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="authentication" class="com.maverick.domain.exam.Authentication">
+        <constructor-arg name="login" value="i.ivanov"/>
+        <constructor-arg name="password" value="12345"/>
+    </bean>
+
+    <bean id="address" class="com.maverick.domain.exam.Address">
+        <property name="id" value="1"/>
+        <property name="country" value="Ukraine"/>
+        <property name="city" value="Kharkiv"/>
+        <property name="zip" value="62987"/>
+        <property name="address" value="Sumska, 25"/>
+    </bean>
+
+    <util:list id="addressesList" value-type="com.maverick.domain.exam.Address">
+        <ref bean="address"/>
+    </util:list>
+
+    <bean id="user" class="com.maverick.domain.exam.User">
+        <property name="id" value="1"/>
+        <property name="firstName" value="Ivan"/>
+        <property name="secondName" value="Ivanov"/>
+        <property name="position" value="engineer"/>
+        <property name="addresses" ref="addressesList"/>
+        <property name="authentication" ref="authentication"/>
+    </bean>
+
+</beans>
