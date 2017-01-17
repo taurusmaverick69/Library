@@ -22,7 +22,7 @@ public class User {
     @Column(name = "position")
     private String position;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Address> addresses;
 
     @OneToOne(fetch = FetchType.LAZY)
