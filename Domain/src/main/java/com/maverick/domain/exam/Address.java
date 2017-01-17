@@ -23,6 +23,10 @@ public class Address {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Address() {
     }
 
@@ -64,6 +68,14 @@ public class Address {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -6,6 +6,7 @@
     <bean id="authentication" class="com.maverick.domain.exam.Authentication">
         <constructor-arg name="login" value="i.ivanov"/>
         <constructor-arg name="password" value="12345"/>
+        <property name="id" value="1"/>
     </bean>
 
     <bean id="address" class="com.maverick.domain.exam.Address">

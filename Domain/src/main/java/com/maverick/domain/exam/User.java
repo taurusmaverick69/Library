@@ -3,6 +3,8 @@ package com.maverick.domain.exam;
 import javax.persistence.*;
 import java.util.List;
 
+
+@NamedNativeQuery(name = "findUsersByKharkiv", query = "SELECT * FROM user JOIN address ON user.id = address.user_id WHERE city = 'Kharkiv'", resultClass = User.class)
 @Entity
 public class User {
 
@@ -20,10 +22,10 @@ public class User {
     @Column(name = "position")
     private String position;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "address")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Address> addresses;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "authentication")
+    @OneToOne(fetch = FetchType.LAZY)
     private Authentication authentication;
 
     public User() {
