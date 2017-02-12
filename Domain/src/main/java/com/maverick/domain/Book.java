@@ -1,7 +1,5 @@
 package com.maverick.domain;
 
-import org.bson.types.ObjectId;
-
 import javax.persistence.*;
 
 @Entity
@@ -27,26 +25,6 @@ public class Book extends EntityClass {
 
     @Column
     private int amount;
-
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-    }
-
-    @Override
-    public ObjectId get_id() {
-        return super.get_id();
-    }
-
-    @Override
-    public void set_id(ObjectId _id) {
-        super.set_id(_id);
-    }
 
     public Author getAuthor() {
         return author;

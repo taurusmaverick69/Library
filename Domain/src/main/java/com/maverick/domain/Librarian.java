@@ -1,6 +1,8 @@
 package com.maverick.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Librarian extends EntityClass {
     @Column
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "librarian")
+    @OneToMany(mappedBy = "librarian")
     private List<Order> orders = new ArrayList<>();
 
     public String getFullName() {

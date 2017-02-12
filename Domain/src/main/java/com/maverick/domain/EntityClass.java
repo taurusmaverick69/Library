@@ -1,5 +1,6 @@
 package com.maverick.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.bson.types.ObjectId;
 
 import javax.persistence.*;
@@ -9,9 +10,9 @@ public abstract class EntityClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     int id;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Transient
     private ObjectId _id;
 
