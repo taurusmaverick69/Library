@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<order xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:studentNamespace="studentNamespace"
+       xmlns:groupNamespace="groupNamespace"
+       xmlns:bookNamespace="bookNamespace"
+       xmlns:authorNamespace="authorNamespace"
+       xmlns:genreNamespace="genreNamespace"
+       xmlns:publisherNamespace="publisherNamespace"
+       xmlns:librarianNamespace="librarianNamespace"
+       xsi:noNamespaceSchemaLocation="xsd/order.xsd">
+
+    <id>1</id>
+    <student>
+        <studentNamespace:id>4</studentNamespace:id>
+        <studentNamespace:full_name>Vladislav Lyubimtsev</studentNamespace:full_name>
+        <studentNamespace:library_card>56458457</studentNamespace:library_card>
+        <studentNamespace:group>
+            <groupNamespace:id>1</groupNamespace:id>
+            <groupNamespace:name>KN-13-1</groupNamespace:name>
+        </studentNamespace:group>
+    </student>
+    <book>
+        <bookNamespace:id>1</bookNamespace:id>
+        <bookNamespace:author>
+            <authorNamespace:id>1</authorNamespace:id>
+            <authorNamespace:full_name>Lev Tolstoy</authorNamespace:full_name>
+            <authorNamespace:years_of_life>1828-1910</authorNamespace:years_of_life>
+        </bookNamespace:author>
+        <bookNamespace:title>Voina i Mir</bookNamespace:title>
+        <bookNamespace:publishing_year>1873</bookNamespace:publishing_year>
+        <bookNamespace:genre>
+            <genreNamespace:id>1</genreNamespace:id>
+            <genreNamespace:name>Roman</genreNamespace:name>
+        </bookNamespace:genre>
+        <bookNamespace:publisher>
+            <publisherNamespace:id>1</publisherNamespace:id>
+            <publisherNamespace:name>Azbyka</publisherNamespace:name>
+        </bookNamespace:publisher>
+        <bookNamespace:amount>2</bookNamespace:amount>
+    </book>
+    <librarian>
+        <librarianNamespace:id>1</librarianNamespace:id>
+        <librarianNamespace:full_name>Ivanova Inna</librarianNamespace:full_name>
+        <librarianNamespace:password>admin</librarianNamespace:password>
+    </librarian>
+    <start_date>2016-02-02</start_date>
+    <finish_date>2016-02-19</finish_date>
+    <status>non-returned</status>
+
+
+
+</order>
