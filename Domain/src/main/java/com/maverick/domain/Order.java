@@ -75,4 +75,16 @@ public class Order extends EntityClass {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "student=" + student +
+                ", book=" + book +
+                ", librarian=" + librarian +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
