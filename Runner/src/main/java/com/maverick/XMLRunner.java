@@ -8,9 +8,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -33,10 +31,9 @@ public class XMLRunner {
 
         File file = new File("xsd_xml", "order.xml");
 
-        File schemaFile = new File("xsd_xml/xsd", "order.xsd");
         Source xmlFile = new StreamSource(file);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = schemaFactory.newSchema(schemaFile);
+        Schema schema = schemaFactory.newSchema(new File("xsd_xml/xsd", "order.xsd"));
         Validator validator = schema.newValidator();
         try {
             validator.validate(xmlFile);
@@ -45,17 +42,18 @@ public class XMLRunner {
             System.out.println(xmlFile.getSystemId() + " is NOT valid reason:" + e);
         }
 
+        parseSAX(file);
+     //   Order order = parseDOM(file);
+    //    System.out.println(order);
+    }
+
+    private static Order parseDOM(File file) throws IOException, SAXException, ParserConfigurationException, ParseException {
+
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file);
 
         doc.getDocumentElement().normalize();
-
-        Order order = parseDOM(doc);
-        System.out.println(order);
-    }
-
-    private static Order parseDOM(Document doc) throws ParseException {
 
         Order order = new Order();
 
@@ -124,11 +122,9 @@ public class XMLRunner {
 
         List<Element> librarianElements = filterElementNodes(librarianChildNodes);
 
-
         String libId = librarianElements.get(0).getTextContent();
         String libName = librarianElements.get(1).getTextContent();
         String libPass = librarianElements.get(2).getTextContent();
-
 
         Librarian librarian = new Librarian();
         librarian.setId(Integer.parseInt(libId));
@@ -146,6 +142,13 @@ public class XMLRunner {
         order.setStatus(status);
 
         return order;
+    }
+
+
+    private static void parseSAX(File file) throws IOException, SAXException, ParserConfigurationException {
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser saxParser = factory.newSAXParser();
+        saxParser.parse(file, new OrderHandler());
     }
 
     private static List<Element> filterElementNodes(NodeList nodeList) {
