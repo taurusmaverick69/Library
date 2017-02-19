@@ -7,27 +7,17 @@
 
     <xs:import namespace="groupNamespace" schemaLocation="group.xsd"/>
 
-    <xs:complexType name="studentIdExtension">
+    <xs:complexType name="studentType">
         <xs:sequence>
-            <xs:element name="id" type="xs:int"/>
+            <xs:element name="full_name" type="xs:string"/>
+            <xs:element name="library_card">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{8}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="group" type="group:groupType"/>
         </xs:sequence>
     </xs:complexType>
-
-        <xs:complexType name="studentType">
-            <xs:complexContent>
-                <xs:extension base="studentIdExtension">
-                    <xs:sequence>
-                        <xs:element name="full_name" type="xs:string"/>
-                        <xs:element name="library_card">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:pattern value="[0-9]{8}"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="group" type="group:groupType"/>
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
 </xs:schema>

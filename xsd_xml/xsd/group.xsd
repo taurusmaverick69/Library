@@ -4,19 +4,9 @@
         elementFormDefault="qualified"
         targetNamespace="groupNamespace">
 
-    <xs:complexType name="groupIdExtension">
-        <xs:sequence>
-            <xs:element name="id" type="xs:int"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="groupType">
-        <xs:complexContent>
-            <xs:extension base="groupIdExtension">
-                <xs:sequence>
-                    <xs:element name="name" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
     </xs:complexType>
 </xs:schema>

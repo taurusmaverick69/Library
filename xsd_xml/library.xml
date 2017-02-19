@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:studentNamespace="studentNamespace"
+         xmlns:groupNamespace="groupNamespace"
+         xmlns:bookNamespace="bookNamespace"
+         xmlns:authorNamespace="authorNamespace"
+         xmlns:genreNamespace="genreNamespace"
+         xmlns:publisherNamespace="publisherNamespace"
+         xmlns:librarianNamespace="librarianNamespace"
+         xmlns:orderNamespace="orderNamespace"
+         xsi:noNamespaceSchemaLocation="xsd/library.xsd">
+
+    <order>
+        <orderNamespace:student>
+            <studentNamespace:full_name>ergerg</studentNamespace:full_name>
+            <studentNamespace:library_card>65565565</studentNamespace:library_card>
+            <studentNamespace:group>
+                <groupNamespace:name>ergerg</groupNamespace:name>
+            </studentNamespace:group>
+        </orderNamespace:student>
+        <orderNamespace:book>
+            <bookNamespace:author>
+                <authorNamespace:full_name>ergterg</authorNamespace:full_name>
+                <authorNamespace:years_of_life>ergerg</authorNamespace:years_of_life>
+            </bookNamespace:author>
+            <bookNamespace:title>erg</bookNamespace:title>
+            <bookNamespace:publishing_year>45</bookNamespace:publishing_year>
+            <bookNamespace:genre>
+                <genreNamespace:name>ert</genreNamespace:name>
+            </bookNamespace:genre>
+            <bookNamespace:publisher>
+                <publisherNamespace:name>erg</publisherNamespace:name>
+            </bookNamespace:publisher>
+            <bookNamespace:amount>4536</bookNamespace:amount>
+        </orderNamespace:book>
+        <orderNamespace:librarian>
+            <librarianNamespace:full_name>rth</librarianNamespace:full_name>
+            <librarianNamespace:password>erg</librarianNamespace:password>
+        </orderNamespace:librarian>
+        <orderNamespace:start_date>2016-12-12</orderNamespace:start_date>
+        <orderNamespace:finish_date>2016-12-12</orderNamespace:finish_date>
+        <orderNamespace:status>non-returned</orderNamespace:status>
+    </order>
+
+</library>

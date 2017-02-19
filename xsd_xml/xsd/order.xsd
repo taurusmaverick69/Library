@@ -3,40 +3,29 @@
            xmlns:student="studentNamespace"
            xmlns:book="bookNamespace"
            xmlns:librarian="librarianNamespace"
+           targetNamespace="orderNamespace"
            elementFormDefault="qualified">
 
     <xs:import namespace="studentNamespace" schemaLocation="student.xsd"/>
     <xs:import namespace="bookNamespace" schemaLocation="book.xsd"/>
     <xs:import namespace="librarianNamespace" schemaLocation="librarian.xsd"/>
 
-    <xs:complexType name="orderIdExtension">
+    <xs:complexType name="orderType">
         <xs:sequence>
-            <xs:element name="id" type="xs:int"/>
+            <xs:element name="student" type="student:studentType"/>
+            <xs:element name="book" type="book:bookType"/>
+            <xs:element name="librarian" type="librarian:librarianType"/>
+            <xs:element name="start_date" type="xs:date"/>
+            <xs:element name="finish_date" type="xs:date"/>
+            <xs:element name="status">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="returned"/>
+                        <xs:enumeration value="non-returned"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:element name="order">
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="orderIdExtension">
-                    <xs:sequence>
-                        <xs:element name="student" type="student:studentType"/>
-                        <xs:element name="book" type="book:bookType"/>
-                        <xs:element name="librarian" type="librarian:librarianType"/>
-                        <xs:element name="start_date" type="xs:date"/>
-                        <xs:element name="finish_date" type="xs:date"/>
-                        <xs:element name="status">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:enumeration value="returned"/>
-                                    <xs:enumeration value="non-returned"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
 
 </xs:schema>

@@ -4,20 +4,11 @@
         elementFormDefault="qualified"
         targetNamespace="librarianNamespace">
 
-    <xs:complexType name="librarianIdExtension">
+    <xs:complexType name="librarianType">
         <xs:sequence>
-            <xs:element name="id" type="xs:int"/>
+            <xs:element name="full_name" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="librarianType">
-        <xs:complexContent>
-            <xs:extension base="librarianIdExtension">
-                <xs:sequence>
-                    <xs:element name="full_name" type="xs:string"/>
-                    <xs:element name="password" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
 </xs:schema>
