@@ -3,20 +3,5 @@
 <library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="library.xsd">
     
-   <order>
-       <student>
-           <full_name></full_name>
-           <library_card></library_card>
-           <group></group>
-       </student>
-       <book></book>
-       <librarian id="">
-           <full_name></full_name>
-           <password></password>
-       </librarian>
-       <start_date></start_date>
-       <finish_date></finish_date>
-       <status></status>
-   </order>
-    
+
 </library>
