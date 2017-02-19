@@ -14,16 +14,24 @@ public class OrderHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        System.out.println(qName);
+
+        isFinishDate = qName.equals("order");
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-     //  System.out.println(qName);
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        System.out.println(new String(ch, start, length));
+
+
+        if (isFinishDate) {
+            String s = new String(ch, start, length);
+
+            System.out.println(s);
+        }
+
+
     }
 }
