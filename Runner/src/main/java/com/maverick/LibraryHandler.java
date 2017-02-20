@@ -79,7 +79,6 @@ public class LibraryHandler extends DefaultHandler {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        setAllToFalse();
     }
 
     @Override
