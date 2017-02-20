@@ -2,6 +2,38 @@
 
 <library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="library.xsd">
-    
+
+  <order id="1">
+      <student id="1">
+          <full_name>wegf</full_name>
+          <library_card>45454453</library_card>
+          <group id="1">
+              <name>KN-13-1</name>
+          </group>
+      </student>
+      <book id="1">
+          <author id="1">
+              <full_name>w4gwg</full_name>
+              <years_of_life>ewrgerg</years_of_life>
+          </author>
+          <title>ergerg</title>
+          <publishing_year>1988</publishing_year>
+          <genre id="1">
+              <name>ergerg</name>
+          </genre>
+          <publisher id="1">
+              <name>ergerg</name>
+          </publisher>
+          <amount>45</amount>
+      </book>
+      <librarian id="1">
+          <full_name>ergerg</full_name>
+          <password>ergerg</password>
+      </librarian>
+      <start_date>2016-12-12</start_date>
+      <finish_date>2016-12-12</finish_date>
+      <status>non-returned</status>
+  </order>
+
 
 </library>
