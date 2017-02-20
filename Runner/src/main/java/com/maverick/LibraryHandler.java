@@ -77,8 +77,9 @@ public class LibraryHandler extends DefaultHandler {
             if (isStatus)
                 order.setStatus(content);
         } catch (ParseException e) {
-            e.getMessage();
+            e.printStackTrace();
         }
+        setAllToFalse();
     }
 
     @Override
@@ -87,10 +88,15 @@ public class LibraryHandler extends DefaultHandler {
             student.setGroup(group);
         if (qName.equals("student"))
             order.setStudent(student);
+        setAllToFalse();
     }
 
     @Override
     public void endDocument() throws SAXException {
         System.err.println(order);
+    }
+
+    private void setAllToFalse() {
+        isOrder = isStudent = isFullName = isLibraryCard = isGroup = isName = isStartDate = isFinishDate = isStatus = false;
     }
 }
