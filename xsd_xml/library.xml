@@ -3,37 +3,36 @@
 <library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="library.xsd">
 
-  <order id="1">
-      <student id="1">
-          <full_name>Vladislav Lyubimtsev</full_name>
-          <library_card>45454453</library_card>
-          <group id="1">
-              <name>KN-13-1</name>
-          </group>
-      </student>
-      <book id="1">
-          <author id="1">
-              <full_name>MyAuthor</full_name>
-              <years_of_life>1878-1950</years_of_life>
-          </author>
-          <title>MyTitle</title>
-          <publishing_year>1930</publishing_year>
-          <genre id="1">
-              <name>Roman</name>
-          </genre>
-          <publisher id="1">
-              <name>Azbyka</name>
-          </publisher>
-          <amount>45</amount>
-      </book>
-      <librarian id="1">
-          <full_name>MyLib</full_name>
-          <password>password</password>
-      </librarian>
-      <start_date>2016-12-12</start_date>
-      <finish_date>2016-12-12</finish_date>
-      <status>non-returned</status>
-  </order>
-
+    <order id="9">
+        <student id="71">
+            <full_name>Vladislav Lyubimtsev</full_name>
+            <library_card>45454453</library_card>
+            <group id="3">
+                <name>KN-13-1</name>
+            </group>
+        </student>
+        <book id="1">
+            <author id="1">
+                <full_name>MyAuthor</full_name>
+                <years_of_life>1878-1950</years_of_life>
+            </author>
+            <title>MyTitle</title>
+            <publishing_year>1930</publishing_year>
+            <genre id="1">
+                <name>Roman</name>
+            </genre>
+            <publisher id="1">
+                <name>Azbyka</name>
+            </publisher>
+            <amount>45</amount>
+        </book>
+        <librarian id="1">
+            <full_name>MyLib</full_name>
+            <password>password</password>
+        </librarian>
+        <start_date>2016-12-12</start_date>
+        <finish_date>2016-12-12</finish_date>
+        <status>non-returned</status>
+    </order>
 
 </library>

@@ -8,7 +8,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -29,11 +31,11 @@ public class XMLRunner {
 
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, ParseException {
 
-        File file = new File("xsd_xml", "order.xml");
+        File file = new File("xsd_xml", "library.xml");
 
         Source xmlFile = new StreamSource(file);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = schemaFactory.newSchema(new File("xsd_xml/xsd", "order.xsd"));
+        Schema schema = schemaFactory.newSchema(new File("xsd_xml", "library.xsd"));
         Validator validator = schema.newValidator();
         try {
             validator.validate(xmlFile);
@@ -42,113 +44,150 @@ public class XMLRunner {
             System.out.println(xmlFile.getSystemId() + " is NOT valid reason:" + e);
         }
 
-        parseSAX(file);
-     //   Order order = parseDOM(file);
-    //    System.out.println(order);
+        //  Order order = parseDOM(file);
+
+
+        SAXParserFactory.newInstance().newSAXParser().parse(file, new LibraryHandler());
     }
 
     private static Order parseDOM(File file) throws IOException, SAXException, ParserConfigurationException, ParseException {
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(file);
+        Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 
-        doc.getDocumentElement().normalize();
+        Element rootElement = doc.getDocumentElement();
+        rootElement.normalize();
 
         Order order = new Order();
-
-        String id = doc.getElementsByTagName("id").item(0).getTextContent();
-        NodeList studentChildNodes = doc.getElementsByTagName("student").item(0).getChildNodes();
-        NodeList bookChildNodes = doc.getElementsByTagName("book").item(0).getChildNodes();
-        NodeList librarianChildNodes = doc.getElementsByTagName("librarian").item(0).getChildNodes();
-        String startDate = doc.getElementsByTagName("start_date").item(0).getTextContent();
-        String finishDate = doc.getElementsByTagName("finish_date").item(0).getTextContent();
-        String status = doc.getElementsByTagName("status").item(0).getTextContent();
-
-        List<Element> studentElements = filterElementNodes(studentChildNodes);
-        String studentId = studentElements.get(0).getTextContent();
-        String fullName = studentElements.get(1).getTextContent();
-        String libraryCard = studentElements.get(2).getTextContent();
-
-        List<Element> groupElements = filterElementNodes(studentElements.get(3).getChildNodes());
-        String groupId = groupElements.get(0).getTextContent();
-        String groupName = groupElements.get(1).getTextContent();
-
-        Student student = new Student();
-        student.setId(Integer.parseInt(studentId));
-        student.setFullName(fullName);
-        student.setLibraryCard(libraryCard);
-        Group group = new Group();
-        group.setId(Integer.parseInt(groupId));
-        group.setName(groupName);
-        student.setGroup(group);
-
-        List<Element> bookElements = filterElementNodes(bookChildNodes);
-        String bookId = bookElements.get(0).getTextContent();
-        List<Element> authorElements = filterElementNodes(bookElements.get(1).getChildNodes());
-        String authorId = authorElements.get(0).getTextContent();
-        String authorFullName = authorElements.get(1).getTextContent();
-        String authorYearsOfLife = authorElements.get(2).getTextContent();
-
-        String title = bookElements.get(2).getTextContent();
-        String publishingYear = bookElements.get(3).getTextContent();
-        List<Element> genreElements = filterElementNodes(bookElements.get(4).getChildNodes());
-        String genreId = genreElements.get(0).getTextContent();
-        String genreName = genreElements.get(1).getTextContent();
-
-        List<Element> publisherElements = filterElementNodes(bookElements.get(5).getChildNodes());
-        String publisherId = publisherElements.get(0).getTextContent();
-        String publisherName = publisherElements.get(1).getTextContent();
-        String amount = bookElements.get(6).getTextContent();
-
-        Book book = new Book();
-        book.setId(Integer.parseInt(bookId));
-        Author author = new Author();
-        author.setId(Integer.parseInt(authorId));
-        author.setFullName(authorFullName);
-        author.setYearsOfLife(authorYearsOfLife);
-        book.setAuthor(author);
-        book.setTitle(title);
-        book.setPublishingYear(Integer.parseInt(publishingYear));
-        Genre genre = new Genre();
-        genre.setId(Integer.parseInt(genreId));
-        genre.setName(genreName);
-        book.setGenre(genre);
-        Publisher publisher = new Publisher();
-        publisher.setId(Integer.parseInt(publisherId));
-        publisher.setName(publisherName);
-        book.setPublisher(publisher);
-        book.setAmount(Integer.parseInt(amount));
-
-        List<Element> librarianElements = filterElementNodes(librarianChildNodes);
-
-        String libId = librarianElements.get(0).getTextContent();
-        String libName = librarianElements.get(1).getTextContent();
-        String libPass = librarianElements.get(2).getTextContent();
-
-        Librarian librarian = new Librarian();
-        librarian.setId(Integer.parseInt(libId));
-        librarian.setFullName(libName);
-        librarian.setPassword(libPass);
-
-        order.setId(Integer.parseInt(id));
-        order.setStudent(student);
-        order.setBook(book);
-        order.setLibrarian(librarian);
-
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        order.setStartDate(format.parse(startDate));
-        order.setFinishDate(format.parse(finishDate));
-        order.setStatus(status);
 
+        List<Element> libraryElements = filterElementNodes(rootElement.getChildNodes());
+        libraryElements.forEach(libraryElement -> {
+
+            order.setId(Integer.parseInt(libraryElement.getAttribute("id")));
+            List<Element> orderElements = filterElementNodes(libraryElement.getChildNodes());
+            orderElements.forEach(orderElement -> {
+                try {
+                    switch (orderElement.getTagName()) {
+                        case "student":
+                            Student student = new Student();
+                            student.setId(Integer.parseInt(orderElement.getAttribute("id")));
+                            List<Element> studentElements = filterElementNodes(orderElement.getChildNodes());
+                            studentElements.forEach(studentElement -> {
+                                switch (studentElement.getTagName()) {
+                                    case "full_name":
+                                        student.setFullName(studentElement.getTextContent());
+                                        break;
+                                    case "library_card":
+                                        student.setLibraryCard(studentElement.getTextContent());
+                                        break;
+                                    case "group":
+                                        Group group = new Group();
+                                        group.setId(Integer.parseInt(studentElement.getAttribute("id")));
+                                        List<Element> groupElements = filterElementNodes(studentElement.getChildNodes());
+                                        groupElements.forEach(groupElement -> {
+                                            switch (groupElement.getTagName()) {
+                                                case "name":
+                                                    group.setName(groupElement.getTextContent());
+                                                    break;
+                                            }
+                                        });
+                                        student.setGroup(group);
+                                        break;
+                                }
+                            });
+                            order.setStudent(student);
+                            break;
+                        case "book":
+                            Book book = new Book();
+                            book.setId(Integer.parseInt(orderElement.getAttribute("id")));
+                            List<Element> bookElements = filterElementNodes(orderElement.getChildNodes());
+                            bookElements.forEach(bookElement -> {
+                                switch (bookElement.getTagName()) {
+                                    case "author":
+                                        Author author = new Author();
+                                        author.setId(Integer.parseInt(bookElement.getAttribute("id")));
+                                        List<Element> authorElements = filterElementNodes(bookElement.getChildNodes());
+                                        authorElements.forEach(authorElement -> {
+                                            switch (authorElement.getTagName()) {
+                                                case "full_name":
+                                                    author.setFullName(authorElement.getTextContent());
+                                                    break;
+                                                case "years_of_life":
+                                                    author.setYearsOfLife(authorElement.getTextContent());
+                                                    break;
+                                            }
+                                        });
+                                        book.setAuthor(author);
+                                        break;
+                                    case "title":
+                                        book.setTitle(bookElement.getTextContent());
+                                        break;
+                                    case "publishing_year":
+                                        book.setPublishingYear(Integer.parseInt(bookElement.getTextContent()));
+                                        break;
+                                    case "genre":
+                                        Genre genre = new Genre();
+                                        genre.setId(Integer.parseInt(bookElement.getAttribute("id")));
+                                        List<Element> genreElements = filterElementNodes(bookElement.getChildNodes());
+                                        genreElements.forEach(genreElement -> {
+                                            switch (genreElement.getTagName()) {
+                                                case "name":
+                                                    genre.setName(genreElement.getTextContent());
+                                            }
+                                        });
+                                        book.setGenre(genre);
+                                        break;
+                                    case "publisher":
+                                        Publisher publisher = new Publisher();
+                                        publisher.setId(Integer.parseInt(bookElement.getAttribute("id")));
+                                        List<Element> publisherElements = filterElementNodes(bookElement.getChildNodes());
+                                        publisherElements.forEach(publisherElement -> {
+                                            switch (publisherElement.getTagName()) {
+                                                case "name":
+                                                    publisher.setName(publisherElement.getTextContent());
+                                            }
+                                        });
+                                        book.setPublisher(publisher);
+                                        break;
+                                    case "amount":
+                                        book.setAmount(Integer.parseInt(bookElement.getTextContent()));
+                                        break;
+                                }
+                            });
+                            order.setBook(book);
+                            break;
+                        case "librarian":
+                            Librarian librarian = new Librarian();
+                            librarian.setId(Integer.parseInt(orderElement.getAttribute("id")));
+                            List<Element> librarianElements = filterElementNodes(orderElement.getChildNodes());
+                            librarianElements.forEach(librarianElement -> {
+                                switch (librarianElement.getTagName()) {
+                                    case "full_name":
+                                        librarian.setFullName(librarianElement.getTextContent());
+                                        break;
+                                    case "password":
+                                        librarian.setPassword(librarianElement.getTextContent());
+                                        break;
+                                }
+                            });
+                            order.setLibrarian(librarian);
+                            break;
+                        case "start_date":
+                            order.setStartDate(format.parse(orderElement.getTextContent()));
+                            break;
+                        case "finish_date":
+                            order.setFinishDate(format.parse(orderElement.getTextContent()));
+                            break;
+                        case "status":
+                            order.setStatus(orderElement.getTextContent());
+                            break;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
         return order;
-    }
-
-
-    private static void parseSAX(File file) throws IOException, SAXException, ParserConfigurationException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser saxParser = factory.newSAXParser();
-        saxParser.parse(file, new OrderHandler());
     }
 
     private static List<Element> filterElementNodes(NodeList nodeList) {
