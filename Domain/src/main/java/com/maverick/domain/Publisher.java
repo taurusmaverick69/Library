@@ -2,8 +2,10 @@ package com.maverick.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlType(propOrder = {"name"}, name = "publisher")
 public class Publisher extends EntityClass {
 
     @Column

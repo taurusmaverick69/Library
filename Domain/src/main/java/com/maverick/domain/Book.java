@@ -1,8 +1,10 @@
 package com.maverick.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlType(propOrder = {"author", "title", "publishingYear", "genre", "publisher", "amount"}, name = "book")
 public class Book extends EntityClass {
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -8,7 +8,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.lang.reflect.InvocationTargetException;
 
-
 public class SpringRunner {
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
@@ -29,5 +28,4 @@ public class SpringRunner {
         }
         System.out.println(service.getAll());
     }
-
 }

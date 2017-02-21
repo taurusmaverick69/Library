@@ -8,9 +8,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -23,16 +25,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sednor-7 on 2/15/17.
- */
 public class XMLRunner {
 
-
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, ParseException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, ParseException, JAXBException {
 
         File file = new File("xsd_xml", "library.xml");
+        validate(file);
+        //  Order order = parseDOM(file);
 
+
+        //  System.err.println(order);
+        //  SAXParserFactory.newInstance().newSAXParser().parse(file, new LibraryHandler());
+        parseJaxb(file);
+    }
+
+    private static void validate(File file) throws SAXException, IOException {
         Source xmlFile = new StreamSource(file);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = schemaFactory.newSchema(new File("xsd_xml", "library.xsd"));
@@ -43,11 +50,6 @@ public class XMLRunner {
         } catch (SAXException e) {
             System.out.println(xmlFile.getSystemId() + " is NOT valid reason:" + e);
         }
-
-        //  Order order = parseDOM(file);
-
-
-        SAXParserFactory.newInstance().newSAXParser().parse(file, new LibraryHandler());
     }
 
     private static Order parseDOM(File file) throws IOException, SAXException, ParserConfigurationException, ParseException {
@@ -197,5 +199,22 @@ public class XMLRunner {
                 elements.add((Element) nodeList.item(i));
             }
         return elements;
+    }
+
+    private static void parseJaxb(File file) throws JAXBException {
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Library.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        Library library = (Library) unmarshaller.unmarshal(file);
+        System.out.println(library);
+
+
+//        Order order = new Order();
+//        order.setId(1);
+//        order.setStatus("non-returned");
+//
+//        Marshaller marshaller = jaxbContext.createMarshaller();
+//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//        marshaller.marshal(order, System.out);
     }
 }

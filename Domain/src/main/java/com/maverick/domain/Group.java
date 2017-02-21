@@ -3,9 +3,11 @@ package com.maverick.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "`group`")
+@XmlType(propOrder = {"name"}, name = "group")
 public class Group extends EntityClass {
 
     @Column

@@ -3,10 +3,13 @@ package com.maverick.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Librarian")
+@XmlType(propOrder = {"fullName", "password"}, name = "librarian")
 public class Librarian extends EntityClass {
 
     @Column(name = "full_name")
@@ -34,6 +37,7 @@ public class Librarian extends EntityClass {
         this.password = password;
     }
 
+    @XmlTransient
     public List<Order> getOrders() {
         return orders;
     }

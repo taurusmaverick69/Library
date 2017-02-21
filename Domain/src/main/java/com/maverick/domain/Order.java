@@ -1,10 +1,13 @@
 package com.maverick.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 @Entity
 @Table(name = "`order`")
+@XmlType(propOrder = {"student", "book", "startDate", "finishDate", "status"}, name = "order")
 public class Order extends EntityClass {
 
     @ManyToOne
@@ -44,6 +47,7 @@ public class Order extends EntityClass {
         this.book = book;
     }
 
+    @XmlTransient
     public Librarian getLibrarian() {
         return librarian;
     }

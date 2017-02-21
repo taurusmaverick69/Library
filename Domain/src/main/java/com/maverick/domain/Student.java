@@ -1,9 +1,11 @@
 package com.maverick.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
 @Entity
+@XmlType(propOrder = {"fullName", "libraryCard", "group"}, name = "student")
 public class Student extends EntityClass {
 
     @Column(name = "full_name")
@@ -45,6 +47,11 @@ public class Student extends EntityClass {
 
     @Override
     public String toString() {
-        return fullName;
+        return "Student{" +
+                "fullName='" + fullName + '\'' +
+                ", orders=" + orders +
+                ", libraryCard='" + libraryCard + '\'' +
+                ", group=" + group +
+                '}';
     }
 }

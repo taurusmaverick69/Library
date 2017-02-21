@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.bson.types.ObjectId;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
 
 @MappedSuperclass
 public abstract class EntityClass {
@@ -16,6 +17,7 @@ public abstract class EntityClass {
     @Transient
     private ObjectId _id;
 
+    @XmlAttribute
     public int getId() {
         return id;
     }
