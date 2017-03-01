@@ -14,22 +14,22 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping
+    @GetMapping
     public List<Order> findAll() {
         return orderService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Order findById(@PathVariable("id") int id) {
         return orderService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Order order) {
+    @PostMapping
+    public void save(@RequestBody Order order) {
         orderService.save(order);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping
     public void delete(@PathVariable("id") int id) {
         orderService.delete(id);
     }

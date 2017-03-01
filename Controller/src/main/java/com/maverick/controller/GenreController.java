@@ -14,22 +14,22 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
-    @RequestMapping
+    @GetMapping
     public List<Genre> findAll() {
         return genreService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Genre findById(@PathVariable("id") int id) {
         return genreService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Genre genre) {
+    @PostMapping
+    public void save(@RequestBody Genre genre) {
         genreService.save(genre);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         genreService.delete(id);
     }

@@ -14,22 +14,22 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping
+    @GetMapping
     public List<Group> findAll() {
         return groupService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Group findById(@PathVariable("id") int id) {
         return groupService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Group group) {
+    @PostMapping
+    public void save(@RequestBody Group group) {
         groupService.save(group);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         groupService.delete(id);
     }

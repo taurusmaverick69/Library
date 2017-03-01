@@ -14,22 +14,22 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping
+    @GetMapping
     public List<Student> findAll() {
         return studentService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Student findById(@PathVariable("id") int id) {
         return studentService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Student student) {
+    @PostMapping
+    public void save(@RequestBody Student student) {
         studentService.save(student);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         studentService.delete(id);
     }

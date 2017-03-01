@@ -14,22 +14,22 @@ public class LibrarianController {
     @Autowired
     private LibrarianService librarianService;
 
-    @RequestMapping
+    @GetMapping
     public List<Librarian> findAll() {
         return librarianService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Librarian findById(@PathVariable("id") int id) {
         return librarianService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Librarian librarian) {
+    @PostMapping
+    public void save(@RequestBody Librarian librarian) {
         librarianService.save(librarian);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         librarianService.delete(id);
     }

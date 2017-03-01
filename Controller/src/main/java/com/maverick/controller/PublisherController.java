@@ -14,22 +14,22 @@ public class PublisherController {
     @Autowired
     private PublisherService publisherService;
 
-    @RequestMapping
+    @GetMapping
     public List<Publisher> findAll() {
         return publisherService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Publisher findById(@PathVariable("id") int id) {
         return publisherService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Publisher publisher) {
+    @PostMapping
+    public void save(@RequestBody Publisher publisher) {
         publisherService.save(publisher);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         publisherService.delete(id);
     }

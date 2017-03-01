@@ -14,22 +14,22 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @RequestMapping
+    @GetMapping
     public List<Author> findAll() {
         return authorService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Author findById(@PathVariable("id") int id) {
         return authorService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("author") Author author) {
+    @PostMapping
+    public void save(@RequestBody Author author) {
         authorService.save(author);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         authorService.delete(id);
     }

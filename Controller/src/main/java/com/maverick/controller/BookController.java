@@ -14,22 +14,22 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping
+    @GetMapping
     public List<Book> findAll() {
         return bookService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Book findById(@PathVariable("id") int id) {
         return bookService.findById(id);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public void save(@ModelAttribute("book") Book book) {
+    @PostMapping
+    public void save(@RequestBody Book book) {
         bookService.save(book);
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         bookService.delete(id);
     }
